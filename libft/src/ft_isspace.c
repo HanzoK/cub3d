@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/03/31 14:15:16 by hanjkim          ###   ########.fr       */
+/*   Created: 2024/06/03 11:31:00 by oohnivch          #+#    #+#             */
+/*   Updated: 2024/11/11 10:54:34 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/libft.h"
 
-# include "libft/includes/libft.h"
-
-typedef struct	s_data
+// Checks if the character is a whitespace character.
+// Returns 1 if the character is a whitespace character, 0 otherwise.
+int	ft_isspace(int c)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-#endif
+	return ((c >= 9 && c <= 13) || c == 32);
+}

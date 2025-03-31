@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/03/31 14:15:16 by hanjkim          ###   ########.fr       */
+/*   Created: 2024/04/09 13:43:53 by oohnivch          #+#    #+#             */
+/*   Updated: 2024/11/11 10:53:51 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/libft.h"
 
-# include "libft/includes/libft.h"
-
-typedef struct	s_data
+// Checks if the character is an alphabetic character.
+// Returns 1 if the character is an alphabetic character, 0 otherwise.
+int	ft_isalpha(int c)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-#endif
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}

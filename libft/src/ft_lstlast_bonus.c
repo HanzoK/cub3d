@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/03/31 14:15:16 by hanjkim          ###   ########.fr       */
+/*   Created: 2024/04/16 16:13:24 by oohnivch          #+#    #+#             */
+/*   Updated: 2024/11/11 10:58:28 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/libft.h"
 
-# include "libft/includes/libft.h"
-
-typedef struct	s_data
+// Returns the last element of the list.
+// The function returns NULL if the list is empty.
+t_list	*ft_lstlast(t_list *lst)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-#endif
+	if (!lst)
+		return (0);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}

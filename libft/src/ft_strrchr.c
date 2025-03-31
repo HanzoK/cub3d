@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/03/31 14:15:16 by hanjkim          ###   ########.fr       */
+/*   Created: 2024/04/04 15:09:15 by oohnivch          #+#    #+#             */
+/*   Updated: 2025/01/21 12:39:18 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/libft.h"
 
-# include "libft/includes/libft.h"
-
-typedef struct	s_data
+char	*ft_strrchr(const char *s, int c)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+	int	i;
 
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	while (i >= 0)
+	{
+		if (s[i] == (const char)c)
+			return ((char *)(s + i));
+		i--;
+	}
+	return (NULL);
+}

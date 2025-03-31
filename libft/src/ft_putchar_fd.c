@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/03/31 14:15:16 by hanjkim          ###   ########.fr       */
+/*   Created: 2024/04/16 11:17:24 by oohnivch          #+#    #+#             */
+/*   Updated: 2024/11/11 11:05:02 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/libft.h"
 
-# include "libft/includes/libft.h"
-
-typedef struct	s_data
+// Outputs the character c to the given file descriptor.
+// Returns the number of characters printed.
+// If an error occurs, the function returns -1.
+int	ft_putchar_fd(char c, int fd)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-#endif
+	return (write(fd, &c, 1));
+}

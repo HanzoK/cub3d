@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/03/31 14:16:02 by hanjkim          ###   ########.fr       */
+/*   Created: 2024/04/16 16:51:50 by oohnivch          #+#    #+#             */
+/*   Updated: 2025/01/21 12:42:12 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_data data;
+	t_list	*n;
 
-	ft_calloc(1, sizeof(t_data));
-	while (1)
-	{
-		// magic happens here
-	}
+	if (!lst || !del || !(*lst))
+		return ;
+	n = (*lst)->next;
+	if (n != NULL)
+		ft_lstclear(&n, del);
+	(del)((*lst)->content);
+	free(*lst);
+	*lst = NULL;
 }
