@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/04/08 21:13:15 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/04/08 21:16:04 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	read_map(char *filename, t_data *data)
 			ft_strchr(line, 'E') || ft_strchr(line, 'W'))
 		{
 			data->player_x = ft_atoi(line);
-			data->player_y = ft_atoi(line + 2);
+			/*data->player_y = ft_atoi(line + 2);*/
 			if (line[0] == 'N')
 				data->player_dir = NORTH;
 			else if (line[0] == 'S')
@@ -75,8 +75,6 @@ void	read_map(char *filename, t_data *data)
 			else if (line[0] == 'W')
 				data->player_dir = WEST;
 		}
-		else if (ft_strchr(line, '1') || ft_strchr(line, '0'))
-			break ;
 		free(line);
 	}
 	if (ft_strchr(line, '1') || ft_strchr(line, '0'))
