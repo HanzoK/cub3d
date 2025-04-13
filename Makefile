@@ -6,7 +6,7 @@
 #    By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/31 14:07:34 by hanjkim           #+#    #+#              #
-#    Updated: 2025/03/31 14:17:44 by hanjkim          ###   ########.fr        #
+#    Updated: 2025/04/13 19:25:11 by hanjkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,18 @@ LIBFT_DIR	=	libft/
 
 LIBFT   	=	$(LIBFT_DIR)libft.a
 
-SRC_DIR 	=	src/
-SRCS     	=	$(SRC_DIR)/main.c			\
+SRCS     	=	src/main.c				\
+				src/init_game.c			\
+				src/input_validation.c	\
+				src/read_map.c			\
+				src/free.c				\
+				src/general_utils.c		\
 
 OBJS     	=	$(SRCS:%.c=%.o) 
 
 RM			=	rm -rf
 
-LINK_FLAGS	=	-L$(LIBFT_DIR) -lft -lftprintf
+LINK_FLAGS	=	-L$(LIBFT_DIR) -lft
 MLXFLAGS	=	-lmlx -lXext -lX11 -lm
 
 all:		$(LIBFT) $(NAME)

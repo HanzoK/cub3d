@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   input_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/04/13 19:25:53 by hanjkim          ###   ########.fr       */
+/*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
+/*   Updated: 2025/04/13 19:06:10 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int main(int argc, char **argv)
+void	input_validation(int argc, char **argv)
 {
-	t_data data;
+	char	*dot_position;
 
-	ft_set_up_game(&data);
-	input_validation(argc, argv);
-	read_map(&data, argv[1]);
-	printf("Map dimensions: %d rows,  %d columns\n", data.width, data.height);
-	int i = 0;
-	while (data.map[i])
+	dot_position = NULL;
+	dot_position = ft_strrchr(argv[1], '.');
+	if (argc == 1 || argc > 2)
 	{
-		printf("Row %d: %s\n", i, data.map[i]);
-		i++;
+		if (!dot_position || ft_strncmp(dot_position, ".cub", 4) != 0)
+			ft_putstr_fd("Error\nMust use a .cub file as argument. Duh.\n", 2);
+		else
+			ft_putstr_fd("Error\nOnly 1 map allowed, dude. Really?\n", 2);
+		exit(1);
 	}
-	/*while (1)*/
-	/*{*/
-	/*	// magic happens here*/
-	/*}*/
-	free_lines(data.map);
-	exit((!(argc || argv)) & 0x7FFFFFFF);
 }

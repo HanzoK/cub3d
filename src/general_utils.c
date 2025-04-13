@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/04/13 19:25:53 by hanjkim          ###   ########.fr       */
+/*   Created: 2025/04/13 19:23:32 by hanjkim           #+#    #+#             */
+/*   Updated: 2025/04/13 19:23:47 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int main(int argc, char **argv)
+char	*join2(char const *s1, char const *s2)
 {
-	t_data data;
+	size_t	i;
+	size_t	j;
+	char	*ptr;
 
-	ft_set_up_game(&data);
-	input_validation(argc, argv);
-	read_map(&data, argv[1]);
-	printf("Map dimensions: %d rows,  %d columns\n", data.width, data.height);
-	int i = 0;
-	while (data.map[i])
-	{
-		printf("Row %d: %s\n", i, data.map[i]);
-		i++;
-	}
-	/*while (1)*/
-	/*{*/
-	/*	// magic happens here*/
-	/*}*/
-	free_lines(data.map);
-	exit((!(argc || argv)) & 0x7FFFFFFF);
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	ptr = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
+	if (ptr == NULL)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (s1[++i])
+		ptr[i] = s1[i];
+	while (s2[++j])
+		ptr[i + j] = s2[j];
+	return (ptr);
 }
