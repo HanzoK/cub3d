@@ -14,11 +14,13 @@
 
 int main(int argc, char **argv)
 {
-	t_data data;
+	t_data 		*data;
+	t_file 		*file;
 
 	ft_set_up_game(&data);
 	input_validation(argc, argv);
 	read_map(&data, argv[1]);
+	
 	printf("Map dimensions: %d rows,  %d columns\n", data.width, data.height);
 	int i = 0;
 	while (data.map[i])

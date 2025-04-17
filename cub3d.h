@@ -27,15 +27,51 @@ typedef enum e_direction
 	WEST = 3
 }				t_direction;
 
+typedef struct s_textures
+{
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
+	char			*floor;
+	char			*ceiling;
+	char			**colour_floor;
+	char			**colour_ceiling;
+	int				floor_r;
+	int				floor_g;
+	int				floor_b;
+	int				ceiling_r;
+	int				ceiling_g;
+	int				ceiling_b;
+
+}					t_textures;
+
+typedef struct s_fileparse
+{
+	char			**texture;
+	char			**map;
+	char			**file;
+	char			player_direction;
+	int				line_length;
+	int				line_height;
+	int				player_pos_x;
+	int				player_pos_y;
+	int				fd;
+	int				i;
+	t_textures		*textures;
+}					t_fileparse;
+
 typedef struct s_data
 {
-	void	*img;
-	char	**map;
-	int		width;
-	int		height;
-	int		player_x;
-	int		player_y;
-	t_direction	player_direction;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	char			**map;
+	int				map_width;
+	int				map_height;
+	int				player_x;
+	int				player_y;
+	t_fileparse		*file;
 }				t_data;
 
 //*****************************************************************

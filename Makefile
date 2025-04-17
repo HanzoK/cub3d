@@ -32,7 +32,7 @@ OBJS     	=	$(SRCS:%.c=%.o)
 RM			=	rm -rf
 
 LINK_FLAGS	=	-L$(LIBFT_DIR) -lft
-MLXFLAGS	=	-lmlx -lXext -lX11 -lm
+#MLXFLAGS	=	-lmlx -lXext -lX11 -lm
 
 all:		$(LIBFT) $(NAME)
 
@@ -43,7 +43,7 @@ $(PRINTF):
 		@make -C $(PRINTF_DIR)
 
 $(NAME):	$(OBJS) $(LIBFT)
-			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LINK_FLAGS) -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJS) $(LINK_FLAGS) -o $(NAME)
 
 clean:
 			$(RM) $(OBJS)
