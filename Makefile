@@ -24,6 +24,7 @@ SRCS     	=	src/main.c				\
 				src/init_game.c			\
 				src/input_validation.c	\
 				src/read_map.c			\
+				src/parse_map.c			\
 				src/free.c				\
 				src/general_utils.c		\
 

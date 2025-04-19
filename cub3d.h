@@ -88,7 +88,12 @@ void	input_validation(int argc, char **argv);
 
 char	*read_file_into_line(char	*filename);
 char	**arrange_lines_as_map(char	*filename);
-void	read_map(t_data *data, char *filename);
+int		read_file(t_fileparse *file, char *filename);
+int		is_space_line(char *line);
+char    *extract_config_values(char *line);
+int		parse_colour_config(t_textures *tx, char *line, int is_it_floor);
+int		parse_config_file(t_fileparse *file);
+char	**fill_map(t_fileparse *file, int map_start);
 
 //*****************************************************************
 //*						FREE FUNCTIONS							  *

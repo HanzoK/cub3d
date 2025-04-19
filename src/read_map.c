@@ -61,25 +61,11 @@ char	**arrange_lines_as_map(char	*filename)
 	return (map);
 }
 
-void	read_map(t_data *data, char *filename)
-{
-	int		i;
-	int		width;
 
-	i = 0;
-	width = 0;
-	data->map = arrange_lines_as_map(filename);
-	if (!data->map)
-		exit(1);
-	while (data->map[i])
-		i++;
-	data->height = i;
-	i = 0;
-	while (data->map[i])
-	{
-		width = ft_strlen(data->map[i]);
-		if (width > data->width)
-			data->width = width;
-		i++;
-	}
+int	read_file(t_fileparse *file, char *filename)
+{
+	file->file = arrange_lines_as_map(filename);
+	if (!file->file)
+		return (0);
+	return (1);
 }

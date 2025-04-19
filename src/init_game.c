@@ -16,9 +16,8 @@ void	ft_set_up_game(t_data *data)
 {
 	data->img = NULL;
 	data->map = NULL;
-	data->width = 0;
-	data->height = 0;
+	data->map_width = 0;
+	data->map_height = 0;
 	data->player_x = 0;
 	data->player_y = 0;
-	data->player_direction = NORTH;
 }
