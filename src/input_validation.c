@@ -27,3 +27,51 @@ void	input_validation(int argc, char **argv)
 		exit(1);
 	}
 }
+
+bool	validate_map(t_data *data)
+{
+	int		i;
+	int		j;
+	int		pc;
+	char	c;
+
+	pc = 0;
+	i = 0;
+	while (i < data->map_height)
+	{
+		j = 0;
+		while (j < data->map_width)
+		{
+			c = data->map[i][j];
+			if (c != '0' && c != '1'
+				&& c != 'N' && c != 'S'
+				&& c != 'E' && c != 'W'
+				&& c != ' ')
+				return (false);
+			if (c == '0')
+			{
+				if (i == 0
+				|| i == data->map_height - 1
+				|| j == 0
+				|| j == data->map_width - 1)
+					return (false);
+				if (data->map[i - 1][j] == ' '
+				|| data->map[i + 1][j] == ' '
+				|| data->map[i][j - 1] == ' '
+				|| data->map[i][j + 1] == ' ')
+					return (false);
+			}
+			if (c == 'N'
+			|| c == 'S'
+			|| c == 'E'
+			|| c == 'W')
+				pc++;
+			j++;
+		}
+		i++;
+	}
+	if (pc == 1)
+		return (true);
+	else
+		return (false);
+}

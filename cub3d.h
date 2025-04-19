@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef enum e_direction
 {
@@ -71,6 +72,7 @@ typedef struct s_data
 	int				map_height;
 	int				player_x;
 	int				player_y;
+	bool			is_game_ready;
 	t_fileparse		*file;
 }				t_data;
 
@@ -80,6 +82,7 @@ typedef struct s_data
 
 void	ft_set_up_game(t_data *data);
 void	input_validation(int argc, char **argv);
+bool	validate_map(t_data *data);
 
 
 //*****************************************************************
