@@ -34,6 +34,7 @@ typedef struct s_textures
 	char			*south;
 	char			*west;
 	char			*east;
+	char			*sprite;
 	char			*floor;
 	char			*ceiling;
 	char			**colour_floor;
@@ -45,22 +46,15 @@ typedef struct s_textures
 	int				ceiling_g;
 	int				ceiling_b;
 
-}					t_textures;
+}					t_tx;
 
-typedef struct s_fileparse
+typedef struct s_file
 {
-	char			**texture;
-	char			**map;
 	char			**file;
-	char			player_direction;
 	int				line_length;
 	int				line_height;
-	int				player_pos_x;
-	int				player_pos_y;
-	int				fd;
-	int				i;
-	t_textures		*textures;
-}					t_fileparse;
+	t_tx			*tx;
+}					t_file;
 
 typedef struct s_data
 {
@@ -73,39 +67,43 @@ typedef struct s_data
 	int				player_x;
 	int				player_y;
 	bool			is_game_ready;
-	t_fileparse		*file;
+	t_file			*file;
 }				t_data;
 
 //*****************************************************************
-//*					MAP VALIDATION FUNCTIONS					  *
+//*					FILE VALIDATION FUNCTIONS					  *
 //*****************************************************************
 
-void	ft_set_up_game(t_data *data);
+void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx);
 void	input_validation(int argc, char **argv);
 bool	validate_map(t_data *data);
 
 
 //*****************************************************************
-//*					MAP READING FUNCTIONS						  *
+//*					FILE READING FUNCTIONS						  *
 //*****************************************************************
 
+int		is_space_line(char *line);
 char	*read_file_into_line(char	*filename);
 char	**arrange_lines_as_map(char	*filename);
-int		read_file(t_fileparse *file, char *filename);
+int		read_file(t_data *data, char *filename);
 int		is_space_line(char *line);
-char    *extract_config_values(char *line);
-int		parse_colour_config(t_textures *tx, char *line, int is_it_floor);
-int		parse_config_file(t_fileparse *file);
-char	**fill_map(t_fileparse *file, int map_start);
+int		rgb_value_check (char **colours);
+char	*get_config_value(char *line, int config_name_len);
+int		parse_colour_config(t_data *data, char *line, int is_it_floor);
+int		parse_config_file(t_data *data);
+char	**fill_map(t_data *data, int map_start);
 
 //*****************************************************************
 //*						FREE FUNCTIONS							  *
 //*****************************************************************
 
-void	free_lines(char **lines);
+void	bruh(t_data *data, char *s, int status);
+void	free_array(char **lines);
+void	free_textures(t_data *date);
 
 //*****************************************************************
-//*						FREE FUNCTIONS							  *
+//*						UTIL FUNCTIONS							  *
 //*****************************************************************
 
 char	*join2(char const *s1, char const *s2);

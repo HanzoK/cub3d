@@ -14,17 +14,18 @@
 
 void	input_validation(int argc, char **argv)
 {
-	char	*dot_position;
+	size_t	len;
 
-	dot_position = NULL;
-	dot_position = ft_strrchr(argv[1], '.');
-	if (argc == 1 || argc > 2)
+	if (argc != 2)
 	{
-		if (!dot_position || ft_strncmp(dot_position, ".cub", 4) != 0)
-			ft_putstr_fd("Error\nMust use a .cub file as argument. Duh.\n", 2);
-		else
-			ft_putstr_fd("Error\nOnly 1 map allowed, dude. Really?\n", 2);
+		ft_putstr_fd("Error\nAre you sure you know what you're doing?\n", 2);
 		exit(1);
+	}
+	len = ft_strlen(argv[1]);
+	if (len < 5 || ft_strncmp(argv[1] + len - 4, ".cub", 4) != 0)
+	{
+		ft_putstr_fd("Error\nDo you know the definition of insanity?\n", 2);
+		exit (1);
 	}
 }
 

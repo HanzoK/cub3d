@@ -12,12 +12,11 @@
 
 #include "../cub3d.h"
 
-void	ft_set_up_game(t_data *data)
+void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx)
 {
-	data->img = NULL;
-	data->map = NULL;
-	data->map_width = 0;
-	data->map_height = 0;
-	data->player_x = 0;
-	data->player_y = 0;
+	ft_bzero(data, sizeof(*data));
+	ft_bzero(file, sizeof(*file));
+	ft_bzero(tx, sizeof(*tx));
+	data->file = file;
+	file->tx = tx;
 }

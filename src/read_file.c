@@ -62,10 +62,17 @@ char	**arrange_lines_as_map(char	*filename)
 }
 
 
-int	read_file(t_fileparse *file, char *filename)
+int	read_file(t_data *data, char *filename)
 {
-	file->file = arrange_lines_as_map(filename);
-	if (!file->file)
+	char	*raw_line;
+
+	raw_line = read_file_into_line(filename);
+	if (!raw_line)
 		return (0);
-	return (1);
+	data->file->file = ft_split(raw_line, '\n');
+	ft_free(&raw_line);
+	if (data->file->file)
+		return (1);
+	else
+		return (0);
 }
