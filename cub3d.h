@@ -83,6 +83,7 @@ bool	validate_map(t_data *data);
 //*					FILE READING FUNCTIONS						  *
 //*****************************************************************
 
+int		skip_spaces(char *line, int i);
 int		is_space_line(char *line);
 char	*read_file_into_line(char	*filename);
 char	**arrange_lines_as_map(char	*filename);

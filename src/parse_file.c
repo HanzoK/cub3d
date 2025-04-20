@@ -52,36 +52,36 @@ int	parse_config_file(t_data *data)
 {
     char	*line;
     int		i;
+    char    *trimmed;
 
+    trimmed = NULL;
     i = 0;
     while (data->file->file[i])
     {
         line = data->file->file[i];
-        if (is_space_line(line))
-        {
-            i++;
-            continue;
-        }
-        if (!ft_strncmp(line, "NO", 2))
+        trimmed = line + skip_spaces(line, 0);
+        if (!ft_strncmp(trimmed, "NO", 2))
             data->file->tx->north = get_config_value(line, 2);
-        else if (!ft_strncmp(line, "SO", 2))
+        else if (!ft_strncmp(trimmed, "SO", 2))
             data->file->tx->south = get_config_value(line, 2);
-        else if (!ft_strncmp(line, "WE", 2))
+        else if (!ft_strncmp(trimmed, "WE", 2))
             data->file->tx->west = get_config_value(line, 2);
-        else if (!ft_strncmp(line, "EA", 2))
+        else if (!ft_strncmp(trimmed, "EA", 2))
             data->file->tx->east = get_config_value(line, 2);
-        else if (!ft_strncmp(line, "S", 1))
+        else if (!ft_strncmp(trimmed, "S", 1))
             data->file->tx->sprite = get_config_value(line, 1);
-        else if (!ft_strncmp(line, "F", 1))
+        else if (!ft_strncmp(trimmed, "F", 1))
         {
             if (!parse_colour_config(data, line, 1))
                 return (-1);
         }
-        else if (!ft_strncmp(line, "C", 1))
+        else if (!ft_strncmp(trimmed, "C", 1))
         {
             if (!parse_colour_config(data, line, 0))
                 return (-1);
         }
+        else if (is_space_line(line))
+            ;
         else
             break;
         i++;
