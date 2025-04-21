@@ -1,7 +1,7 @@
-NO./path_to_north_texture
-SO./path_to_south_texture
-WE./path_to_west_texture
-EA./path_to_east_texture
+               NO ./path_to_north_texture
+SO ./path_to_south_texture
+WE ./path_to_west_texture
+EA ./path_to_east_texture
 S             ./path_to_the_sprite_texture
 
             F220,  100,   0

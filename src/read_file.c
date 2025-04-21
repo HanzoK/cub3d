@@ -65,11 +65,16 @@ char	**arrange_lines_as_map(char	*filename)
 int	read_file(t_data *data, char *filename)
 {
 	char	*raw_line;
+	char	*trimmed;
 
 	raw_line = read_file_into_line(filename);
 	if (!raw_line)
 		return (0);
+	trimmed = ft_strtrim(raw_line, " \t\n");
+	if (!trimmed || trimmed[0] == '\0')
+		return (ft_free(&trimmed), ft_free(&raw_line), 0);
 	data->file->file = ft_split(raw_line, '\n');
+	ft_free(&trimmed);
 	ft_free(&raw_line);
 	if (data->file->file)
 		return (1);

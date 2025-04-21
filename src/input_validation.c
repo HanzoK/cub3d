@@ -76,3 +76,25 @@ bool	validate_map(t_data *data)
 	else
 		return (false);
 }
+
+/*bool	validate_xpm_64(void *mlx, char *path)
+{
+	int		w;
+	int		h;
+	void	*img;
+	size_t	len;
+
+	len = ft_strlen(path);
+	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
+		return (false);
+	img = mlx_xpm_file_to_image(mlx, path, &w, &h);
+	if (!img)
+		return (false);
+	if (w != 64 || h != 64)
+	{
+		mlx_destroy_image(mlx, img);
+		return (false);
+	}
+	mlx_destroy_image(mlx, img);
+	return (true);
+}*/
