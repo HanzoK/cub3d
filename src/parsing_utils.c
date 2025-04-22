@@ -19,6 +19,16 @@ int	skip_spaces(char *line, int i)
 	return (i);
 }
 
+int	arr_len(char **array)
+{
+	int i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
 int	is_space_line(char *line)
 {
 	int j;

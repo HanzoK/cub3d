@@ -25,7 +25,7 @@ int parse_colour_config(t_data *data, char *line, int is_it_floor)
     colours = ft_split(value, ',');
     if (!colours)
         return (ft_free(&value), 0);
-    if (!colours[0] || !colours[1] || !colours[2])
+    if (arr_len(colours) != 3)
         return(ft_free(&value), free_array(colours), 0);
     if (!rgb_value_check(colours))
         (ft_free(&value), free_array(colours), bruh (data, "Colours, bruh.\n", 1));

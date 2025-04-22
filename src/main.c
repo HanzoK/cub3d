@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 		bruh(&data, "bruh.", 1);
 	map_start = parse_config_file(&data);
 	if (map_start < 0)
-		bruh (&data, NULL, 1);
+		bruh (&data, "incomplete config file, yo", 1);
 	fill_map(&data, map_start);
 	if (!data.map)
 		bruh( &data, NULL, 1);

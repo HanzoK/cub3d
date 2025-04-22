@@ -84,6 +84,7 @@ bool	validate_xpm_64(void *mlx, char *path);
 //*					FILE READING FUNCTIONS						  *
 //*****************************************************************
 
+int		arr_len(char **array);
 int		skip_spaces(char *line, int i);
 int		is_space_line(char *line);
 char	*read_file_into_line(char	*filename);
