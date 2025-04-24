@@ -42,21 +42,20 @@ int	is_space_line(char *line)
 		return (0);
 }
 
-int	rgb_value_check (char **colours)
+int	is_numeric_value(char *s)
 {
-	int	r;
-	int	g;
-	int	b;
+	int i;
 
-	r = ft_atoi(colours[0]);
-	g = ft_atoi(colours[1]);
-	b = ft_atoi(colours[2]);
-	if (!(r >= 0 && r <= 255
-		&& g >= 0 && g <= 255
-		&& b >= 0 && b <= 255))
+	if (!s || !s[0])
 		return (0);
-	else
-		return (1);
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit((unsigned char)s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 char	*get_config_value(char *line, int config_name_len)
@@ -68,6 +67,7 @@ char	*get_config_value(char *line, int config_name_len)
 
     i1 = skip_spaces(line,0);
     i2 = i1 + config_name_len;
+	i2 = skip_spaces(line, i2);
 	raw_line = line + i2;
 	trimmed_line = ft_strtrim(raw_line, " \t\n");
 	return (trimmed_line);

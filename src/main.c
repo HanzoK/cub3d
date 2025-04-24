@@ -14,19 +14,20 @@
 
 void	check_game_ready(t_data *data)
 {
-	t_tx		*tx;
-	bool		map_ok;
+	t_tx	*tx;
+	int		map_ok;
 
 	tx = data->file->tx;
 	map_ok = validate_map(data);
+	printf("map_ok = %d", map_ok);
 	if (!tx->north
-		&& !tx->south
-		&& !tx->west
-		&& !tx->east
-		&& !tx->floor
-		&& !tx->ceiling
-		&& !tx->sprite
-		&& !map_ok)
+		|| !tx->south
+		|| !tx->west
+		|| !tx->east
+		|| !tx->floor
+		|| !tx->ceiling
+		|| !tx->sprite
+		|| !map_ok)
 		data->is_game_ready = false;
 /*	if (!validate_xpm_64(data->mlx, tx->north)
 	 	|| !validate_xpm_64(data->mlx, tx->south)
@@ -38,27 +39,34 @@ void	check_game_ready(t_data *data)
 		data->is_game_ready = true;
 }
 
+int start_up_game(char **argv, t_data *data)
+{
+	int map_start;
+
+	if (!read_file(data, argv[1]))
+		return (0);
+	map_start = parse_config_file(data);
+	if (map_start < 0)
+		return (0);
+	if (!fill_map(data, map_start))
+		return (0);
+	check_game_ready(data);
+	if (!data->is_game_ready)
+		return (0);
+	return (1);
+}
+
 int main(int argc, char **argv)
 {
 	t_data 		data;
 	t_file 		file;
 	t_tx		tx;
-	int			map_start;
 	int			i;
 
 	ft_set_up_game(&data, &file, &tx);
 	input_validation(argc, argv);
-	if (!read_file(&data, argv[1]))
-		bruh(&data, "bruh.", 1);
-	map_start = parse_config_file(&data);
-	if (map_start < 0)
-		bruh (&data, "incomplete config file, yo", 1);
-	fill_map(&data, map_start);
-	if (!data.map)
-		bruh( &data, NULL, 1);
-	check_game_ready(&data);
-	if (!data.is_game_ready)
-		bruh (&data, "Error\nInvalid map or missing config values\n", 1);
+	if (!start_up_game(argv, &data))
+		bruh(&data, "Error\nInvalid map or missing config values\n", 1);
  	printf("NORTH texture: %s\n", tx.north);
 	printf("SOUTH texture: %s\n", tx.south);
 	printf("WEST texture: %s\n", tx.west);

@@ -76,7 +76,7 @@ typedef struct s_data
 
 void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx);
 void	input_validation(int argc, char **argv);
-bool	validate_map(t_data *data);
+int		validate_map(t_data *data);
 bool	validate_xpm_64(void *mlx, char *path);
 
 
@@ -84,6 +84,7 @@ bool	validate_xpm_64(void *mlx, char *path);
 //*					FILE READING FUNCTIONS						  *
 //*****************************************************************
 
+int		is_numeric_value(char *s);
 int		arr_len(char **array);
 int		skip_spaces(char *line, int i);
 int		is_space_line(char *line);
