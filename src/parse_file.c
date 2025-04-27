@@ -12,6 +12,16 @@
 
 #include "../cub3d.h"
 
+int check_and_set_texture(char  **texture, char *line)
+{
+    if (*texture)
+        return (0);
+    *texture = get_config_value(line, 2);
+    if (!*texture)
+        return (0);
+    return (1);
+}
+
 int parse_colour_config(t_data *data, char *line, int is_it_floor)
 {
     char    **colours;
@@ -61,22 +71,41 @@ int	parse_config_file(t_data *data)
         line = data->file->file[i];
         trimmed = line + skip_spaces(line, 0);
         if (!ft_strncmp(trimmed, "NO", 2))
-            data->file->tx->north = get_config_value(line, 2);
-        else if (!ft_strncmp(trimmed, "SO", 2))
-            data->file->tx->south = get_config_value(line, 2);
-        else if (!ft_strncmp(trimmed, "WE", 2))
-            data->file->tx->west = get_config_value(line, 2);
-        else if (!ft_strncmp(trimmed, "EA", 2))
-            data->file->tx->east = get_config_value(line, 2);
-        else if (!ft_strncmp(trimmed, "S", 1))
-            data->file->tx->sprite = get_config_value(line, 1);
+        {
+            if (!check_and_set_texture(&data->file->tx->north, line))
+                return (-1);
+        }
+        else if (!ft_strncmp(line, "SO", 2))
+        {
+            if (!check_and_set_texture(&data->file->tx->south, line))
+                return (-1);
+        }
+        else if (!ft_strncmp(line, "WE", 2))
+        {
+            if (!check_and_set_texture(&data->file->tx->west, line))
+                return (-1);
+        }
+        else if (!ft_strncmp(line, "EA", 2))
+        {
+            if (!check_and_set_texture(&data->file->tx->east, line))
+                return (-1);
+        }
+        else if (!ft_strncmp(line, "S", 1))
+        {
+            if (!check_and_set_texture(&data->file->tx->sprite, line))
+                return (-1);
+        }
         else if (!ft_strncmp(trimmed, "F", 1))
         {
+            if (data->file->tx->floor)
+                return (-1);
             if (!parse_colour_config(data, line, 1))
                 return (-1);
         }
         else if (!ft_strncmp(trimmed, "C", 1))
         {
+            if (data->file->tx->ceiling)
+                return (-1);
             if (!parse_colour_config(data, line, 0))
                 return (-1);
         }
@@ -86,9 +115,6 @@ int	parse_config_file(t_data *data)
             break;
         i++;
     }
-    if (!data->file->tx->north || !data->file->tx->south || !data->file->tx->west ||
-        !data->file->tx->east || !data->file->tx->floor || !data->file->tx->ceiling)
-        return(-1);
     return (i);
 }
 

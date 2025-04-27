@@ -19,7 +19,6 @@ void	check_game_ready(t_data *data)
 
 	tx = data->file->tx;
 	map_ok = validate_map(data);
-	printf("map_ok = %d", map_ok);
 	if (!tx->north
 		|| !tx->south
 		|| !tx->west
@@ -61,13 +60,13 @@ int main(int argc, char **argv)
 	t_data 		data;
 	t_file 		file;
 	t_tx		tx;
-	int			i;
+	//int			i;
 
 	ft_set_up_game(&data, &file, &tx);
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
 		bruh(&data, "Error\nInvalid map or missing config values\n", 1);
- 	printf("NORTH texture: %s\n", tx.north);
+ 	/*printf("NORTH texture: %s\n", tx.north);
 	printf("SOUTH texture: %s\n", tx.south);
 	printf("WEST texture: %s\n", tx.west);
 	printf("EAST texture: %s\n", tx.east);
@@ -80,6 +79,16 @@ int main(int argc, char **argv)
 	{
 		printf("%s\n", data.map[i]);
 		i++;
-	}
+	}*/
+	/*data.mlx = mlx_init();
+	if (!data.mlx)
+		bruh (&data, "Error\n mlx_init fail.\n", 1);
+	data.win = mlx_new_window(data.mlx, 1024, 1024, "cub3D");
+	if (!data.win)
+		bruh (&data, "Error\n window cceation fail\n", 1);
+	data.img_north = mlx_xpm_file_to_image(data.mlx, data.tx->north, 64, 64);
+	data.img_south = mlx_xpm_file_to_image(data.mlx, data.tx->south, 64, 64);
+	data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);
+	data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
 	bruh(&data, NULL, 0);
 }

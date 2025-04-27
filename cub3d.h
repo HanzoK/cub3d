@@ -60,13 +60,17 @@ typedef struct s_data
 {
 	void			*mlx;
 	void			*win;
-	void			*img;
+	void			*img_north;
+	void			*img_south;
+	void			*img_west;
+	void			*img_east;
 	char			**map;
 	int				map_width;
 	int				map_height;
 	int				player_x;
 	int				player_y;
 	bool			is_game_ready;
+	t_tx			*tx;
 	t_file			*file;
 }				t_data;
 
