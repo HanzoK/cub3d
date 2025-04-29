@@ -1,0 +1,13 @@
+{
+	"name": "cub3d",
+	"runArgs": [
+		"--name",
+		"dev-cub3d"
+	],
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
+	],
+	"dockerFile": "Dockerfile",
+	"workspaceFolder": "/workspaces/cub3d"
+}
