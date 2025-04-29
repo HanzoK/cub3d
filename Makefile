@@ -6,7 +6,7 @@
 #    By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/31 14:07:34 by hanjkim           #+#    #+#              #
-#    Updated: 2025/04/13 19:25:11 by hanjkim          ###   ########.fr        #
+#    Updated: 2025/04/29 10:09:04 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,6 @@ all:		$(LIBFT) $(NAME)
 
 $(LIBFT):
 		@make -C $(LIBFT_DIR)
-
-$(PRINTF):
-		@make -C $(PRINTF_DIR)
 
 $(NAME):	$(OBJS) $(LIBFT)
 			$(CC) $(CFLAGS) $(OBJS) $(LINK_FLAGS) -o $(NAME)
