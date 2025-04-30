@@ -7,14 +7,11 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	gcc \
 	gdb \
-	make \
 	lldb \
+	valgrind \
 	xorg \
 	libx11-dev \
 	libxext-dev \
-	libbsd-dev \
-	libxext-dev \
-	zlib1g-dev \
 	libbsd-dev \
 	git \
 	pkg-config \
@@ -22,6 +19,13 @@ RUN apt-get update && apt-get install -y \
 	tmux \
 	fzf \
 	&& rm -rf /var/lib/apt/lists/*
+
+
+# Install minilibx
+RUN git clone https://github.com/42Paris/minilibx-linux .mlx && \
+	cd .mlx && ./configure && \
+	cp libmlx.a /usr/local/lib/ && \
+	cp mlx.h /usr/local/include/ 
 
 # Download the joestar setup script
 RUN curl -fsSL https://raw.githubusercontent.com/ollie-joestar/dotfiles_mini/main/setup.sh -o /usr/local/bin/joestar && \

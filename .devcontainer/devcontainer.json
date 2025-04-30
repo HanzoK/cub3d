@@ -2,7 +2,11 @@
 	"name": "cub3d",
 	"runArgs": [
 		"--name",
-		"dev-cub3d"
+		"dev-cub3d",
+		"-e",
+		"DISPLAY=${env:DISPLAY}",
+		"-v",
+		"/tmp/.X11-unix:/tmp/.X11-unix"
 	],
 	"mounts": [
 		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
