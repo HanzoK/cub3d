@@ -7,7 +7,15 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	gcc \
 	gdb \
+	make \
 	lldb \
+	xorg \
+	libx11-dev \
+	libxext-dev \
+	libbsd-dev \
+	libxext-dev \
+	zlib1g-dev \
+	libbsd-dev \
 	git \
 	pkg-config \
 	zsh \
