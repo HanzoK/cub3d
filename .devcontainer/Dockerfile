@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y \
 
 
 # Install minilibx
-RUN git clone https://github.com/42Paris/minilibx-linux .mlx && \
-	cd .mlx && ./configure && \
+RUN git clone https://github.com/42Paris/minilibx-linux mlx && \
+	cd mlx && ./configure && \
 	cp libmlx.a /usr/local/lib/ && \
 	cp mlx.h /usr/local/include/ 
 
