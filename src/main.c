@@ -6,11 +6,11 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 12:32:20 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:02:10 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 
 void	check_game_ready(t_data *data)
 {
@@ -80,15 +80,19 @@ int main(int argc, char **argv)
 		printf("%s\n", data.map[i]);
 		i++;
 	}*/
-	/*data.mlx = mlx_init();
+	/// Ollie got stuff. Hanju can go for a smoke
+	data.mlx = mlx_init();
 	if (!data.mlx)
 		bruh (&data, "Error\n mlx_init fail.\n", 1);
-	data.win = mlx_new_window(data.mlx, 1024, 1024, "cub3D");
+	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "cub3D");
 	if (!data.win)
-		bruh (&data, "Error\n window cceation fail\n", 1);
-	data.img_north = mlx_xpm_file_to_image(data.mlx, data.tx->north, 64, 64);
-	data.img_south = mlx_xpm_file_to_image(data.mlx, data.tx->south, 64, 64);
-	data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);
-	data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
+		bruh (&data, "Error\n window creation fail\n", 1);
+	/*data.img_north = mlx_xpm_file_to_image(data.mlx, data.tx->north, 64, 64);*/
+	/*data.img_south = mlx_xpm_file_to_image(data.mlx, data.tx->south, 64, 64);*/
+	/*data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);*/
+	/*data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
+	mlx_loop(data.mlx);
+	mlx_destroy_window(data.mlx, data.win);
+	mlx_destroy_display(data.mlx);
 	bruh(&data, NULL, 0);
 }

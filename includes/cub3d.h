@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 12:37:17 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:02:07 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <stdbool.h>
+# include <mlx.h>
+
+# define WIDTH 1280
+# define HEIGHT 720
 
 typedef enum e_direction
 {

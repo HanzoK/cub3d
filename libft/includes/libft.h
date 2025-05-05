@@ -6,7 +6,7 @@
 /*   By: oohnivch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:39 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/03/03 19:44:49 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:02:06 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		ft_putptr(unsigned long nb);
 int		ft_puthex(unsigned long n, const char format);
 //	Get next line
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 69
 # endif
 
 char	*get_next_line(int fd, int *exitcode);

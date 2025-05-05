@@ -6,13 +6,13 @@
 #    By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/05 12:20:51 by oohnivch          #+#    #+#              #
-#    Updated: 2025/05/05 13:12:09 by oohnivch         ###   ########.fr        #
+#    Updated: 2025/05/05 15:48:50 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		= cub3d
+NAME 		= cub3D
 CC			= cc 
-CFLAGS		= -g
+CFLAGS		= -Wall -Wextra -Werror -g
 ifeq ($(shell uname), Linux)
 	MLXFLAGS  = -lXext -lmlx -lX11
 else
@@ -35,7 +35,14 @@ endif
 SRCDIR		= src/
 OBJDIR		= obj/
 
-SRC			= test_mlx.c
+SRC			= main.c \
+			  free.c \
+			  general_utils.c \
+			  init_game.c \
+			  input_validation.c \
+			  parse_file.c \
+			  parsing_utils.c \
+			  read_file.c
 
 OBJ			= $(SRC:.c=.o)
 OBJS		= $(addprefix $(OBJDIR), $(OBJ))
@@ -43,31 +50,45 @@ OBJS		= $(addprefix $(OBJDIR), $(OBJ))
 
 all: $(OBJDIR) $(NAME)
 
-$(NAME): 	$(OBJS) $(LIB)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LIB) -o $(NAME)
+$(NAME): 	$(OBJS) $(LIB) | logo
+	@$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LIB) -o $(NAME)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(LIB)
-	$(CC) $(CFLAGS) -o $@ -c $< $(HEADER) 
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADER) 
 
 $(OBJDIR):
-	mkdir $(OBJDIR)
+	@mkdir $(OBJDIR)
 
 $(LIBFT):
-	make -C $(LIBFTDIR)
+	@make --no-print-directory -C $(LIBFTDIR)
 
 $(MLX):
-	make -C $(MLXDIR)
+	@make --no-print-directory -C $(MLXDIR)
 
 clean:
-	make -C $(LIBFTDIR) clean
-	rm -rf $(OBJDIR)
+	@make --no-print-directory -C $(LIBFTDIR) clean
+	@rm -rf $(OBJDIR)
+	@echo "$(YELLOW)Deleting $(words $(OBJ)) object file(s) $(NORMAL)"
+	@echo "$(GREEN)Deletion success! $(NORMAL)"
 
 fclean:
-	make -C $(LIBFTDIR) fclean
-	# make -C $(MLXDIR) clean
-	rm -rf $(OBJDIR)
-	rm -f $(NAME)
+	@make --no-print-directory -C $(LIBFTDIR) fclean
+	@rm -rf $(OBJDIR)
+	@rm -f $(NAME)
+	@echo "$(YELLOW)Deleting $(NAME) and $(words $(OBJ)) object file(s) $(NORMAL)" 
+	@echo "$(GREEN)Deletion success! $(NORMAL)"
 
 re: fclean all
+
+logo:
+	@echo "	 ░▒▓██████▓▒░  ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  "
+	@echo "	░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	 ░▒▓██████▓▒░   ░▒▓██████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  \n"
+                                                                           
+                                                                          
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 #    By: hanjkim <hanjkim@student.42vienna.com>		+#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/04 13:24:37 by hanjkim           #+#    #+#              #
-#    Updated: 2025/03/04 13:24:51 by hanjkim          ###   ########.fr        #
+#    Updated: 2025/05/05 15:38:47 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #									Variables								   #
@@ -66,7 +66,7 @@ all: $(OBJ_PATH) $(NAME)
 
 $(NAME): $(OBJS)
 	@$(AR) $@ $(OBJS)
-	@echo "\n$(PURPLE)******** $(NAME) Created! ********$(NORMAL)\n"
+	@echo "\n$(PURPLE)******** $(NAME) Compiled! ********$(NORMAL)\n"
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
