@@ -3,76 +3,71 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/31 14:07:34 by hanjkim           #+#    #+#              #
-#    Updated: 2025/04/30 13:46:39 by oohnivch         ###   ########.fr        #
+#    Created: 2025/05/05 12:20:51 by oohnivch          #+#    #+#              #
+#    Updated: 2025/05/05 13:12:09 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME    	=	cub3D
+NAME 		= cub3d
+CC			= cc 
+CFLAGS		= -g
+ifeq ($(shell uname), Linux)
+	MLXFLAGS  = -lXext -lmlx -lX11
+else
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
+	# MLX_FLAGS = -I/opt/X11/include -Imlx -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
+endif
+HEADER		= -I./includes
 
-CC			=	cc
-# CFLAGS  	=	-Wall -Werror -Wextra -g
-CFLAGS  	=	-g
+LIBFTDIR 	= ./libft
+LIBFT 		= $(LIBFTDIR)/libft.a
+MLXDIR		= ./mlx
+MLX			= $(MLXDIR)/libmlx_$(shell uname).a
 
 ifeq ($(shell uname), Linux)
-		INCLUDES = -I/usr/include -Imlx
+	LIB		= $(LIBFT)
 else
-		INCLUDES = -I/opt/X11/include -Imlx
+	LIB		= $(MLX) $(LIBFT)
 endif
 
-MLX_DIR		=	./mlx
-MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
+SRCDIR		= src/
+OBJDIR		= obj/
 
-ifeq ($(shell uname), Linux)
-		MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
-else
-		MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
-endif
+SRC			= test_mlx.c
+
+OBJ			= $(SRC:.c=.o)
+OBJS		= $(addprefix $(OBJDIR), $(OBJ))
 
 
-LIBFT_DIR	=	libft/
-LIBFT   	=	$(LIBFT_DIR)libft.a
-# LINK_FLAGS	=	-L$(LIBFT_DIR) -lft
+all: $(OBJDIR) $(NAME)
 
-SRCS     	=	src/test_mlx.c			\
+$(NAME): 	$(OBJS) $(LIB)
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LIB) -o $(NAME)
 
-				# src/main.c				\
-				# src/init_game.c			\
-				# src/input_validation.c	\
-				# src/read_file.c			\
-				# src/parse_file.c		\
-				# src/free.c				\
-				# src/general_utils.c		\
-				# src/parsing_utils.c     \
+$(OBJDIR)%.o: $(SRCDIR)%.c $(LIB)
+	$(CC) $(CFLAGS) -o $@ -c $< $(HEADER) 
 
-OBJS     	=	$(SRCS:%.c=%.o) 
-
-RM			=	rm -rf
-
-all:		$(MLX_LIB) $(LIBFT) $(NAME)
-
-.c.o:
-			$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
-
-$(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS)
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
 $(LIBFT):
-			@make -C $(LIBFT_DIR)
+	make -C $(LIBFTDIR)
 
-$(MLX_LIB):
-			@make -C $(MLX_DIR)
+$(MLX):
+	make -C $(MLXDIR)
 
 clean:
-			$(RM) $(OBJS)
-			@make -C $(LIBFT_DIR) clean
+	make -C $(LIBFTDIR) clean
+	rm -rf $(OBJDIR)
 
-fclean:		clean
-			$(RM) $(NAME)
-			@make -C $(LIBFT_DIR) fclean
+fclean:
+	make -C $(LIBFTDIR) fclean
+	# make -C $(MLXDIR) clean
+	rm -rf $(OBJDIR)
+	rm -f $(NAME)
 
-re: 		fclean all
+re: fclean all
 
-.PHONY: 	all clean fclean re
+.PHONY: all clean fclean re

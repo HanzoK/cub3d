@@ -6,12 +6,13 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 08:02:30 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/04/30 13:47:33 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:36:10 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include <stdlib.h>
+/*#include "mlx.h"*/
+#include <mlx.h>
+#include "cub3d.h"
 
 int	main(void)
 {
