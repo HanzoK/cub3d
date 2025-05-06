@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 13:49:36 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:58:33 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void	bruh(t_data *data, char *s, int status)
 		(ft_putstr_fd(s, 2), ft_putstr_fd("\n", 2));
 	if (data)
 	{
+		if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
+		if (data->win)
+			mlx_destroy_window(data->mlx, data->win);
+		if (data->mlx)
+			(mlx_destroy_display(data->mlx), free(data->mlx));
 		free_array(data->map);
 		free_array(data->file->file);
 		free_textures(data);

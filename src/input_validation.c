@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 13:50:01 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:34:20 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,11 @@ int	validate_map(t_data *data)
 			|| c == 'S'
 			|| c == 'E'
 			|| c == 'W')
+			{
+				data->player_x = j;
+				data->player_y = i;
 				pc++;
+			}
 			j++;
 		}
 		i++;

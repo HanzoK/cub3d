@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 16:02:10 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:02:42 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,41 @@ int start_up_game(char **argv, t_data *data)
 	return (1);
 }
 
+int key_hook(int keycode, t_data *data)
+{
+	printf("Keycode: %d\n", keycode);
+	if (keycode == ESC)
+		bruh(data, "Exit game", 0);
+	/*if (keycode == ESC)*/
+	/*{*/
+	/*	mlx_destroy_window(data->mlx, data->win);*/
+	/*	data->win = NULL;*/
+	/*}*/
+	if (keycode == R)
+		color_screen(data, 0xFFFF0000);
+	if (keycode == G)
+		color_screen(data, 0xFF00FF00);
+	if (keycode == B)
+		color_screen(data, 0xFF0000FF);
+	if (keycode == E)
+		evening(data);
+	if (keycode == M)
+		morning(data);
+	put_player(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	return (0);
+}
+
+int	draw(t_data *data)
+{
+	move_player(data);
+	wipe(data);
+	put_map(data);
+	put_player(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_data 		data;
@@ -81,18 +116,40 @@ int main(int argc, char **argv)
 		i++;
 	}*/
 	/// Ollie got stuff. Hanju can go for a smoke
+	write(1, "Hanju finished\n", 15);
 	data.mlx = mlx_init();
 	if (!data.mlx)
-		bruh (&data, "Error\n mlx_init fail.\n", 1);
+		bruh (&data, "Error\n mlx_init fail\n", 1);
+	write(1, "Mlx init\n", 9);
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "cub3D");
 	if (!data.win)
 		bruh (&data, "Error\n window creation fail\n", 1);
+	write(1, "Window created\n", 15);
+	data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+	if (!data.img)
+		bruh (&data, "Error\n image creation fail\n", 1);
+	write(1, "Image created\n", 14);
+	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
+	if (!data.addr)
+		bruh (&data, "Error\n image data address fail\n", 1);
+	write(1, "Image data address\n", 19);
+	data.player = init_player(&data);
+	if (!data.player)
+		bruh (&data, "Error\n player malloc fail\n", 1);
+	write(1, "Player created\n", 16);
 	/*data.img_north = mlx_xpm_file_to_image(data.mlx, data.tx->north, 64, 64);*/
 	/*data.img_south = mlx_xpm_file_to_image(data.mlx, data.tx->south, 64, 64);*/
 	/*data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);*/
 	/*data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
+	/*put_player(&data);*/
+	printarr(data.map);
+	put_map(&data);
+	put_player(&data);
+	mlx_key_hook(data.win, &key_hook, &data);
+	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
+	mlx_hook(data.win, 3, 1L<<1, key_release, &data);
+	mlx_hook(data.win, 17, 0, &button_hook, &data);
+	mlx_loop_hook(data.mlx, &draw, &data);
 	mlx_loop(data.mlx);
-	mlx_destroy_window(data.mlx, data.win);
-	mlx_destroy_display(data.mlx);
 	bruh(&data, NULL, 0);
 }

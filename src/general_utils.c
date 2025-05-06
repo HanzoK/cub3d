@@ -6,11 +6,17 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:23:32 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 13:49:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:00:27 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	button_hook(t_data *data)
+{
+	bruh(data, NULL, 0);
+	return (0);
+}
 
 char	*join2(char const *s1, char const *s2)
 {
@@ -34,4 +40,30 @@ char	*join2(char const *s1, char const *s2)
 	while (s2[++j])
 		ptr[i + j] = s2[j];
 	return (ptr);
+}
+
+void	printarr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		printf("%s\n", arr[i]);
+		i++;
+	}
+}
+
+int	get_color(int red, int green, int blue)
+{
+	int	color;
+
+	color = 255;
+	color <<= 8;
+	color += red;
+	color <<= 8;
+	color += green;
+	color <<= 8;
+	color += blue;
+	return (color);
 }

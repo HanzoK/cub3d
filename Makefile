@@ -6,7 +6,7 @@
 #    By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/05 12:20:51 by oohnivch          #+#    #+#              #
-#    Updated: 2025/05/05 15:48:50 by oohnivch         ###   ########.fr        #
+#    Updated: 2025/05/06 16:40:37 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRC			= main.c \
 			  input_validation.c \
 			  parse_file.c \
 			  parsing_utils.c \
+			  player.c \
+			  put.c \
 			  read_file.c
 
 OBJ			= $(SRC:.c=.o)
@@ -51,7 +53,7 @@ OBJS		= $(addprefix $(OBJDIR), $(OBJ))
 all: $(OBJDIR) $(NAME)
 
 $(NAME): 	$(OBJS) $(LIB) | logo
-	@$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -lm $(LIB) -o $(NAME)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(LIB)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADER) 
