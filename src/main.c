@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/06 16:02:42 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:31:46 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,196 @@ int key_hook(int keycode, t_data *data)
 	return (0);
 }
 
+bool coll(t_data *data, float pos_x, float pos_y)
+{
+	int	x;
+	int	y;
+
+	x = pos_x / VOX;
+	y = pos_y / VOX;
+	if (data->map[y][x] == '1')
+		return (true);
+	return (false);
+}
+
+void	put_ray(t_data *data, float start_x)
+{
+	float	ray_x;
+	float	ray_y;
+	float	cos_ray;
+	float 	sin_ray;
+
+	cos_ray = cos(start_x);
+	sin_ray = sin(start_x);
+	ray_x = data->player->x;
+	ray_y = data->player->y;
+	while (!coll(data, ray_x, ray_y))
+	{
+		put_pixel(data, ray_x, ray_y, 0xFFAA0000);
+		ray_x += cos_ray;
+		ray_y += sin_ray;
+	}
+}
+
+float	distance(t_data *data, float ray_x, float ray_y)
+{
+	float	angle;
+	float 	dist;
+	float	x;
+	float	y;
+
+	x = ray_x - data->player->x;
+	y = ray_y - data->player->y;
+	angle = atan2f(y, x) - data->player->dir;
+	dist = sqrtf(powf(x, 2) + powf(y, 2)) * cosf(angle);
+	return (dist);
+}
+
+int	shade_color(float dist, int color)
+{
+	int	alpha;
+	int	red;
+	int	green;
+	int	blue;
+
+	alpha = (color >> 24) & 0xFF;
+	red = (color >> 16) & 0xFF;
+	green = (color >> 8) & 0xFF;
+	blue = color & 0xFF;
+
+	float ratio = dist / DRAW_DIST;
+	red = (int)((float)red * (1 - ratio));
+	green = (int)((float)green * (1 - ratio));
+	blue = (int)((float)blue * (1 - ratio));
+	if (red > 255)
+		red = 255;
+	if (green > 255)
+		green = 255;
+	if (blue > 255)
+		blue = 255;
+	if (red <= 0)
+		red = 1;
+	if (green <= 0)
+		green = 1;
+	if (blue <= 0)
+		blue = 1;
+	return ((alpha << 24) | (red << 16) | (green << 8) | blue);
+}
+
+void	draw_line(t_data *data, float start_x, int i)
+{
+	float	ray_x;
+	float	ray_y;
+	float	cos_ray;
+	float	sin_ray;
+	float	dist;
+	float	height;
+	int		start_y;
+	int		end_y;
+
+	cos_ray = cos(start_x);
+	sin_ray = sin(start_x);
+	ray_x = data->player->x;
+	ray_y = data->player->y;
+	while (!coll(data, ray_x, ray_y))
+	{
+		ray_x += cos_ray;
+		ray_y += sin_ray;
+	}
+	if (data->d == 3)
+		dist = sqrtf(powf(ray_x - data->player->x, 2) + powf(ray_y - data->player->y, 2));
+	else
+		dist = distance(data, ray_x, ray_y);
+	height = ((float)VOX / dist) * ((float)WIDTH / 2);
+	start_y = (HEIGHT - height) / 2;
+	end_y = start_y + height;
+	while (start_y < end_y)
+	{
+		if (data->d == 3)
+		{
+			if ((i == WIDTH / 2 || i == WIDTH / 2 + 1 || i == WIDTH / 2 - 1) && 
+				(start_y == HEIGHT / 2 || start_y == HEIGHT / 2 + 1 ||
+				start_y == HEIGHT / 2 - 1))
+				put_pixel(data, i, start_y, 0xFF00AAAA);
+			else
+				put_pixel(data, i, start_y, 0xFFAA0033);
+		}
+		else
+		{
+			put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0033));
+			if (i == WIDTH / 2)
+				printf("Distance: %f\n", dist);
+		}
+		start_y++;
+	}
+}
+
+// flashcasting version
 int	draw(t_data *data)
 {
-	move_player(data);
-	wipe(data);
-	put_map(data);
-	put_player(data);
+	if (data->d == 1)
+	{
+//		basic raycasting version
+		float		ray_x;
+		float		ray_y;
+		float 	cos_ray;
+		float 	sin_ray;
+
+		move_player(data);
+		wipe(data);
+		put_map(data);
+		put_player(data);
+		ray_x = data->player->x;
+		ray_y = data->player->y;
+		cos_ray = cos(data->player->dir);
+		sin_ray = sin(data->player->dir);
+		while (!coll(data, ray_x, ray_y))
+		{
+			put_pixel(data, ray_x, ray_y, 0xFFAA0000);
+			ray_x += cos_ray;
+			ray_y += sin_ray;
+		}
+	}
+	else if (data->d == 2)
+	{
+		float	fraction;
+		float	start_x;
+		int		i;
+
+		move_player(data);
+		wipe(data);
+		put_map(data);
+		put_player(data);
+		fraction = PI / 3 / WIDTH;
+		start_x = data->player->dir - PI / 6;
+		i = 0;
+		while (i < WIDTH)
+		{
+			put_ray(data, start_x);
+			start_x += fraction;
+			i++;
+		}
+	}
+	else if (data->d >= 3)
+	{
+		float	fraction;
+		float	start_x;
+		int		i;
+
+		move_player(data);
+		wipe(data);
+		/*put_map(data);*/
+		/*put_player(data);*/
+		fraction = PI / 3 / WIDTH;
+		start_x = data->player->dir - PI / 6;
+		i = 0;
+		while (i < WIDTH)
+		{
+			draw_line(data, start_x, i);
+			start_x += fraction;
+			i++;
+		}
+	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }
@@ -142,6 +326,7 @@ int main(int argc, char **argv)
 	/*data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);*/
 	/*data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
 	/*put_player(&data);*/
+	data.d = 1;
 	printarr(data.map);
 	put_map(&data);
 	put_player(&data);

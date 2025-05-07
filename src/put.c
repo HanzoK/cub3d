@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:06:30 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/06 16:06:38 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:29:05 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,14 @@ void	put_player(t_data *data)
 {
 	int	x;
 	int	y;
+	int	h;
 
-	y = -4;
-	while (y < 4)
+	h = 3;
+	y = 0 - h;
+	while (y < h)
 	{
-		x = -4;
-		while (x < 4)
+		x = (0 - h) + (y == (0 - h) || y == h - 1);
+		while (x < h - (y == (0 - h) || y == h - 1))
 		{
 			put_pixel(data, data->player->x + x, data->player->y + y, 0xFFFFCCFF);
 			x++;
@@ -124,8 +126,8 @@ void	put_map(t_data *data)
 		{
 			if (data->map[y][x] == '1')
 				put_square(data, x * VOX, y * VOX, VOX, 0xFF000088);
-			/*else if (data->map[y][x] == '0')*/
-			/*	put_square(data, x * VOX, y * VOX, VOX, 0xFF000000);*/
+			else if (data->map[y][x] != '1' && data->map[y][x] != ' ')
+				put_empty_square(data, x * VOX, y * VOX, VOX);
 			/*else if (data->map[y][x] == ' ')*/
 			/*	put_pixel(data, x, y, 0xFF000000);*/
 			x++;
@@ -146,6 +148,25 @@ void	wipe(t_data *data)
 		while (x < WIDTH)
 		{
 			put_pixel(data, x, y, 0x00000000);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	put_empty_square(t_data *data, int pos_x, int pos_y, int size)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < size)
+	{
+		x = 0;
+		while (x < size)
+		{
+			if (x == 0 || x == size - 1 || y == 0 || y == size - 1)
+				put_pixel(data, pos_x + x, pos_y + y, 0xFF333333);
 			x++;
 		}
 		y++;

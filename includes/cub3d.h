@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/06 16:48:54 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:31:10 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define VOX 40
 # define SPEED 3
 # define TURN_SPEED 0.03
+# define DRAW_DIST 1000.0
 
 typedef enum e_direction
 {
@@ -55,6 +56,10 @@ typedef enum e_keycode
 	R = 114,
 	G = 103,
 	B = 98,
+	ONE = 49,
+	TWO = 50,
+	THREE = 51,
+	FOUR = 52,
 }				t_keycode;
 
 typedef struct s_textures
@@ -130,6 +135,7 @@ typedef struct s_data
 	bool			is_game_ready;
 	t_tx			*tx;
 	t_file			*file;
+	int				d;
 }				t_data;
 
 //*****************************************************************
@@ -167,6 +173,7 @@ t_player	*init_player(t_data *data);
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 void		move_player(t_data *data);
+bool 		coll(t_data *data, float pos_x, float pos_y);
 
 //*****************************************************************
 //*						DRAW FUNCTIONS							  *
@@ -178,6 +185,7 @@ void	put_map(t_data *data);
 void	put_player(t_data *data);
 void	put_pixel(t_data *data, int x, int y, int color);
 void	put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color);
+void	put_empty_square(t_data *data, int pos_x, int pos_y, int size);
 void	color_screen(t_data *data, int color);
 void	evening(t_data *data);
 void	morning(t_data *data);

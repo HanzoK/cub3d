@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/06 17:20:21 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:45:22 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,18 @@ int	key_press(int keycode, t_data *data)
 		color_screen(data, 0xFF00FF00);
 	if (keycode == B)
 		color_screen(data, 0xFF0000FF);
-	if (keycode == E)
-		evening(data);
 	if (keycode == M)
 		printarr(data->map);
 	if (keycode == SHIFT)
 		data->player->dash = 2;
+	if (keycode == ONE)
+		data->d = 1;
+	if (keycode == TWO)
+		data->d = 2;
+	if (keycode == THREE)
+		data->d = 3;
+	if (keycode == FOUR)
+		data->d = 4;
 	return (0);
 }
 
@@ -87,47 +93,59 @@ int	key_release(int keycode, t_data *data)
 
 void	move_player(t_data *data)
 {
-	t_player	*player;
+	t_player	*pl;
 	float 		speed;
-	float 		turn_speed;
-	float		sin_dir;
-	float		cos_dir;
+	float 		t_speed;
+	float		sin_d;
+	float		cos_d;
 
-	player = data->player;
-	turn_speed = (float)TURN_SPEED;
+	pl = data->player;
+	t_speed = (float)TURN_SPEED;
 	speed = (float)SPEED;
 
-	if (player->turn_left)
-		player->dir -= turn_speed;
-	if (player->turn_right)
-		player->dir += turn_speed;
-	if (player->dir > 2 * PI)
-		player->dir = 0;
-	if (player->dir < 0)
-		player->dir = 2 * PI;
-	sin_dir = sin(player->dir);
-	cos_dir = cos(player->dir);
-	if (player->key_up)
+	if (pl->turn_left)
+		pl->dir -= t_speed;
+	if (pl->turn_right)
+		pl->dir += t_speed;
+	if (pl->dir > 2 * PI)
+		pl->dir = 0;
+	if (pl->dir < 0)
+		pl->dir = 2 * PI;
+	sin_d = sin(pl->dir);
+	cos_d = cos(pl->dir);
+	if (pl->key_up)
 	{
-		player->x += speed * cos_dir * player->dash;
-		player->y += speed * sin_dir * player->dash;
+		if (!coll(data, (pl->x + speed * cos_d * pl->dash), (pl->y + speed * sin_d * pl->dash)))
+		{
+			pl->x += speed * cos_d * pl->dash;
+			pl->y += speed * sin_d * pl->dash;
+		}
 	}
-	if (player->key_down)
+	if (pl->key_down)
 	{
-		player->x -= speed * cos_dir * player->dash;
-		player->y -= speed * sin_dir * player->dash;
+		if (!coll(data, (pl->x - speed * cos_d * pl->dash), (pl->y - speed * sin_d * pl->dash)))
+		{
+			pl->x -= speed * cos_d * pl->dash;
+			pl->y -= speed * sin_d * pl->dash;
+		}
 	}
-	if (player->key_left)
+	if (pl->key_left)
 	{
-		player->x -= speed * sin_dir * player->dash;
-		player->y += speed * cos_dir * player->dash;
+		if (!coll(data, (pl->x + speed * sin_d * pl->dash), (pl->y - speed * cos_d * pl->dash)))
+		{
+			pl->x += speed * sin_d * pl->dash;
+			pl->y -= speed * cos_d * pl->dash;
+		}
 	}
-	if (player->key_right)
+	if (pl->key_right)
 	{
-		player->x += speed * sin_dir * player->dash;
-		player->y -= speed * cos_dir * player->dash;
+		if (!coll(data, (pl->x - speed * sin_d * pl->dash), (pl->y + speed * cos_d * pl->dash)))
+		{
+			pl->x -= speed * sin_d * pl->dash;
+			pl->y += speed * cos_d * pl->dash;
+		}
 	}
-	printf("X: %f Y: %f\n", player->x, player->y);
+	/*printf("X: %f Y: %f Dir: %f Cos: %f Sin: %f\n", pl->x, pl->y, pl->dir, cos_d, sin_d);*/
 	/*if (data->player->key_up && data->player->y > 0 + 4)*/
 	/*	data->player->y -= speed * data->player->dash;*/
 	/*if (data->player->key_down && data->player->y < HEIGHT - 4)*/
