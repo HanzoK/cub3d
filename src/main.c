@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/07 14:24:13 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:34:20 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	draw_line(t_data *data, float start_x, int i)
 		}
 		else
 		{
-			put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0033));
+			put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0055));
 			if (i == WIDTH / 2)
 				printf("Distance: %f\n", dist);
 		}
