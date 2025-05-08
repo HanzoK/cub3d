@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/07 14:24:47 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:40:34 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 # include <stdbool.h>
 # include <mlx.h>
 # include <math.h>
+# include <sys/time.h>
 
 # define WIDTH 1280
 # define HEIGHT 720
 # define PI 3.14159265358979323846
 # define BLACK 0xFF000000
 # define VOX 40
-# define SPEED 3
-# define TURN_SPEED 0.03
+# define SPEED 300
+# define TURN_SPEED 3
 # define DRAW_DIST 1000.0
+# define FPS 120
+# define FRAME_TIME 16
 
 typedef enum e_direction
 {
@@ -56,6 +59,7 @@ typedef enum e_keycode
 	R = 114,
 	G = 103,
 	B = 98,
+	ZERO = 48,
 	ONE = 49,
 	TWO = 50,
 	THREE = 51,
@@ -113,6 +117,14 @@ typedef struct s_player
 	bool			turn_right;
 }					t_player;
 
+typedef struct s_time
+{
+	long			last; // last time
+	long			last_frame; // last frame time
+	long			curr; // current time
+	long			delta; // time difference
+}					t_time;
+
 typedef struct s_data
 {
 	void			*mlx;
@@ -123,6 +135,7 @@ typedef struct s_data
 	int				size_line;
 	int				endian;
 
+	t_time			*time;
 	t_player		*player;
 	t_sprite		*spr;
 	char			**map;
@@ -142,7 +155,7 @@ typedef struct s_data
 //*					FILE VALIDATION FUNCTIONS					  *
 //*****************************************************************
 
-void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx);
+void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx, t_time *time);
 void	input_validation(int argc, char **argv);
 int		validate_map(t_data *data);
 bool	validate_xpm_64(void *mlx, char *path);
@@ -198,6 +211,13 @@ void	bruh(t_data *data, char *s, int status);
 void	free_array(char **lines);
 void	free_textures(t_data *date);
 int		button_hook(t_data *data);
+
+//*****************************************************************
+//*						TIME FUNCTIONS							  *
+//*****************************************************************
+
+long	get_time(t_data *data);
+long	get_delta_time(t_data *data);
 
 //*****************************************************************
 //*						UTIL FUNCTIONS							  *

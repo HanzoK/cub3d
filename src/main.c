@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/07 14:24:13 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:39:00 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void	draw_line(t_data *data, float start_x, int i)
 				start_y == HEIGHT / 2 - 1))
 				put_pixel(data, i, start_y, 0xFF00AAAA);
 			else
-				put_pixel(data, i, start_y, 0xFFAA0033);
+				put_pixel(data, i, start_y, 0xFFCC0033);
 		}
 		else
 		{
@@ -207,15 +207,26 @@ void	draw_line(t_data *data, float start_x, int i)
 // flashcasting version
 int	draw(t_data *data)
 {
-	if (data->d == 1)
+//		just 2D map and player pos
+	data->time->delta = get_delta_time(data);
+	move_player(data);
+	if (get_time(data) - data->time->last_frame < FRAME_TIME)
+		return (0);
+	data->time->last_frame = get_time(data);
+	if (data->d == 0)
 	{
-//		basic raycasting version
+		wipe(data);
+		put_map(data);
+		put_player(data);
+	}
+	else if (data->d == 1)
+	{
+//		basic 2D raycasting version
 		float		ray_x;
 		float		ray_y;
 		float 	cos_ray;
 		float 	sin_ray;
 
-		move_player(data);
 		wipe(data);
 		put_map(data);
 		put_player(data);
@@ -230,13 +241,13 @@ int	draw(t_data *data)
 			ray_y += sin_ray;
 		}
 	}
+//		basic 2D raycasting version with FOV
 	else if (data->d == 2)
 	{
 		float	fraction;
 		float	start_x;
 		int		i;
 
-		move_player(data);
 		wipe(data);
 		put_map(data);
 		put_player(data);
@@ -250,16 +261,14 @@ int	draw(t_data *data)
 			i++;
 		}
 	}
+//		basic 3D raycasting version
 	else if (data->d >= 3)
 	{
 		float	fraction;
 		float	start_x;
 		int		i;
 
-		move_player(data);
 		wipe(data);
-		/*put_map(data);*/
-		/*put_player(data);*/
 		fraction = PI / 3 / WIDTH;
 		start_x = data->player->dir - PI / 6;
 		i = 0;
@@ -279,9 +288,10 @@ int main(int argc, char **argv)
 	t_data 		data;
 	t_file 		file;
 	t_tx		tx;
+	t_time		time;
 	//int			i;
 
-	ft_set_up_game(&data, &file, &tx);
+	ft_set_up_game(&data, &file, &tx, &time);
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
 		bruh(&data, "Error\nInvalid map or missing config values\n", 1);
@@ -326,10 +336,10 @@ int main(int argc, char **argv)
 	/*data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);*/
 	/*data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
 	/*put_player(&data);*/
-	data.d = 1;
+	data.d = 0;
+	get_delta_time(&data);
+	data.time->last_frame = get_time(&data);
 	printarr(data.map);
-	put_map(&data);
-	put_player(&data);
 	mlx_key_hook(data.win, &key_hook, &data);
 	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
 	mlx_hook(data.win, 3, 1L<<1, key_release, &data);

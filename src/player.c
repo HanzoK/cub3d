@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/07 10:45:22 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:39:56 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	key_press(int keycode, t_data *data)
 		printarr(data->map);
 	if (keycode == SHIFT)
 		data->player->dash = 2;
+	if (keycode == ZERO)
+		data->d = 0;
 	if (keycode == ONE)
 		data->d = 1;
 	if (keycode == TWO)
@@ -100,8 +102,8 @@ void	move_player(t_data *data)
 	float		cos_d;
 
 	pl = data->player;
-	t_speed = (float)TURN_SPEED;
-	speed = (float)SPEED;
+	t_speed = (float)TURN_SPEED * data->time->delta / 1000;
+	speed = (float)SPEED * data->time->delta / 1000;
 
 	if (pl->turn_left)
 		pl->dir -= t_speed;
