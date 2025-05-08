@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/05 12:20:51 by oohnivch          #+#    #+#              #
-#    Updated: 2025/05/07 17:29:32 by oohnivch         ###   ########.fr        #
+#    Created: 2025/05/08 12:51:55 by oohnivch          #+#    #+#              #
+#    Updated: 2025/05/08 12:51:59 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ endif
 SRCDIR		= src/
 OBJDIR		= obj/
 SRC			= main.c \
+			  delta_time.c \
 			  free.c \
 			  general_utils.c \
 			  init_game.c \
@@ -62,7 +63,7 @@ SRC			= main.c \
 			  parsing_utils.c \
 			  player.c \
 			  put.c \
-			  read_file.c
+			  read_file.c \
 
 OBJ			= $(SRC:.c=.o)
 OBJS		= $(addprefix $(OBJDIR), $(OBJ))
