@@ -6,22 +6,57 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:06:30 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/07 08:29:05 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:18:19 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	put_fat_pixel(t_data *data, int x, int y, int color)
+{
+	int	i;
+	int	w;
+	int	n;
+	int	s;
+	int e;
+
+	if (x <= 0 || x >= WIDTH - 1|| y <= 0 || y >= HEIGHT - 1)
+		return ;
+	i = (y * data->size_line) + (x * (data->bpp / 8));
+	w = (y * data->size_line) + ((-1 + x) * (data->bpp / 8));
+	e = (y * data->size_line) + ((1 + x) * (data->bpp / 8));
+	n = ((-1 + y) * data->size_line) + (x * (data->bpp / 8));
+	s = ((1 + y) * data->size_line) + (x * (data->bpp / 8));
+	data->addr[i] = color & 0xFF;
+	data->addr[i + 1] = (color >> 8) & 0xFF;
+	data->addr[i + 2] = (color >> 16) & 0xFF;
+	data->addr[w] = color & 0xFF;
+	data->addr[w + 1] = (color >> 8) & 0xFF;
+	data->addr[w + 2] = (color >> 16) & 0xFF;
+	data->addr[e] = color & 0xFF;
+	data->addr[e + 1] = (color >> 8) & 0xFF;
+	data->addr[e + 2] = (color >> 16) & 0xFF;
+	data->addr[n] = color & 0xFF;
+	data->addr[n + 1] = (color >> 8) & 0xFF;
+	data->addr[n + 2] = (color >> 16) & 0xFF;
+	data->addr[s] = color & 0xFF;
+	data->addr[s + 1] = (color >> 8) & 0xFF;
+	data->addr[s + 2] = (color >> 16) & 0xFF;
+}
+
 void	put_pixel(t_data *data, int x, int y, int color)
 {
 	int	i;
+	int	*lol;
 
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 		return ;
 	i = (y * data->size_line) + (x * (data->bpp / 8));
-	data->addr[i] = color & 0xFF;
-	data->addr[i + 1] = (color >> 8) & 0xFF;
-	data->addr[i + 2] = (color >> 16) & 0xFF;
+	/*data->addr[i] = color & 0xFF;*/
+	/*data->addr[i + 1] = (color >> 8) & 0xFF;*/
+	/*data->addr[i + 2] = (color >> 16) & 0xFF;*/
+	lol = (int *)&data->addr[i];
+	*lol = color;
 }
 
 void	color_screen(t_data *data, int color)

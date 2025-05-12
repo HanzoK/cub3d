@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:23:32 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/06 16:00:27 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:57:25 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,15 @@ int	get_color(int red, int green, int blue)
 	color += blue;
 	return (color);
 }
+
+/*float	dist(float *start, float *end, float direction)*/
+/*{*/
+/*	float	x;*/
+/*	float	y;*/
+/*	float	angle;*/
+/**/
+/*	x = end[0] - start[0];*/
+/*	y = end[1] - start[1];*/
+/*	angle = atan2f(y, x) - direction;*/
+/*	return (sqrtf(powf(x, 2) + powf(y, 2)) * cosf(angle));*/
+/*}*/

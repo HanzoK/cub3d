@@ -6,7 +6,7 @@
 #    By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/05 12:20:51 by oohnivch          #+#    #+#              #
-#    Updated: 2025/05/08 11:47:47 by oohnivch         ###   ########.fr        #
+#    Updated: 2025/05/12 10:10:02 by oohnivch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC			= main.c \
 			  parsing_utils.c \
 			  player.c \
 			  put.c \
+			  ray.c \
 			  read_file.c \
 
 OBJ			= $(SRC:.c=.o)
@@ -71,7 +72,7 @@ OBJS		= $(addprefix $(OBJDIR), $(OBJ))
 
 all: 		$(OBJDIR) $(NAME) | logo
 
-$(NAME): 	$(LIB) $(OBJS)
+$(NAME): 	$(LIB) $(OBJS) ./includes/cub3d.h
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lm $(LIB) $(MLXFLAGS)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(LIB)

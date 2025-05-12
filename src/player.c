@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/08 12:39:56 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:24:11 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_player	*init_player(t_data *data)
 		return (NULL);
 	player->x = (float)data->player_x * VOX + ((float)VOX / 2);
 	player->y = (float)data->player_y * VOX + ((float)VOX / 2);
-	player->dir = PI / 2 * 3;
+	/*player->dir = PI / 2 * 3;*/
+	player->dir = 0;
 	player->key_up = false;
 	player->key_down = false;
 	player->key_left = false;
@@ -35,7 +36,7 @@ t_player	*init_player(t_data *data)
 
 int	key_press(int keycode, t_data *data)
 {
-	printf("Keycode: %d\n", keycode);
+	/*printf("Keycode: %d\n", keycode);*/
 	if (keycode == ESC)
 		bruh(data, "Exit game", 0);
 	if (keycode == UP || keycode == W)
@@ -60,6 +61,8 @@ int	key_press(int keycode, t_data *data)
 		printarr(data->map);
 	if (keycode == SHIFT)
 		data->player->dash = 2;
+	if (keycode == CTRL)
+		data->player->dash = 0.1;
 	if (keycode == ZERO)
 		data->d = 0;
 	if (keycode == ONE)
@@ -75,7 +78,7 @@ int	key_press(int keycode, t_data *data)
 
 int	key_release(int keycode, t_data *data)
 {
-	printf("Keycode: %d\n", keycode);
+	/*printf("Keycode: %d\n", keycode);*/
 	if (keycode == UP || keycode == W)
 		data->player->key_up = false;
 	if (keycode == DOWN || keycode == S)
@@ -90,6 +93,8 @@ int	key_release(int keycode, t_data *data)
 		data->player->turn_right = false;
 	if (keycode == SHIFT)
 		data->player->dash = 1;
+	if (keycode == CTRL)
+		data->player->dash = 1;
 	return (0);
 }
 
@@ -98,53 +103,57 @@ void	move_player(t_data *data)
 	t_player	*pl;
 	float 		speed;
 	float 		t_speed;
-	float		sin_d;
-	float		cos_d;
+	double 		x_spd;
+	double 		y_spd;
 
 	pl = data->player;
 	t_speed = (float)TURN_SPEED * data->time->delta / 1000;
 	speed = (float)SPEED * data->time->delta / 1000;
+	x_spd = speed * cos(pl->dir) * pl->dash;
+	y_spd = speed * sin(pl->dir) * pl->dash;
+	double cos_d;
+	double sin_d;
+	cos_d = cos(pl->dir);
+	sin_d = sin(pl->dir);
 
 	if (pl->turn_left)
-		pl->dir -= t_speed;
-	if (pl->turn_right)
-		pl->dir += t_speed;
+		pl->dir -= t_speed * pl->dash;
+	else if (pl->turn_right)
+		pl->dir += t_speed * pl->dash;
 	if (pl->dir > 2 * PI)
 		pl->dir = 0;
-	if (pl->dir < 0)
+	else if (pl->dir < 0)
 		pl->dir = 2 * PI;
-	sin_d = sin(pl->dir);
-	cos_d = cos(pl->dir);
 	if (pl->key_up)
 	{
-		if (!coll(data, (pl->x + speed * cos_d * pl->dash), (pl->y + speed * sin_d * pl->dash)))
+		if (!coll(data, (pl->x + x_spd * 2), (pl->y + y_spd * 2)))
 		{
-			pl->x += speed * cos_d * pl->dash;
-			pl->y += speed * sin_d * pl->dash;
+			pl->x += x_spd;
+			pl->y += y_spd;
 		}
 	}
 	if (pl->key_down)
 	{
-		if (!coll(data, (pl->x - speed * cos_d * pl->dash), (pl->y - speed * sin_d * pl->dash)))
+		if (!coll(data, (pl->x - x_spd * 2), (pl->y - y_spd)))
 		{
-			pl->x -= speed * cos_d * pl->dash;
-			pl->y -= speed * sin_d * pl->dash;
+			pl->x -= x_spd;
+			pl->y -= y_spd;
 		}
 	}
 	if (pl->key_left)
 	{
-		if (!coll(data, (pl->x + speed * sin_d * pl->dash), (pl->y - speed * cos_d * pl->dash)))
+		if (!coll(data, (pl->x + y_spd * 2), (pl->y - x_spd * 2)))
 		{
-			pl->x += speed * sin_d * pl->dash;
-			pl->y -= speed * cos_d * pl->dash;
+			pl->x += y_spd;
+			pl->y -= x_spd;
 		}
 	}
 	if (pl->key_right)
 	{
-		if (!coll(data, (pl->x - speed * sin_d * pl->dash), (pl->y + speed * cos_d * pl->dash)))
+		if (!coll(data, (pl->x - y_spd * 2), (pl->y + x_spd * 2)))
 		{
-			pl->x -= speed * sin_d * pl->dash;
-			pl->y += speed * cos_d * pl->dash;
+			pl->x -= y_spd;
+			pl->y += x_spd;
 		}
 	}
 	/*printf("X: %f Y: %f Dir: %f Cos: %f Sin: %f\n", pl->x, pl->y, pl->dir, cos_d, sin_d);*/

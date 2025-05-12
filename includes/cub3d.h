@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/08 12:40:34 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:50:28 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define VOX 40
 # define SPEED 300
 # define TURN_SPEED 3
-# define DRAW_DIST 1000.0
-# define FPS 120
+# define DRAW_DIST 1780.0
+/*# define FPS 120*/
 # define FRAME_TIME 16
 
 typedef enum e_direction
@@ -48,6 +48,7 @@ typedef enum e_keycode
 	DOWN = 65364,
 	RIGHT = 65363,
 	SHIFT = 65505,
+	CTRL = 65507,
 	W = 119,
 	A = 97,
 	S = 115,
@@ -108,7 +109,7 @@ typedef struct s_player
 	float			y;
 	float			dir;
 
-	int				dash;
+	float			dash;
 	bool			key_up;
 	bool			key_down;
 	bool			key_left;
@@ -199,6 +200,7 @@ void	put_player(t_data *data);
 void	put_pixel(t_data *data, int x, int y, int color);
 void	put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color);
 void	put_empty_square(t_data *data, int pos_x, int pos_y, int size);
+void	put_fat_pixel(t_data *data, int x, int y, int color);
 void	color_screen(t_data *data, int color);
 void	evening(t_data *data);
 void	morning(t_data *data);
@@ -211,6 +213,15 @@ void	bruh(t_data *data, char *s, int status);
 void	free_array(char **lines);
 void	free_textures(t_data *date);
 int		button_hook(t_data *data);
+
+//*****************************************************************
+//*						RAY FUNCTIONS							  *
+//*****************************************************************
+
+bool	edge(t_data *data, float pos_x, float pos_y);
+bool	coll(t_data *data, float pos_x, float pos_y);
+int		cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y);
+int		cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y);
 
 //*****************************************************************
 //*						TIME FUNCTIONS							  *
@@ -226,5 +237,6 @@ long	get_delta_time(t_data *data);
 int		get_color(int red, int green, int blue);
 char	*join2(char const *s1, char const *s2);
 void	printarr(char **arr);
+float	dist(float *start, float *end, float direction);
 
 #endif
