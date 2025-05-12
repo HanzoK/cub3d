@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/12 13:48:23 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:29:44 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,22 +91,22 @@ int	cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y)
 	if (ray_dir_x < 0)
 	{
 		step_x = -1;
-		/*side_dist_x = (*ray_x - map_x * VOX) / VOX * delta_dist_x;*/
+		side_dist_x = (*ray_x - map_x * VOX) / VOX * delta_dist_x;
 	}
 	else
 	{
 		step_x = 1;
-		/*side_dist_x = ((map_x + 1) * VOX - *ray_x) / VOX * delta_dist_x;*/
+		side_dist_x = ((map_x + 1) * VOX - *ray_x) / VOX * delta_dist_x;
 	}
 	if (ray_dir_y < 0)
 	{
 		step_y = -1;
-		/*side_dist_y = (*ray_y - map_y * VOX) / VOX * delta_dist_y;*/
+		side_dist_y = (*ray_y - map_y * VOX) / VOX * delta_dist_y;
 	}
 	else
 	{
 		step_y = 1;
-		/*side_dist_y = ((map_y + 1) * VOX - *ray_y) / VOX * delta_dist_y;*/
+		side_dist_y = ((map_y + 1) * VOX - *ray_y) / VOX * delta_dist_y;
 	}
 	/*side_dist_x = powf(side_dist_x, 2) + */
 	while (!edge(data, *ray_x + side_dist_x, *ray_y + side_dist_y))

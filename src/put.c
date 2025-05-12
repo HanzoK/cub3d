@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:06:30 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/12 17:18:19 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:29:47 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ void	put_pixel(t_data *data, int x, int y, int color)
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 		return ;
 	i = (y * data->size_line) + (x * (data->bpp / 8));
-	/*data->addr[i] = color & 0xFF;*/
-	/*data->addr[i + 1] = (color >> 8) & 0xFF;*/
-	/*data->addr[i + 2] = (color >> 16) & 0xFF;*/
 	lol = (int *)&data->addr[i];
 	*lol = color;
 }
