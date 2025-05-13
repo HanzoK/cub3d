@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 12:23:32 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:42:13 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define VOX 40
 # define SPEED 300
 # define TURN_SPEED 3
-# define DRAW_DIST 1780.0
+# define DRAW_DIST 780.0
 /*# define FPS 120*/
 # define FRAME_TIME 16
 
@@ -198,6 +198,8 @@ void	wipe(t_data *data);
 void	put_map(t_data *data);
 void	put_player(t_data *data);
 void	put_pixel(t_data *data, int x, int y, int color);
+void	put_pixel_sky(t_data *data, int x, int y, int color);
+void	put_pixel_floor(t_data *data, int x, int y, int color);
 void	put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color);
 void	put_empty_square(t_data *data, int pos_x, int pos_y, int size);
 void	put_fat_pixel(t_data *data, int x, int y, int color);

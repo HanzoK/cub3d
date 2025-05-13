@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:06:30 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/12 17:29:47 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:41:41 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,74 @@ void	put_fat_pixel(t_data *data, int x, int y, int color)
 	data->addr[s + 2] = (color >> 16) & 0xFF;
 }
 
+/*void	put_pixel_sky(t_data *data, int x, int y, int color)*/
+/*{*/
+/*	int	red;*/
+/*	int	green;*/
+/*	int	blue;*/
+/**/
+/*	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)*/
+/*		return ;*/
+/*	red = (color >> 16) & 0xFF;*/
+/*	green = (color >> 8) & 0xFF;*/
+/*	blue = color & 0xFF;*/
+/*	float ratio = y / ((float)HEIGHT / 2);*/
+/*	red = (int)((float)red * (1 - ratio));*/
+/*	green = (int)((float)green * (1 - ratio));*/
+/*	blue = (int)((float)blue * (1 - ratio));*/
+/*	if (red > 255)*/
+/*		red = 255;*/
+/*	if (green > 255)*/
+/*		green = 255;*/
+/*	if (blue > 255)*/
+/*		blue = 255;*/
+/*	if (red <= 0)*/
+/*		red = 1;*/
+/*	if (green <= 0)*/
+/*		green = 1;*/
+/*	if (blue <= 0)*/
+/*		blue = 1;*/
+/*	color = (255 << 24 | (red << 16) | (green << 8) | blue);*/
+	/*i = (y * data->size_line) + (x * (data->bpp / 8));*/
+	/*data->addr[i] = color & 0xFF;*/
+	/*data->addr[i + 1] = color & 0xFF;*/
+	/*data->addr[i + 2] = color & 0xFF;*/
+/*}*/
+/**/
+/*void	put_pixel_floor(t_data *data, int x, int y, int color)*/
+/*{*/
+/*	int	red;*/
+/*	int	green;*/
+/*	int	blue;*/
+/**/
+/*	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)*/
+/*		return ;*/
+/*	red = (color >> 16) & 0xFF;*/
+/*	green = (color >> 8) & 0xFF;*/
+/*	blue = color & 0xFF;*/
+/*	float ratio = (HEIGHT - y) / ((float)HEIGHT / 2);*/
+/*	red = (int)((float)red * (1 - ratio));*/
+/*	green = (int)((float)green * (1 - ratio));*/
+/*	blue = (int)((float)blue * (1 - ratio));*/
+/*	if (red > 255)*/
+/*		red = 255;*/
+/*	if (green > 255)*/
+/*		green = 255;*/
+/*	if (blue > 255)*/
+/*		blue = 255;*/
+/*	if (red <= 0)*/
+/*		red = 1;*/
+/*	if (green <= 0)*/
+/*		green = 1;*/
+/*	if (blue <= 0)*/
+/*		blue = 1;*/
+/*	int	i;*/
+/*	i = (y * data->size_line) + (x * (data->bpp / 8));*/
+/*	data->addr[i] = color & 0xFF;*/
+/*	data->addr[i + 1] = (color >> 8) & 0xFF;*/
+/*	data->addr[i + 2] = (color >> 16) & 0xFF;*/
+/*}*/
+/**/
 void	put_pixel(t_data *data, int x, int y, int color)
 {
 	int	i;

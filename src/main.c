@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 14:05:46 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:48:11 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,8 @@ void	draw_line(t_data *data, float start_x, int i)
 	{
 		while (y < start_y)
 		{
-			put_pixel(data, i, y, data->sky);
+			put_pixel(data, i, y, shade_color((y / ((float)HEIGHT / 16 * 7) * DRAW_DIST), data->sky));
+			/*put_pixel_sky(data, i, y, data->sky);*/
 			y++;
 		}
 	}
@@ -223,7 +224,8 @@ void	draw_line(t_data *data, float start_x, int i)
 				start_y == HEIGHT / 2 - 1))
 				put_pixel(data, i, start_y, 0xFF00AAAA);
 			else
-				put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0055));
+				/*put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0055));*/
+				put_pixel(data, i, start_y, shade_color(dist, 0xFF770022));
 			if (i == WIDTH / 2)
 				printf("Distance: %f Hit_X: %f Hit_Y: %f\n", dist, hit_x, hit_y);
 			/*if (i == WIDTH / 2)*/
@@ -236,7 +238,7 @@ void	draw_line(t_data *data, float start_x, int i)
 		y = end_y;
 		while (y < HEIGHT)
 		{
-			put_pixel(data, i, y, data->floor);
+			put_pixel(data, i, y, shade_color((((float)HEIGHT / 16 * 15 - y) / ((float)HEIGHT / 2) * DRAW_DIST), data->floor));
 			y++;
 		}
 	}
@@ -498,8 +500,10 @@ int main(int argc, char **argv)
 		i++;
 	}*/
 	/// Ollie got stuff. Hanju can go for a smoke
-	data.sky = 0xFF00AAFF;
-	data.floor = 0xFF333333;
+	/*data.sky = 0xFF00AAFF;*/
+	data.sky = 0xFF0077AA;
+	/*data.floor = 0xFF333333;*/
+	data.floor = 0xFF222222;
 	write(1, "Hanju finished\n", 15);
 	data.mlx = mlx_init();
 	if (!data.mlx)
