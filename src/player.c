@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/13 12:33:09 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:35:56 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,12 @@ void	move_player(t_data *data)
 	double 		y_spd;
 
 	pl = data->player;
-	t_speed = (float)TURN_SPEED * data->time->delta / 1000;
-	speed = (float)SPEED * data->time->delta / 1000;
-	x_spd = speed * cos(pl->dir) * pl->dash;
-	y_spd = speed * sin(pl->dir) * pl->dash;
 	/*double cos_d;*/
 	/*double sin_d;*/
 	/*cos_d = cos(pl->dir);*/
 	/*sin_d = sin(pl->dir);*/
 
+	t_speed = (float)TURN_SPEED * data->time->delta / 1000;
 	if (pl->turn_left)
 		pl->dir -= t_speed * pl->dash;
 	else if (pl->turn_right)
@@ -124,33 +121,44 @@ void	move_player(t_data *data)
 		pl->dir = 0;
 	else if (pl->dir < 0)
 		pl->dir = 2 * PI;
+	speed = (float)SPEED * data->time->delta / 1000;
+	x_spd = speed * cos(pl->dir) * pl->dash;
+	y_spd = speed * sin(pl->dir) * pl->dash;
+	if ((pl->x + VOX * (1 - 2 * (x_spd < 0))) / VOX > data->map_width
+		|| (pl->y + VOX * (1 - 2 * (y_spd < 0))) / VOX > data->map_height
+		|| (pl->x + VOX * (1 - 2 * (x_spd < 0))) / VOX <= 0
+		|| (pl->y + VOX * (1 - 2 * (y_spd < 0))) / VOX <= 0
+		/*|| (data->map[(int)(pl->y + (float)VOX * (1 - 2 * (y_spd < 0)))][(int)(pl->x + (float)VOX * (1 - 2 * (x_spd < 0)) / VOX)] != '1')*/
+		)
+		return ;
+	/*printf("X: %f Y: %f Dir: %f Cos: %f Sin: %f\n", pl->x, pl->y, pl->dir, cos(pl->dir), sin(pl->dir));*/
 	if (pl->key_up)
 	{
-		if (!coll(data, (pl->x + x_spd * 3), (pl->y + y_spd * 3)))
+		if (!coll(data, (pl->x + x_spd * 10), (pl->y + y_spd * 10)))
 		{
 			pl->x += x_spd;
 			pl->y += y_spd;
 		}
 	}
-	if (pl->key_down)
+	else if (pl->key_down)
 	{
-		if (!coll(data, (pl->x - x_spd * 3), (pl->y - y_spd * 3)))
+		if (!coll(data, (pl->x - x_spd * 10), (pl->y - y_spd * 10)))
 		{
 			pl->x -= x_spd;
 			pl->y -= y_spd;
 		}
 	}
-	if (pl->key_left)
+	else if (pl->key_left)
 	{
-		if (!coll(data, (pl->x + y_spd * 3), (pl->y - x_spd * 3)))
+		if (!coll(data, (pl->x + y_spd * 10), (pl->y - x_spd * 10)))
 		{
 			pl->x += y_spd;
 			pl->y -= x_spd;
 		}
 	}
-	if (pl->key_right)
+	else if (pl->key_right)
 	{
-		if (!coll(data, (pl->x - y_spd * 3), (pl->y + x_spd * 3)))
+		if (!coll(data, (pl->x - y_spd * 10), (pl->y + x_spd * 10)))
 		{
 			pl->x -= y_spd;
 			pl->y += x_spd;

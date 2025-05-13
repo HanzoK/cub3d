@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 12:35:07 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:05:46 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,20 @@ void	put_ray(t_data *data, float start_x)
 	}
 }
 
+float	distance2(t_data *data, float ray_x, float ray_y, float start_x)
+{
+	float	angle;
+	float 	dist;
+	float	x;
+	float	y;
+
+	x = ray_x - data->player->x;
+	y = ray_y - data->player->y;
+	angle = atan2f(y, x) - start_x;
+	dist = sqrtf(powf(x, 2) + powf(y, 2)) * cosf(angle);
+	return (dist);
+}
+
 float	distance(t_data *data, float ray_x, float ray_y)
 {
 	float	angle;
@@ -169,9 +183,15 @@ void	draw_line(t_data *data, float start_x, int i)
 	/*else*/
 	/*	dist = distance(data, ray_x, ray_y);*/
 	/*height = ((float)VOX / dist) * ((float)HEIGHT / 2);*/
-	ray(data, start_x, &hit_x, &hit_y);
-	dist = distance(data, hit_x, hit_y);
-	height = ((float)VOX / dist) * ((float)WIDTH / 2);
+	float temp = ray(data, start_x, &hit_x, &hit_y);
+	float temp2 = distance(data, hit_x, hit_y);
+	if (data->d < 2)
+		dist = temp2;
+	else if (data->d == 2)
+		dist = temp;
+	else
+		dist = (temp2 + temp) / 2;
+	height = ((float)VOX / dist) * ((float)HEIGHT / 2);
 	start_y = (HEIGHT - height) / 2;
 	end_y = start_y + height;
 	y = 0;
@@ -194,13 +214,18 @@ void	draw_line(t_data *data, float start_x, int i)
 			else
 				put_pixel(data, i, start_y, 0xFFCC0033);
 			if (i == WIDTH / 2)
-				printf("Distance: %f\n", dist);
+				printf("Distance: %f Hit_X: %f Hit_Y: %f\n", dist, hit_x, hit_y);
 		}
 		else
 		{
-			put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0055));
+			if ((i == WIDTH / 2 || i == WIDTH / 2 + 1 || i == WIDTH / 2 - 1) && 
+				(start_y == HEIGHT / 2 || start_y == HEIGHT / 2 + 1 ||
+				start_y == HEIGHT / 2 - 1))
+				put_pixel(data, i, start_y, 0xFF00AAAA);
+			else
+				put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0055));
 			if (i == WIDTH / 2)
-				printf("Distance: %f\n", dist);
+				printf("Distance: %f Hit_X: %f Hit_Y: %f\n", dist, hit_x, hit_y);
 			/*if (i == WIDTH / 2)*/
 			/*	printf("Distance: %f Steps: %d X: %f Y: %f\n", dist, step_count, data->player->x, data->player->y);*/
 		}
@@ -334,6 +359,8 @@ void	rays(t_data *data)
 
 	fraction = PI / 3 / WIDTH;
 	start_x = data->player->dir - PI / 6;
+	/*fraction = PI / 2 / WIDTH;*/
+	/*start_x = data->player->dir - PI / 4;*/
 	i = 0;
 	while (i < WIDTH)
 	{
@@ -353,7 +380,7 @@ int	draw(t_data *data)
 	if (get_time(data) - data->time->last_frame < FRAME_TIME)
 		return (0);
 	data->time->last_frame = get_time(data);
-	wipe(data);
+	/*wipe(data);*/
 	put_map(data);
 	put_player(data);
 	/*float		ray_x;*/
