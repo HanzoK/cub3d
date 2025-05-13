@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/12 13:50:28 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:23:32 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ bool	edge(t_data *data, float pos_x, float pos_y);
 bool	coll(t_data *data, float pos_x, float pos_y);
 int		cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y);
 int		cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y);
+float	ray(t_data *data, float direction, float *hit_x, float *hit_y);
 
 //*****************************************************************
 //*						TIME FUNCTIONS							  *

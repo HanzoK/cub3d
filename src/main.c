@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/12 17:28:32 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:35:07 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,27 +149,28 @@ int	shade_color(float dist, int color)
 
 void	draw_line(t_data *data, float start_x, int i)
 {
-	float	ray_x;
-	float	ray_y;
 	float	dist;
 	float	height;
 	int		start_y;
 	int		end_y;
 	int		y;
-	int		step_count;
+	float	hit_x;
+	float	hit_y;
 
-	step_count = cast_ray1(data, start_x , &ray_x, &ray_y);
+	/*step_count = cast_ray1(data, start_x , &ray_x, &ray_y);*/
 	/*if (data->d == 3)*/
 	/*else*/
 	/*	if ((int)start_x == (int)data->player->dir)*/
 	/*		step_count = cast_ray2(data, start_x , &ray_x, &ray_y);*/
 	/*	else*/
 	/*		step_count = cast_ray1(data, start_x , &ray_x, &ray_y);*/
-	if (data->d == 3)
-		dist = sqrtf(powf(ray_x - data->player->x, 2) + powf(ray_y - data->player->y, 2));
-	else
-		dist = distance(data, ray_x, ray_y);
+	/*if (data->d == 3)*/
+	/*	dist = sqrtf(powf(ray_x - data->player->x, 2) + powf(ray_y - data->player->y, 2));*/
+	/*else*/
+	/*	dist = distance(data, ray_x, ray_y);*/
 	/*height = ((float)VOX / dist) * ((float)HEIGHT / 2);*/
+	ray(data, start_x, &hit_x, &hit_y);
+	dist = distance(data, hit_x, hit_y);
 	height = ((float)VOX / dist) * ((float)WIDTH / 2);
 	start_y = (HEIGHT - height) / 2;
 	end_y = start_y + height;
@@ -193,13 +194,15 @@ void	draw_line(t_data *data, float start_x, int i)
 			else
 				put_pixel(data, i, start_y, 0xFFCC0033);
 			if (i == WIDTH / 2)
-				printf("Distance: %f Steps: %d X: %f Y: %f\n", dist, step_count, data->player->x, data->player->y);
+				printf("Distance: %f\n", dist);
 		}
 		else
 		{
 			put_pixel(data, i, start_y, shade_color(dist, 0xFFFF0055));
 			if (i == WIDTH / 2)
-				printf("Distance: %f Steps: %d X: %f Y: %f\n", dist, step_count, data->player->x, data->player->y);
+				printf("Distance: %f\n", dist);
+			/*if (i == WIDTH / 2)*/
+			/*	printf("Distance: %f Steps: %d X: %f Y: %f\n", dist, step_count, data->player->x, data->player->y);*/
 		}
 		start_y++;
 	}
@@ -214,112 +217,132 @@ void	draw_line(t_data *data, float start_x, int i)
 	}
 }
 
-int	ray(t_data *data, float *ray_x, float *ray_y)
+float	ray(t_data *data, float direction, float *hit_x, float *hit_y)
 {
-	int		step_count;
+	float	ray_x;
+	float	ray_y;
+	float	x_dir;
+	float	y_dir;
+	float	x_step_size;
+	float	y_step_size;
+	float	x_len;
+	float	y_len;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
 
-	step_count = 0;
-
-	*ray_x = data->player->x;
-	*ray_y = data->player->y;
-	// Ray direction
-	float dir_x = cos(data->player->dir);
-	float dir_y = sin(data->player->dir);
-	// Distance to first side
-	float	dist_x;
-	float	dist_y;
-	dist_x = 0;
-	dist_y = 0;
-
-	//distance till first grid line
-	dist_x = fabs(VOX - (*ray_x - (int)(*ray_x / VOX) * VOX));
-	// Draw to nearest grid line
-	while (!edge(data, *ray_x, *ray_y))
+	ray_x = data->player->x;
+	ray_y = data->player->y;
+	x_dir = cos(direction);
+	y_dir = sin(direction);
+	x_step_size = VOX * sqrtf(1 + (y_dir / x_dir) * (y_dir / x_dir));
+	y_step_size = VOX * sqrtf(1 + (x_dir / y_dir) * (x_dir / y_dir));
+	map_x = (int)(ray_x / VOX);
+	map_y = (int)(ray_y / VOX);
+	if (x_dir < 0)
 	{
-		put_pixel(data, *ray_x, *ray_y, 0xFF00AAAA);
-		*ray_x += dir_x;
-		*ray_y += dir_y;
-		step_count++;
+		step_x = -1;
+		x_len = (ray_x - map_x * VOX) * x_step_size / VOX;
 	}
-	float 	step_dist_x;
-	float	step_dist_y;
-	if (dir_x != 0.0)
-		step_dist_x = fabs(VOX / dir_x);
 	else
-		step_dist_x = 0;
-	if (dir_y != 0.0)
-		step_dist_y = fabs(VOX / dir_y);
-	else
-		step_dist_y = 0;
-	if (step_dist_x > (float)WIDTH)
-		step_dist_x = 0;
-	if (step_dist_y > (float)HEIGHT)
-		step_dist_y = 0;
-	/*printf("1dist_x: %f 1dist_y: %f step_dist_x: %f step_dist_y: %f\n",*/
-	/*	dist_x, dist_y, step_dist_x, step_dist_y);*/
-	*ray_x = data->player->x;
-	*ray_y = data->player->y;
-	int map_x = (int)(*ray_x / VOX);
-	int map_y = (int)(*ray_y / VOX);
-	if (dir_x < 0)
-		dist_x = (*ray_x - (int)(map_x * VOX));
-	else
-		dist_x = ((int)(map_x + 1) * VOX - *ray_x);
-	if (dir_y < 0)
-		dist_y = (*ray_y - (int)(map_y * VOX));
-	else
-		dist_y = ((int)(map_y + 1) * VOX - *ray_y);
-	printf("2dist_x: %f 2dist_y: %f step_dist_x: %f step_dist_y: %f\n",
-		dist_x, dist_y, step_dist_x, step_dist_y);
-	float ray_dist_x;
-	float ray_dist_y;
-
-	int	step_x = 1 - (2 * (dir_x < 0));
-	int step_y = 1 - (2 * (dir_y < 0));
-	ray_dist_x = dist_x * step_dist_x / VOX;
-	ray_dist_y = dist_y * step_dist_y / VOX;
-	printf("ray_dist_x: %f ray_dist_y: %f\n", ray_dist_x, ray_dist_y);
-	/*printf("dir_x: %lf dir_y: %lf\n", (double)dir_x, (double)dir_y);*/
-	// Current grid pos
-	/*// Step direction*/
-	/*// FROM HERE ON I NEED DDA*/
-	/**/
-	float	ray_pos_x;
-	float	ray_pos_y;
-	ray_pos_x = *ray_x;
-	ray_pos_y = *ray_y;
-	/*printf("ray_pos_x: %f ray_pos_y: %f map_x: %d map_y: %d\n",*/
-	/*	ray_pos_x, ray_pos_y, map_x, map_y);*/
-	/*float new_dist_x;*/
-	/*float new_dist_y;*/
-	int i = 0;
-	while (!coll(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y))
 	{
-		if ((ray_dist_x != 0 && ray_dist_x < ray_dist_y) || ray_dist_y == 0)
+		step_x = 1;
+		x_len = ((map_x + 1) * VOX - ray_x) * x_step_size / VOX;
+	}
+	if (y_dir < 0)
+	{
+		step_y = -1;
+		y_len = (ray_y - map_y * VOX) * y_step_size / VOX;
+	}
+	else
+	{
+		step_y = 1;
+		y_len = ((map_y + 1) * VOX - ray_y) * y_step_size / VOX;
+	}
+	/*int	i = 0;*/
+	/*printf("x_step_size: %f y_step_size: %f x_len: %f y_len: %f\n",*/
+	/*	x_step_size, y_step_size, x_len, y_len);*/
+	int	wall = 0;
+	while (1)
+	{
+		/*put_square(data, map_x * VOX + 1, map_y * VOX + 1, VOX - 2, 0xFF222222);*/
+		if (x_len < y_len)
 		{
-			put_fat_pixel(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y, 0xFF00FF00);
-			ray_dist_x += step_dist_x;
+			/*put_fat_pixel(data, ray_x + x_dir * x_len, ray_y + y_dir * x_len, 0xFF00FF00);*/
 			map_x += step_x;
-			/*ray_pos_x += step_dist_x;*/
-			/*ray_pos_y += dir_y * step_dist_x;*/
+			x_len += x_step_size;
+			wall = 1;
 		}
-		else if (ray_dist_x == 0 || ray_dist_x > ray_dist_y)
+		else
 		{
-			put_fat_pixel(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y, 0xFFFFFF00);
-			ray_dist_y += step_dist_y;
+			/*put_fat_pixel(data, ray_x + x_dir * y_len, ray_y + y_dir * y_len, 0xFFFFFF00);*/
 			map_y += step_y;
-			/*ray_pos_y += step_dist_y;*/
-			/*ray_pos_x += dir_x * step_dist_y;*/
+			y_len += y_step_size;
+			wall = 2;
 		}
-		i++;
-		if (i == 2)
-			break;
-		put_pixel(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y, 0xFFFF00AA);
-		/*put_fat_pixel(data, ray_pos_x, ray_pos_y, 0xFF00AAAA);*/
-		step_count++;
+		if (map_x >= 0 && map_x < data->map_width
+			&& map_y >= 0 && map_y < data->map_height)
+		{
+			if (data->map[map_y][map_x] == '1')
+			{
+				/*put_square(data, map_x * VOX, map_y * VOX, VOX, 0xFF5555FF);*/
+				break;
+			}
+		}
+	}
+	if (wall == 1)
+	{
+		*hit_x = ray_x + x_dir * (x_len - x_step_size);
+		*hit_y = ray_y + y_dir * (x_len - x_step_size);
+		return (x_len - x_step_size);
+		printf("hit green at x_len: %f x: %f y: %f\n", x_len, ray_x + x_dir * x_len, ray_y + y_dir * x_len);
+		/*put_fat_pixel(data, ray_x + x_dir * (x_len - x_step_size), ray_y + y_dir * (x_len - x_step_size), 0xFFFF00FF);*/
+	}
+	else if (wall == 2)
+	{
+		*hit_x = ray_x + x_dir * (y_len - y_step_size);
+		*hit_y = ray_y + y_dir * (y_len - y_step_size);
+		return (y_len - y_step_size);
+		printf("hit yellow at y_len: %f x: %f y: %f\n", y_len, ray_x + x_dir * y_len, ray_y + y_dir * y_len);
+		/*put_fat_pixel(data, ray_x + x_dir * (y_len - y_step_size), ray_y + y_dir * (y_len - y_step_size), 0xFFFF00FF);*/
+	}
+	else
+	{
+		printf("hit nothing at x_len: %f y_len: %f x: %f y: %f\n", x_len, y_len, ray_x + x_dir * x_len, ray_y + y_dir * y_len);
+		put_fat_pixel(data, ray_x + x_dir * x_len, ray_y + y_dir * x_len, 0xFFFF0000);
+		return (0);
+	}
+	if (data->map[map_y][map_x] == '1')
+	{
+		put_square(data, map_x * VOX, map_y * VOX, VOX, 0xFF5555FF);
+		printf("map_x : %d map_y: %d\n", map_x, map_y);
 	}
 
-	return (step_count);
+	/*if (coll(data, ray_x + x_dir * x_len, ray_y + y_dir * x_len))*/
+	/*	printf("hit green at x_len: %f x: %f y: %f\n", x_len, ray_x + x_dir * x_len, ray_y + y_dir * x_len);*/
+	/*else if (coll(data, ray_x + x_dir * y_len, ray_y + y_dir * y_len))*/
+	/*	printf("hit yellow at y_len: %f x: %f y: %f\n", y_len, ray_x + x_dir * y_len, ray_y + y_dir * y_len);*/
+	return (0);
+}
+
+void	rays(t_data *data)
+{
+	float	fraction;
+	float	start_x;
+	int		i;
+
+	fraction = PI / 3 / WIDTH;
+	start_x = data->player->dir - PI / 6;
+	i = 0;
+	while (i < WIDTH)
+	{
+		/*ray(data);*/
+		draw_line(data, start_x, i);
+		start_x += fraction;
+		i++;
+	}
+	/*ray_new(data);*/
 }
 
 int	draw(t_data *data)
@@ -333,9 +356,11 @@ int	draw(t_data *data)
 	wipe(data);
 	put_map(data);
 	put_player(data);
-	float		ray_x;
-	float		ray_y;
-	ray(data, &ray_x, &ray_y);
+	/*float		ray_x;*/
+	/*float		ray_y;*/
+	rays(data);
+	/*ray_new(data);*/
+	/*ray(data, &ray_x, &ray_y);*/
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }

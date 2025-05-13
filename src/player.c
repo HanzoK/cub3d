@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/12 17:24:11 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:33:09 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ void	move_player(t_data *data)
 	speed = (float)SPEED * data->time->delta / 1000;
 	x_spd = speed * cos(pl->dir) * pl->dash;
 	y_spd = speed * sin(pl->dir) * pl->dash;
-	double cos_d;
-	double sin_d;
-	cos_d = cos(pl->dir);
-	sin_d = sin(pl->dir);
+	/*double cos_d;*/
+	/*double sin_d;*/
+	/*cos_d = cos(pl->dir);*/
+	/*sin_d = sin(pl->dir);*/
 
 	if (pl->turn_left)
 		pl->dir -= t_speed * pl->dash;
@@ -126,7 +126,7 @@ void	move_player(t_data *data)
 		pl->dir = 2 * PI;
 	if (pl->key_up)
 	{
-		if (!coll(data, (pl->x + x_spd * 2), (pl->y + y_spd * 2)))
+		if (!coll(data, (pl->x + x_spd * 3), (pl->y + y_spd * 3)))
 		{
 			pl->x += x_spd;
 			pl->y += y_spd;
@@ -134,7 +134,7 @@ void	move_player(t_data *data)
 	}
 	if (pl->key_down)
 	{
-		if (!coll(data, (pl->x - x_spd * 2), (pl->y - y_spd)))
+		if (!coll(data, (pl->x - x_spd * 3), (pl->y - y_spd * 3)))
 		{
 			pl->x -= x_spd;
 			pl->y -= y_spd;
@@ -142,7 +142,7 @@ void	move_player(t_data *data)
 	}
 	if (pl->key_left)
 	{
-		if (!coll(data, (pl->x + y_spd * 2), (pl->y - x_spd * 2)))
+		if (!coll(data, (pl->x + y_spd * 3), (pl->y - x_spd * 3)))
 		{
 			pl->x += y_spd;
 			pl->y -= x_spd;
@@ -150,7 +150,7 @@ void	move_player(t_data *data)
 	}
 	if (pl->key_right)
 	{
-		if (!coll(data, (pl->x - y_spd * 2), (pl->y + x_spd * 2)))
+		if (!coll(data, (pl->x - y_spd * 3), (pl->y + x_spd * 3)))
 		{
 			pl->x -= y_spd;
 			pl->y += x_spd;
