@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 14:48:11 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:22:17 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,8 @@ void	check_game_ready(t_data *data)
 		|| !tx->east
 		|| !tx->floor
 		|| !tx->ceiling
-		|| !tx->sprite
 		|| !map_ok)
 		data->is_game_ready = false;
-/*	if (!validate_xpm_64(data->mlx, tx->north)
-	 	|| !validate_xpm_64(data->mlx, tx->south)
-	 	|| !validate_xpm_64(data->mlx, tx->west)
-	 	|| !validate_xpm_64(data->mlx, tx->east)
-		|| !validate_xpm_64(data->mlx, tx->sprite))
-		data->is_game_ready = false;*/
 	else
 		data->is_game_ready = true;
 }
@@ -489,7 +482,6 @@ int main(int argc, char **argv)
 	printf("SOUTH texture: %s\n", tx.south);
 	printf("WEST texture: %s\n", tx.west);
 	printf("EAST texture: %s\n", tx.east);
-	printf("SPRITE texture: %s\n\n", tx.sprite);
 	printf("Floor colour (R,G,B): %d,%d,%d\n", tx.floor_r, tx.floor_g, tx.floor_b);
 	printf("Ceil  colour (R,G,B): %d,%d,%d\n\n", tx.ceiling_r, tx.ceiling_g, tx.ceiling_b);
 	printf("Map size: %d rows | %d cols\n\n", data.map_height, data.map_width);
@@ -508,6 +500,8 @@ int main(int argc, char **argv)
 	data.mlx = mlx_init();
 	if (!data.mlx)
 		bruh (&data, "Error\n mlx_init fail\n", 1);
+	if (!validate_textures(&data))
+		bruh(&data, "Error\n texture validation fail\n", 1);
 	write(1, "Mlx init\n", 9);
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "cub3D");
 	if (!data.win)

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 14:42:13 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:11:20 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx, t_time *time);
 void	input_validation(int argc, char **argv);
 int		validate_map(t_data *data);
 bool	validate_xpm_64(void *mlx, char *path);
+int		validate_textures(t_data *data);
 
 //*****************************************************************
 //*					FILE READING FUNCTIONS						  *

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/06 15:34:20 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:22:15 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,14 @@ int	validate_map(t_data *data)
 			c = data->map[i][j];
 			if (c == '0')
 			{
-				if (i == 0
-				|| i == data->map_height - 1
-				|| j == 0
+				if (i == 0 || i == data->map_height - 1 || j == 0
 				|| j == data->map_width - 1)
 					return (false);
-				if (data->map[i - 1][j] == ' '
-				|| data->map[i + 1][j] == ' '
-				|| data->map[i][j - 1] == ' '
-				|| data->map[i][j + 1] == ' ')
+				if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' '
+				|| data->map[i][j - 1] == ' ' || data->map[i][j + 1] == ' ')
 					return (false);
 			}
-			if (c == 'N'
-			|| c == 'S'
-			|| c == 'E'
-			|| c == 'W')
+			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
 				data->player_x = j;
 				data->player_y = i;
@@ -142,7 +135,17 @@ int	rgb_value_check (char **colours)
 		return (1);
 }
 
-/*bool	validate_xpm_64(void *mlx, char *path)
+int	validate_textures(t_data *data)
+{
+	if (!validate_xpm_64(data->mlx, data->file->tx->north)
+		|| !validate_xpm_64(data->mlx, data->file->tx->south)
+		|| !validate_xpm_64(data->mlx, data->file->tx->west)
+		|| !validate_xpm_64(data->mlx, data->file->tx->east))
+		return (0);
+	return (1);
+}
+
+bool	validate_xpm_64(void *mlx, char *path)
 {
 	int		w;
 	int		h;
@@ -155,11 +158,11 @@ int	rgb_value_check (char **colours)
 	img = mlx_xpm_file_to_image(mlx, path, &w, &h);
 	if (!img)
 		return (false);
-	if (w != 64 || h != 64)
+	if (w != 128 || h != 128)
 	{
 		mlx_destroy_image(mlx, img);
 		return (false);
 	}
 	mlx_destroy_image(mlx, img);
 	return (true);
-}*/
+}
