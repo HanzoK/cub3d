@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 13:50:08 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:44:39 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int parse_colour_config(t_data *data, char *line, int is_it_floor)
         tx->ceiling_g = ft_atoi(colours[1]);
         tx->ceiling_b = ft_atoi(colours[2]);
     }
+    data->sky = get_color(tx->ceiling_r, tx->ceiling_g, tx->ceiling_b);
+    data->floor = get_color(tx->floor_r, tx->floor_g, tx->floor_b);
     return (1);
 }
 
