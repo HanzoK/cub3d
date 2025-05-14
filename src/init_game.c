@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:07 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 13:59:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:17:10 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_set_up_game(t_data *data, t_file *file, t_textures *tx, t_time *time)
 	ft_bzero(tx, sizeof(*tx));
 	ft_bzero(time, sizeof(*time));
 	data->file = file;
+	data->tx = tx;
 	file->tx = tx;
 	data->time = time;
 }

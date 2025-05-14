@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 16:01:13 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:25:04 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 	data.mlx = mlx_init();
 	if (!data.mlx)
 		bruh (&data, "Error\n mlx_init fail\n", 1);
-	if (!validate_textures(&data))
+	if (!load_textures(&data))
 		bruh(&data, "Error\n texture validation fail\n", 1);
 	write(1, "Mlx init\n", 9);
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "cub3D");
