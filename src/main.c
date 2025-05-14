@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 19:25:04 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 21:23:37 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,17 @@ int main(int argc, char **argv)
 	/*data.sky = 0xFF0077AA;*/
 	/*data.floor = 0xFF333333;*/
 	/*data.floor = 0xFF222222;*/
-	write(1, "Hanju finished\n", 15);
 	data.mlx = mlx_init();
 	if (!data.mlx)
 		bruh (&data, "Error\n mlx_init fail\n", 1);
+	write(1, "\rLOADING TEXTURES [0/4]", 23);
 	if (!load_textures(&data))
 		bruh(&data, "Error\n texture validation fail\n", 1);
-	write(1, "Mlx init\n", 9);
+	write(1, "Hanju finished\n", 15);
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "cub3D");
 	if (!data.win)
 		bruh (&data, "Error\n window creation fail\n", 1);
+	write(1, "Mlx init\n", 9);
 	write(1, "Window created\n", 15);
 	data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
 	if (!data.img)
@@ -114,11 +115,11 @@ int main(int argc, char **argv)
 	/*data.wall[SOUTH] = 0xFFCCCC00;*/
 	/*data.wall[WEST] = 0xFF0000CC;*/
 	/*data.wall[EAST] = 0xFFCC0000;*/
-	data.wall[NORTH] = 0xFF990000; 
-	data.wall[SOUTH] = 0xFF990000;
-	data.wall[WEST] = 0xFF550000;
-	data.wall[EAST] = 0xFF550000;
-	data.floor = 0xFF222222;
+	/*data.wall[NORTH] = 0xFF990000; */
+	/*data.wall[SOUTH] = 0xFF990000;*/
+	/*data.wall[WEST] = 0xFF550000;*/
+	/*data.wall[EAST] = 0xFF550000;*/
+	data.floor = 0xFF444444;
 	data.sky = 0xFF0077AA;
 	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
 	mlx_hook(data.win, 3, 1L<<1, key_release, &data);

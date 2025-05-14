@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 17:06:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 20:10:39 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,44 @@
 
 void	put_texture(t_data *data, int x, int y, t_ray *ray)
 {
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	void	*img;
+	int			tex_x;
+	int			tex_y;
+	int			*color;
+	void		*img;
+	t_texture	*tx;
+	int			i;
 
 
-	tex_x = ray->column;
-	tex_y = y / ray->height * IMG_H;
-
-	printf("I need a smoke\n");
+	/*printf("I need a smoke\n");*/
 	if (ray->wall == NORTH)
-		img = data->tx->north;
+		tx = data->tx->north;
 	else if (ray->wall == SOUTH)
-		img = data->tx->south;
+		tx = data->tx->south;
 	else if (ray->wall == WEST)
-		img = data->tx->west;
+		tx = data->tx->west;
 	else
-		img = data->tx->east;
-	printf("img_x: %d img_y: %d\n", tex_x, tex_y);
+		tx = data->tx->east;
+	if (!tx)
+		bruh(data, "Error\ntexture not found\n", 1);
+	/*printf("I need a smoke at column x: %d y: %d\n", x, y);*/
+	int	edge = (HEIGHT - ray->height) / 2 + (ray->height * y >= ((double)HEIGHT / 2));
+	img = tx->img;
+	tex_x = ray->column;
+	tex_y = abs(y - edge) / ray->height * tx->height;
+	/*printf("tex_x: %d tex_y: %d\n", tex_x, tex_y);*/
+	i = (tex_y * tx->size_line) + (tex_x * (tx->bpp / 8));
 	if (img)
-		color = *(unsigned int *)(img + (tex_y * IMG_W + tex_x) * 4);
+		color = (int *)&tx->addr[i];
 	else
-		color = 0xFF000000;
-	put_pixel(data, x, y, color);
+	{
+		color = NULL;
+		bruh(data, "Error\ntexture address failed\n", 1);
+	}
+		/*color = *(unsigned int *)(img + (tex_y * tx->width + tex_x) * 4);*/
+	/*else*/
+	/*	*color = 0xFF000000;*/
+	float dist = ray->dist;
+	put_pixel(data, x, y, (shade_color(dist, *color)));
 }
 
 void	draw_line(t_data *data, float start_x, int i)
@@ -52,6 +66,7 @@ void	draw_line(t_data *data, float start_x, int i)
 	dist = distance(data, ray->x, ray->y);
 	height = ((float)VOX / dist) * ((float)WIDTH / 2);
 	ray->height = height;
+	ray->dist = dist;
 	start_y = (HEIGHT - height) / 2;
 	y = 0;
 	while (y < start_y)
@@ -68,9 +83,9 @@ void	draw_line(t_data *data, float start_x, int i)
 			put_pixel(data, i, start_y, 0xFF00AAAA);
 		else
 		{
-			printf("zsh: segmentation fault (core dumped)\t./cub3D maps/map.cub\n");
+			/*printf("zsh: segmentation fault (core dumped)\t./cub3D maps/map.cub\n");*/
 			put_texture(data, i, start_y, ray);
-			printf("unreachable\n");
+			/*printf("unreachable\n");*/
 		}
 			/*put_pixel(data, i, start_y, shade_color(dist, data->wall[ray->wall]));*/
 		/*if (i == WIDTH / 2)*/
@@ -82,6 +97,7 @@ void	draw_line(t_data *data, float start_x, int i)
 		put_pixel(data, i, y, shade_color((((float)HEIGHT / 16 * 15 - y) / ((float)HEIGHT / 2) * DRAW_DIST), data->floor));
 		y++;
 	}
+	free(ray);
 }
 
 void	draw_frame(t_data *data)
@@ -90,6 +106,8 @@ void	draw_frame(t_data *data)
 	float	start_x;
 	int		i;
 
+	/*fraction = PI / 2 / WIDTH;*/
+	/*start_x = data->player->dir - PI / 4;*/
 	fraction = PI / 3 / WIDTH;
 	start_x = data->player->dir - PI / 6;
 	i = 0;
@@ -107,8 +125,8 @@ int	draw(t_data *data)
 	move_player(data);
 	if (get_time(data) - data->time->last_frame < FRAME_TIME)
 		return (0);
-	if (get_time(data) - data->time->last_frame > FRAME_TIME * 2)
-		printf("Machine is struggling\n");
+	/*if (get_time(data) - data->time->last_frame > FRAME_TIME * 2)*/
+	/*	printf("Machine is struggling\n");*/
 	data->time->last_frame = get_time(data);
 	/*put_map(data);*/
 	/*put_player(data);*/

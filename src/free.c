@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 15:29:05 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 20:18:04 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_textures(t_data *data)
 {
 	t_textures *tx;
 
-	tx = data->file->tx;
+	tx = data->tx;
 	if (!tx)
 		return ;
 	if (tx->north_path)
@@ -52,6 +52,14 @@ void	free_textures(t_data *data)
 		free_array(tx->colour_floor);
 	if (tx->colour_ceiling)
 		free_array(tx->colour_ceiling);
+	mlx_destroy_image(data->mlx, tx->north->img);
+	mlx_destroy_image(data->mlx, tx->south->img);
+	mlx_destroy_image(data->mlx, tx->west->img);
+	mlx_destroy_image(data->mlx, tx->east->img);
+	free(tx->north);
+	free(tx->south);
+	free(tx->west);
+	free(tx->east);
 }
 
 void	bruh(t_data *data, char *s, int status)
@@ -60,6 +68,7 @@ void	bruh(t_data *data, char *s, int status)
 		(ft_putstr_fd(s, 2), ft_putstr_fd("\n", 2));
 	if (data)
 	{
+		free_textures(data);
 		if (data->img)
 			mlx_destroy_image(data->mlx, data->img);
 		if (data->win)
@@ -68,8 +77,7 @@ void	bruh(t_data *data, char *s, int status)
 			(mlx_destroy_display(data->mlx), free(data->mlx));
 		free_array(data->map);
 		free_array(data->file->file);
-		free_textures(data);
-		//free(data);
+		free(data->player);
 		data = NULL;
 	}
 	exit(status);

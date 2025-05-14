@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 19:25:29 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 21:23:12 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,15 @@ t_texture	*init_texture(t_data *data, char *path)
 int	load_textures(t_data *data)
 {
 	data->tx->north = init_texture(data, data->tx->north_path);
+	write(1, "\rLOADING TEXTURES [1/4]", 23);
 	data->tx->south = init_texture(data, data->tx->south_path);
+	write(1, "\rLOADING TEXTURES [2/4]", 23);
 	data->tx->west = init_texture(data, data->tx->west_path);
+	write(1, "\rLOADING TEXTURES [3/4]", 23);
 	data->tx->east = init_texture(data, data->tx->east_path);
-	return (0);
+	write(1, "\rLOADING TEXTURES [4/4]\n", 24);
+	printf("Textures loaded\n");
+	return (1);
 }
 
 
