@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 16:46:13 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:25:09 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,26 @@ typedef enum e_keycode
 	FOUR = 52,
 }				t_keycode;
 
+typedef struct s_texture
+{
+	char			*path;
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				width;
+	int				height;
+	int				size_line;
+	int				endian;
+	/*struct			s_wall_tx	*next;*/
+	/*struct			s_wall_tx	*prev;*/
+}					t_texture;
+
 typedef struct s_textures
 {
-	void			*north;
-	void			*south;
-	void			*west;
-	void			*east;
+	t_texture			*north;
+	t_texture			*south;
+	t_texture			*west;
+	t_texture			*east;
 	char			*north_path;
 	char			*south_path;
 	char			*west_path;
@@ -94,6 +108,7 @@ typedef struct s_textures
 	int				ceiling_r;
 	int				ceiling_g;
 	int				ceiling_b;
+
 }					t_textures;
 
 typedef struct s_file
@@ -172,7 +187,7 @@ typedef struct s_data
 	int				sky;
 	int				floor;
 	bool			is_game_ready;
-	t_textures			*tx;
+	t_textures		*tx;
 	t_file			*file;
 	int				d;
 }				t_data;
@@ -184,8 +199,8 @@ typedef struct s_data
 void	ft_set_up_game(t_data *data, t_file *file, t_textures *tx, t_time *time);
 void	input_validation(int argc, char **argv);
 int		validate_map(t_data *data);
-bool	validate_xpm_64(void *mlx, char *path);
-int		validate_textures(t_data *data);
+bool	validate_xpm_64(t_data *data, void *mlx);
+int		load_textures(t_data *data);
 
 //*****************************************************************
 //*					FILE READING FUNCTIONS						  *

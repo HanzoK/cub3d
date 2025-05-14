@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 15:26:45 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 19:25:29 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,34 +135,56 @@ int	rgb_value_check (char **colours)
 		return (1);
 }
 
-int	validate_textures(t_data *data)
+t_texture	*init_texture(t_data *data, char *path)
 {
-	if (!validate_xpm_64(data->mlx, data->file->tx->north_path)
-		|| !validate_xpm_64(data->mlx, data->file->tx->south_path)
-		|| !validate_xpm_64(data->mlx, data->file->tx->west_path)
-		|| !validate_xpm_64(data->mlx, data->file->tx->east_path))
-		return (0);
-	return (1);
-}
+	t_texture	*tx;
 
-bool	validate_xpm_64(void *mlx, char *path)
-{
-	int		w;
-	int		h;
-	void	*img;
-	size_t	len;
-
-	len = ft_strlen(path);
-	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
-		return (false);
-	img = mlx_xpm_file_to_image(mlx, path, &w, &h);
-	if (!img)
-		return (false);
-	if (w != 128 || h != 128)
+	tx = ft_calloc(1, sizeof(t_texture));
+	if (!tx)
 	{
-		mlx_destroy_image(mlx, img);
-		return (false);
+		bruh(data, "Error\ntexture malloc failed\n", 1);
 	}
-	mlx_destroy_image(mlx, img);
-	return (true);
+	tx->img = mlx_xpm_file_to_image(data->mlx, path, &tx->width, &tx->height);
+	if (!tx->img)
+	{
+		bruh(data, "Error\ntexture loading failed\n", 1);
+	}
+	tx->addr = mlx_get_data_addr(tx->img, &tx->bpp, &tx->size_line, &tx->endian);
+	if (!tx->addr)
+	{
+		bruh(data, "Error\ntexture address failed\n", 1);
+	}
+	return (tx);
 }
+
+int	load_textures(t_data *data)
+{
+	data->tx->north = init_texture(data, data->tx->north_path);
+	data->tx->south = init_texture(data, data->tx->south_path);
+	data->tx->west = init_texture(data, data->tx->west_path);
+	data->tx->east = init_texture(data, data->tx->east_path);
+	return (0);
+}
+
+
+/*bool	validate_xpm_64(t_data *data, void *mlx)*/
+/*{*/
+/*	int		w;*/
+/*	int		h;*/
+/*	void	*img;*/
+/*	size_t	len;*/
+/**/
+/*	len = ft_strlen(path);*/
+/*	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)*/
+/*		return (false);*/
+/*	data->file->tx->north.img = mlx_xpm_file_to_image(mlx, data->file->tx->north_path, &w, &h);*/
+/*	data->file->tx->south.img = mlx_xpm_file_to_image(mlx, data->file->tx->south_path, &w, &h);*/
+/*	data->file->tx->east.img = mlx_xpm_file_to_image(mlx, data->file->tx->east_path, &w, &h);*/
+/*	data->file->tx->south.img = mlx_xpm_file_to_image(mlx, data->file->tx->west_path, &w, &h);*/
+/*	if (!data->file->tx->north*/
+/*		|| !data->file->tx->south*/
+/*		|| !data->file->tx->east*/
+/*		|| !data->file->tx->west)*/
+/*		return (false);*/
+/*	return (true);*/
+/*}*/
