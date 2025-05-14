@@ -6,11 +6,91 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 11:59:56 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:11:24 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+t_ray	*init_ray(t_data *data, float direction)
+{
+	t_ray	*ray;
+
+	ray = ft_calloc(sizeof(t_ray), 1);
+	if (!ray)
+		return (bruh(data, "Error: malloc failed", 0), NULL);
+	ray->x = data->player->x;
+	ray->y = data->player->y;
+	ray->dir = direction;
+	ray->x_dir = cos(direction);
+	ray->y_dir = sin(direction);
+	ray->x_step_size = VOX * sqrtf(1 + \
+			(ray->y_dir / ray->x_dir) * (ray->y_dir / ray->x_dir));
+	ray->y_step_size = VOX * sqrtf(1 + \
+			(ray->x_dir / ray->y_dir) * (ray->x_dir / ray->y_dir));
+	ray->map_x = (int)(ray->x / VOX);
+	ray->map_y = (int)(ray->y / VOX);
+	ray->step_x = 1 - (2 * (ray->x_dir < 0));
+	ray->step_y = 1 - (2 * (ray->y_dir < 0));
+	return (ray);
+}
+
+void	ray_init_len(t_ray *ray)
+{
+	if (ray->x_dir < 0)
+		ray->x_len = (ray->x - ray->map_x * VOX) * ray->x_step_size / VOX;
+	else
+		ray->x_len = ((ray->map_x + 1) * VOX - ray->x) * ray->x_step_size / VOX;
+	if (ray->y_dir < 0)
+		ray->y_len = (ray->y - ray->map_y * VOX) * ray->y_step_size / VOX;
+	else
+		ray->y_len = ((ray->map_y + 1) * VOX - ray->y) * ray->y_step_size / VOX;
+}
+
+void	dda(t_data *data, t_ray *ray)
+{
+	while (1)
+	{
+		if (ray->x_len < ray->y_len)
+		{
+			ray->map_x += ray->step_x;
+			ray->x_len += ray->x_step_size;
+			ray->wall = 1 + 2 * (ray->step_x > 0);
+		}
+		else
+		{
+			ray->map_y += ray->step_y;
+			ray->y_len += ray->y_step_size;
+			ray->wall = 0 + 2 * (ray->step_y < 0);
+		}
+		if (ray->map_x >= 0 && ray->map_x < data->map_width
+			&& ray->map_y >= 0 && ray->map_y < data->map_height)
+		{
+			if (data->map[ray->map_y][ray->map_x] == '1')
+				break ;
+		}
+	}
+}
+
+t_ray	*cast_ray(t_data *data, float direction)
+{
+	t_ray	*ray;
+
+	ray = init_ray(data, direction);
+	ray_init_len(ray);
+	dda(data, ray);
+	if (ray->wall % 2)
+	{
+		ray->x = ray->x + ray->x_dir * (ray->x_len - ray->x_step_size);
+		ray->y = ray->y + ray->y_dir * (ray->x_len - ray->x_step_size);
+	}
+	else
+	{
+		ray->x = ray->x + ray->x_dir * (ray->y_len - ray->y_step_size);
+		ray->y = ray->y + ray->y_dir * (ray->y_len - ray->y_step_size);
+	}
+	return (ray);
+}
 
 float	ray(t_data *data, float direction, float *hit_x, float *hit_y)
 {
@@ -111,6 +191,8 @@ float	ray(t_data *data, float direction, float *hit_x, float *hit_y)
 		put_square(data, map_x * VOX, map_y * VOX, VOX, 0xFF5555FF);
 		printf("map_x : %d map_y: %d\n", map_x, map_y);
 	}
+	// ADD WALL HERE
+	// AFTER SMOKE
 	return (0);
 }
 

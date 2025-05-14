@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 14:10:05 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:13:52 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,21 @@ void	draw_line(t_data *data, float start_x, int i)
 	float	dist;
 	float	height;
 	int		start_y;
-	int		end_y;
 	int		y;
-	float	hit_x;
-	float	hit_y;
+	t_ray	*ray;
 
-	float temp = ray(data, start_x, &hit_x, &hit_y);
-	float temp2 = distance(data, hit_x, hit_y);
-	if (data->d < 2)
-		dist = temp;
-	else if (data->d <= 3)
-		dist = temp2;
-	else
-		dist = (temp2 + temp) / 2;
+	ray = cast_ray(data, start_x);
+	dist = distance(data, ray->x, ray->y);
 	height = ((float)VOX / dist) * ((float)WIDTH / 2);
 	start_y = (HEIGHT - height) / 2;
-	end_y = start_y + height;
 	y = 0;
 	while (y < start_y)
 	{
 		put_pixel(data, i, y, shade_color((y / ((float)HEIGHT / 16 * 7) * DRAW_DIST), data->sky));
 		y++;
 	}
-	while (start_y < end_y)
+	y = start_y + height;
+	while (start_y < y)
 	{
 		if ((i == WIDTH / 2 || i == WIDTH / 2 + 1 || i == WIDTH / 2 - 1) && 
 			(start_y == HEIGHT / 2 || start_y == HEIGHT / 2 + 1 ||
@@ -51,7 +43,6 @@ void	draw_line(t_data *data, float start_x, int i)
 			/*printf("Distance: %f Hit_X: %f Hit_Y: %f\n", dist, hit_x, hit_y);*/
 		start_y++;
 	}
-	y = end_y;
 	while (y < HEIGHT)
 	{
 		put_pixel(data, i, y, shade_color((((float)HEIGHT / 16 * 15 - y) / ((float)HEIGHT / 2) * DRAW_DIST), data->floor));

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 14:01:12 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:19:10 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@
 typedef enum e_direction
 {
 	NORTH = 0,
-	NEAST = 1,
-	EAST = 2,
-	SEAST = 3,
-	SOUTH = 4,
-	SWEST = 5,
-	WEST = 6,
+	EAST = 1,
+	SOUTH = 2,
+	WEST = 3,
+	NEAST = 4,
+	SEAST = 5,
+	SWEST = 6,
 	NWEST = 7,
 }				t_direction;
 
@@ -161,6 +161,7 @@ typedef struct s_data
 	int				size_line;
 	int				endian;
 
+	int				wall[4];
 	t_time			*time;
 	t_player		*player;
 	t_sprite		*spr;
@@ -250,9 +251,10 @@ int		button_hook(t_data *data);
 
 bool	edge(t_data *data, float pos_x, float pos_y);
 bool	coll(t_data *data, float pos_x, float pos_y);
+t_ray 	*cast_ray(t_data *data, float direction);
 /*int		cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y);*/
 /*int		cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y);*/
-float	ray(t_data *data, float direction, float *hit_x, float *hit_y);
+/*float	ray(t_data *data, float direction, float *hit_x, float *hit_y);*/
 float	distance(t_data *data, float ray_x, float ray_y);
 
 //*****************************************************************

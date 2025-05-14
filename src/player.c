@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 13:05:52 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:14:26 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ int	key_press(int keycode, t_data *data)
 		data->player->turn_left = true;
 	if (keycode == RIGHT || keycode == D)
 		data->player->turn_right = true;
-	if (keycode == R)
-		color_screen(data, 0xFFFF0000);
-	if (keycode == G)
-		color_screen(data, 0xFF00FF00);
-	if (keycode == B)
-		color_screen(data, 0xFF0000FF);
+	/*if (keycode == R)*/
+	/*	color_screen(data, 0xFFFF0000);*/
+	/*if (keycode == G)*/
+	/*	color_screen(data, 0xFF00FF00);*/
+	/*if (keycode == B)*/
+	/*	color_screen(data, 0xFF0000FF);*/
 	if (keycode == M)
 		printarr(data->map);
 	if (keycode == SHIFT)
@@ -256,7 +256,7 @@ void	move_player(t_data *data)
 		/*pl->x -= y_spd * (pl->x_dist > 10);*/
 		/*pl->y += x_spd * (pl->y_dist > 10);*/
 	}
-	printf("X: %f Y: %f x_dist: %f y_dist: %f\n", pl->x, pl->y, pl->x_dist, pl->y_dist);
+	/*printf("X: %f Y: %f x_dist: %f y_dist: %f\n", pl->x, pl->y, pl->x_dist, pl->y_dist);*/
 	/*printf("X: %f Y: %f Dir: %f Cos: %f Sin: %f\n", pl->x, pl->y, pl->dir, cos_d, sin_d);*/
 	/*if (data->player->key_up && data->player->y > 0 + 4)*/
 	/*	data->player->y -= speed * data->player->dash;*/
