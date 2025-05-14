@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 13:59:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:35:33 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	check_game_ready(t_data *data)
 
 	tx = data->file->tx;
 	map_ok = validate_map(data);
-	if (!tx->north
-		|| !tx->south
-		|| !tx->west
-		|| !tx->east
+	if (!tx->north_path
+		|| !tx->south_path
+		|| !tx->west_path
+		|| !tx->east_path
 		|| !tx->floor
 		|| !tx->ceiling
 		|| !map_ok)
@@ -110,6 +110,10 @@ int main(int argc, char **argv)
 	data.time->last_frame = get_time(&data);
 	write(1, "Game ready\n", 12);
 	printarr(data.map);
+	data.wall[NORTH] = 0xFF00CCCC; 
+	data.wall[SOUTH] = 0xFFCCCC00;
+	data.wall[WEST] = 0xFF0000CC;
+	data.wall[EAST] = 0xFFCC0000;
 	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
 	mlx_hook(data.win, 3, 1L<<1, key_release, &data);
 	mlx_hook(data.win, 17, 0, &button_hook, &data);

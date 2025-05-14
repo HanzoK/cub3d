@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 13:59:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:29:05 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	free_textures(t_data *data)
 	tx = data->file->tx;
 	if (!tx)
 		return ;
-	if (tx->north)
-		ft_free(&tx->north);
-	if (tx->south)
-		ft_free(&tx->south);
-	if (tx->west)
-		ft_free(&tx->west);
-	if (tx->east)
-		ft_free(&tx->east);
+	if (tx->north_path)
+		ft_free(&tx->north_path);
+	if (tx->south_path)
+		ft_free(&tx->south_path);
+	if (tx->west_path)
+		ft_free(&tx->west_path);
+	if (tx->east_path)
+		ft_free(&tx->east_path);
 	if (tx->floor)
 		ft_free(&tx->floor);
 	if	(tx->sprite)

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 16:22:15 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 15:26:45 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,10 @@ int	rgb_value_check (char **colours)
 
 int	validate_textures(t_data *data)
 {
-	if (!validate_xpm_64(data->mlx, data->file->tx->north)
-		|| !validate_xpm_64(data->mlx, data->file->tx->south)
-		|| !validate_xpm_64(data->mlx, data->file->tx->west)
-		|| !validate_xpm_64(data->mlx, data->file->tx->east))
+	if (!validate_xpm_64(data->mlx, data->file->tx->north_path)
+		|| !validate_xpm_64(data->mlx, data->file->tx->south_path)
+		|| !validate_xpm_64(data->mlx, data->file->tx->west_path)
+		|| !validate_xpm_64(data->mlx, data->file->tx->east_path))
 		return (0);
 	return (1);
 }

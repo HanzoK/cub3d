@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 15:19:10 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:29:01 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,14 @@ typedef enum e_keycode
 
 typedef struct s_textures
 {
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
+	void			*north;
+	void			*south;
+	void			*west;
+	void			*east;
+	char			*north_path;
+	char			*south_path;
+	char			*west_path;
+	char			*east_path;
 	char			*sprite;
 	char			*floor;
 	char			*ceiling;
@@ -97,14 +101,6 @@ typedef struct s_file
 	int				line_height;
 	t_textures		*tx;
 }					t_file;
-
-typedef struct s_sprite
-{
-	void			*north;
-	void			*south;
-	void			*west;
-	void			*east;
-}					t_sprite;
 
 typedef struct s_player
 {
@@ -164,7 +160,6 @@ typedef struct s_data
 	int				wall[4];
 	t_time			*time;
 	t_player		*player;
-	t_sprite		*spr;
 	char			**map;
 	int				map_width;
 	int				map_height;

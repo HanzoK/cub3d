@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 13:59:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:29:51 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,22 @@ int	parse_config_file(t_data *data)
         trimmed = line + skip_spaces(line, 0);
         if (!ft_strncmp(trimmed, "NO", 2))
         {
-            if (!check_and_set_texture(&data->file->tx->north, line))
+            if (!check_and_set_texture(&data->file->tx->north_path, line))
                 return (-1);
         }
         else if (!ft_strncmp(line, "SO", 2))
         {
-            if (!check_and_set_texture(&data->file->tx->south, line))
+            if (!check_and_set_texture(&data->file->tx->south_path, line))
                 return (-1);
         }
         else if (!ft_strncmp(line, "WE", 2))
         {
-            if (!check_and_set_texture(&data->file->tx->west, line))
+            if (!check_and_set_texture(&data->file->tx->west_path, line))
                 return (-1);
         }
         else if (!ft_strncmp(line, "EA", 2))
         {
-            if (!check_and_set_texture(&data->file->tx->east, line))
+            if (!check_and_set_texture(&data->file->tx->east_path, line))
                 return (-1);
         }
         else if (!ft_strncmp(line, "S", 1))
