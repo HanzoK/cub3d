@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 15:29:01 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 16:46:13 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define DRAW_DIST 780.0
 /*# define FPS 120*/
 # define FRAME_TIME 16
+# define IMG_W 128
+# define IMG_H 128
 
 typedef enum e_direction
 {
@@ -145,6 +147,8 @@ typedef struct s_ray
 	int			step_x;
 	int			step_y;
 	t_direction wall;
+	int			column;
+	float		height;
 }				t_ray;
 
 typedef struct s_data

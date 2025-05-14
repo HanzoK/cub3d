@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:12:59 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 10:40:24 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:57:13 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,11 @@ float	distance(t_data *data, float ray_x, float ray_y)
 	x = ray_x - data->player->x;
 	y = ray_y - data->player->y;
 	angle = atan2f(y, x) - data->player->dir;
-	if (data->d == 3)
-	{
-		if (angle < -PI)
-			angle += 2 * PI;
-		if (angle > PI)
-			angle -= 2 * PI;
-	}
-	dist = sqrtf(x * x + y * y * cosf(angle));
+	if (angle < -PI)
+		angle += 2 * PI;
+	else if (angle > PI)
+		angle -= 2 * PI;
+	dist = sqrtf(((x * x) + (y * y))) * cosf(angle);
 	return (dist);
 }
 

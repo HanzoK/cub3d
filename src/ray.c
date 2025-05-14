@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 15:11:24 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:37:27 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,25 @@ void	dda(t_data *data, t_ray *ray)
 	}
 }
 
+void	ray_get_wall_column(t_ray *ray)
+{
+	float	pos;
+	float	check;
+
+	if (ray->wall == NORTH || ray->wall == SOUTH)
+	{
+		check = ray->map_x * VOX + ((VOX - 1) * ray->wall == NORTH);
+		pos = fabs(ray->x - check);
+	}
+	else
+	{
+		check = ray->map_y * VOX + ((VOX - 1) * ray->wall == EAST);
+		pos = fabs(ray->y - check);
+	}
+	ray->column = (int)(pos / VOX * (double)IMG_W);
+}
+
+
 t_ray	*cast_ray(t_data *data, float direction)
 {
 	t_ray	*ray;
@@ -89,6 +108,7 @@ t_ray	*cast_ray(t_data *data, float direction)
 		ray->x = ray->x + ray->x_dir * (ray->y_len - ray->y_step_size);
 		ray->y = ray->y + ray->y_dir * (ray->y_len - ray->y_step_size);
 	}
+	ray_get_wall_column(ray);
 	return (ray);
 }
 

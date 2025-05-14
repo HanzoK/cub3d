@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 15:35:33 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 16:01:13 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,16 @@ int main(int argc, char **argv)
 	data.time->last_frame = get_time(&data);
 	write(1, "Game ready\n", 12);
 	printarr(data.map);
-	data.wall[NORTH] = 0xFF00CCCC; 
-	data.wall[SOUTH] = 0xFFCCCC00;
-	data.wall[WEST] = 0xFF0000CC;
-	data.wall[EAST] = 0xFFCC0000;
+	/*data.wall[NORTH] = 0xFF00CCCC; */
+	/*data.wall[SOUTH] = 0xFFCCCC00;*/
+	/*data.wall[WEST] = 0xFF0000CC;*/
+	/*data.wall[EAST] = 0xFFCC0000;*/
+	data.wall[NORTH] = 0xFF990000; 
+	data.wall[SOUTH] = 0xFF990000;
+	data.wall[WEST] = 0xFF550000;
+	data.wall[EAST] = 0xFF550000;
+	data.floor = 0xFF222222;
+	data.sky = 0xFF0077AA;
 	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
 	mlx_hook(data.win, 3, 1L<<1, key_release, &data);
 	mlx_hook(data.win, 17, 0, &button_hook, &data);
