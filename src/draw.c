@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 16:51:22 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:06:44 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	put_texture(t_data *data, int x, int y, t_ray *ray)
 		img = data->tx->west;
 	else
 		img = data->tx->east;
+	printf("img_x: %d img_y: %d\n", tex_x, tex_y);
 	if (img)
 		color = *(unsigned int *)(img + (tex_y * IMG_W + tex_x) * 4);
 	else
