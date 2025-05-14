@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/06 10:58:33 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:59:44 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_array(char **array)
 
 void	free_textures(t_data *data)
 {
-	t_tx *tx;
+	t_textures *tx;
 
 	tx = data->file->tx;
 	if (!tx)

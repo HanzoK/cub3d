@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 16:44:39 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 13:59:44 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int parse_colour_config(t_data *data, char *line, int is_it_floor)
 {
     char    **colours;
     char    *value;
-    t_tx    *tx;
+    t_textures    *tx;
 
     tx = data->file->tx;
     value = get_config_value(line, 1);

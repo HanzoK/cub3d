@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/13 16:44:44 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:01:12 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@
 typedef enum e_direction
 {
 	NORTH = 0,
-	SOUTH = 1,
+	NEAST = 1,
 	EAST = 2,
-	WEST = 3
+	SEAST = 3,
+	SOUTH = 4,
+	SWEST = 5,
+	WEST = 6,
+	NWEST = 7,
 }				t_direction;
 
 typedef enum e_keycode
@@ -84,15 +88,14 @@ typedef struct s_textures
 	int				ceiling_r;
 	int				ceiling_g;
 	int				ceiling_b;
-
-}					t_tx;
+}					t_textures;
 
 typedef struct s_file
 {
 	char			**file;
 	int				line_length;
 	int				line_height;
-	t_tx			*tx;
+	t_textures		*tx;
 }					t_file;
 
 typedef struct s_sprite
@@ -107,7 +110,11 @@ typedef struct s_player
 {
 	float			x;
 	float			y;
+	float			x_dist;
+	float			y_dist;
 	float			dir;
+	float			x_dir;
+	float			y_dir;
 
 	float			dash;
 	bool			key_up;
@@ -125,6 +132,24 @@ typedef struct s_time
 	long			curr; // current time
 	long			delta; // time difference
 }					t_time;
+
+typedef struct s_ray
+{
+	float		x;
+	float		y;
+	float		dir;
+	float		x_dir;
+	float		y_dir;
+	float		x_step_size;
+	float		y_step_size;
+	float		x_len;
+	float		y_len;
+	int			map_x;
+	int			map_y;
+	int			step_x;
+	int			step_y;
+	t_direction wall;
+}				t_ray;
 
 typedef struct s_data
 {
@@ -147,7 +172,7 @@ typedef struct s_data
 	int				sky;
 	int				floor;
 	bool			is_game_ready;
-	t_tx			*tx;
+	t_textures			*tx;
 	t_file			*file;
 	int				d;
 }				t_data;
@@ -156,7 +181,7 @@ typedef struct s_data
 //*					FILE VALIDATION FUNCTIONS					  *
 //*****************************************************************
 
-void	ft_set_up_game(t_data *data, t_file *file, t_tx *tx, t_time *time);
+void	ft_set_up_game(t_data *data, t_file *file, t_textures *tx, t_time *time);
 void	input_validation(int argc, char **argv);
 int		validate_map(t_data *data);
 bool	validate_xpm_64(void *mlx, char *path);
@@ -195,6 +220,8 @@ bool 		coll(t_data *data, float pos_x, float pos_y);
 //*****************************************************************
 
 int		draw(t_data *data);
+void	draw_frame(t_data *data);
+void	draw_line(t_data *data, float start_x, int i);
 void	wipe(t_data *data);
 void	put_map(t_data *data);
 void	put_player(t_data *data);
@@ -223,9 +250,10 @@ int		button_hook(t_data *data);
 
 bool	edge(t_data *data, float pos_x, float pos_y);
 bool	coll(t_data *data, float pos_x, float pos_y);
-int		cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y);
-int		cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y);
+/*int		cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y);*/
+/*int		cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y);*/
 float	ray(t_data *data, float direction, float *hit_x, float *hit_y);
+float	distance(t_data *data, float ray_x, float ray_y);
 
 //*****************************************************************
 //*						TIME FUNCTIONS							  *
@@ -238,6 +266,7 @@ long	get_delta_time(t_data *data);
 //*						UTIL FUNCTIONS							  *
 //*****************************************************************
 
+int		shade_color(float dist, int color);
 int		get_color(int red, int green, int blue);
 char	*join2(char const *s1, char const *s2);
 void	printarr(char **arr);

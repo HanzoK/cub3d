@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/13 13:35:56 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:05:52 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,97 @@ int	key_release(int keycode, t_data *data)
 	return (0);
 }
 
+float	ray_x(t_data *data, int map_x, int map_y, int step_x)
+{
+	float	dist;
+
+	if (data->player->x_dir < 0)
+		dist = (data->player->x - map_x * VOX);
+	else if (data->player->x_dir > 0)
+		dist = ((map_x + 1) * VOX - data->player->x);
+	else
+		return (WIDTH);
+	while (1)
+	{
+		if (map_x < 0 || map_x >= data->map_width
+			|| map_y < 0 || map_y >= data->map_height)
+			break ;
+		if (data->map[map_y][map_x + step_x] == '1')
+			break ;
+		dist += VOX;
+		map_x += step_x;
+	}
+	return (dist);
+}
+
+float	ray_y(t_data *data, int map_x, int map_y, int step_y)
+{
+	float	dist;
+
+	if (data->player->y_dir < 0)
+		dist = (data->player->y - map_y * VOX);
+	else if (data->player->y_dir > 0)
+		dist = ((map_y + 1) * VOX - data->player->y);
+	else
+		return (HEIGHT);
+	while (1)
+	{
+		if (map_x < 0 || map_x >= data->map_width
+			|| map_y < 0 || map_y >= data->map_height)
+			break ;
+		if (data->map[map_y + step_y][map_x] == '1')
+			break ;
+		dist += VOX;
+		map_y += step_y;
+	}
+	return (dist);
+}
+
+void	update_player_distance(t_data *data, t_player *pl)
+{
+	int	map_x;
+	int	map_y;
+	int	step_x;
+	int	step_y;
+
+	map_x = (int)(pl->x / VOX);
+	map_y = (int)(pl->y / VOX);
+	step_x = 1 - (2 * (pl->x_dir < 0));
+	step_y = 1 - (2 * (pl->y_dir < 0));
+	data->player->x_dir = cos(pl->dir);
+	data->player->y_dir = sin(pl->dir);
+	pl->x_dist = ray_x(data, map_x, map_y, step_x);
+	pl->y_dist = ray_y(data, map_x, map_y, step_y);
+}
+
+bool	can_move(t_player *player)
+{
+	float	x_dist;
+	float	y_dist;
+
+	x_dist = player->x_dist;
+	y_dist = player->y_dist;
+	if ((!x_dist || x_dist > 20) && 
+		(!y_dist || y_dist > 20))
+		return (true);
+	return (false);
+}
+
+float	wall(t_data *data, float x, float y, float speed)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)(x / VOX);
+	map_y = (int)(y / VOX);
+	if (map_x < 0 || map_x >= data->map_width
+		|| map_y < 0 || map_y >= data->map_height)
+		return (0);
+	if (data->map[map_y][map_x] == '1')
+		return (0);
+	return (speed);
+}
+
 void	move_player(t_data *data)
 {
 	t_player	*pl;
@@ -124,46 +215,48 @@ void	move_player(t_data *data)
 	speed = (float)SPEED * data->time->delta / 1000;
 	x_spd = speed * cos(pl->dir) * pl->dash;
 	y_spd = speed * sin(pl->dir) * pl->dash;
-	if ((pl->x + VOX * (1 - 2 * (x_spd < 0))) / VOX > data->map_width
-		|| (pl->y + VOX * (1 - 2 * (y_spd < 0))) / VOX > data->map_height
-		|| (pl->x + VOX * (1 - 2 * (x_spd < 0))) / VOX <= 0
-		|| (pl->y + VOX * (1 - 2 * (y_spd < 0))) / VOX <= 0
-		/*|| (data->map[(int)(pl->y + (float)VOX * (1 - 2 * (y_spd < 0)))][(int)(pl->x + (float)VOX * (1 - 2 * (x_spd < 0)) / VOX)] != '1')*/
-		)
-		return ;
-	/*printf("X: %f Y: %f Dir: %f Cos: %f Sin: %f\n", pl->x, pl->y, pl->dir, cos(pl->dir), sin(pl->dir));*/
+	/*update_player_distance(data, pl);*/
 	if (pl->key_up)
 	{
-		if (!coll(data, (pl->x + x_spd * 10), (pl->y + y_spd * 10)))
-		{
-			pl->x += x_spd;
-			pl->y += y_spd;
-		}
+		pl->x += wall(data, pl->x + x_spd * 2, pl->y, x_spd);
+		pl->y += wall(data, pl->x, pl->y + y_spd * 2, y_spd);
+		/*pl->x += x_spd;*/
+		/*pl->y += y_spd;*/
+		/*pl->x += x_spd * (pl->x_dist > 10);*/
+		/*pl->y += y_spd * (pl->y_dist > 10);*/
+		/*if (data->map[(int)(pl->y / VOX)][(int)(pl->x / VOX)] == '1')*/
+		/*{*/
+		/*	pl->x -= x_spd;*/
+		/*	pl->y -= y_spd;*/
+		/*}*/
 	}
 	else if (pl->key_down)
 	{
-		if (!coll(data, (pl->x - x_spd * 10), (pl->y - y_spd * 10)))
-		{
-			pl->x -= x_spd;
-			pl->y -= y_spd;
-		}
+		pl->x -= wall(data, pl->x - x_spd * 2, pl->y, x_spd);
+		pl->y -= wall(data, pl->x, pl->y - y_spd * 2, y_spd);
+		/*pl->x -= x_spd * (pl->x_dist > 10);*/
+		/*pl->y -= y_spd * (pl->y_dist > 10);*/
+		/*if (data->map[(int)(pl->y / VOX)][(int)(pl->x / VOX)] == '1')*/
+		/*{*/
+		/*	pl->x += x_spd;*/
+		/*	pl->y += y_spd;*/
+		/*}*/
 	}
 	else if (pl->key_left)
 	{
-		if (!coll(data, (pl->x + y_spd * 10), (pl->y - x_spd * 10)))
-		{
-			pl->x += y_spd;
-			pl->y -= x_spd;
-		}
+		pl->x += wall(data, pl->x + y_spd * 2, pl->y, y_spd);
+		pl->y -= wall(data, pl->x, pl->y - x_spd * 2, x_spd);
+		/*pl->x += y_spd * (pl->x_dist > 10);*/
+		/*pl->y -= x_spd * (pl->y_dist > 10);*/
 	}
 	else if (pl->key_right)
 	{
-		if (!coll(data, (pl->x - y_spd * 10), (pl->y + x_spd * 10)))
-		{
-			pl->x -= y_spd;
-			pl->y += x_spd;
-		}
+		pl->x -= wall(data, pl->x - y_spd * 2, pl->y, y_spd);
+		pl->y += wall(data, pl->x, pl->y + x_spd * 2, x_spd);
+		/*pl->x -= y_spd * (pl->x_dist > 10);*/
+		/*pl->y += x_spd * (pl->y_dist > 10);*/
 	}
+	printf("X: %f Y: %f x_dist: %f y_dist: %f\n", pl->x, pl->y, pl->x_dist, pl->y_dist);
 	/*printf("X: %f Y: %f Dir: %f Cos: %f Sin: %f\n", pl->x, pl->y, pl->dir, cos_d, sin_d);*/
 	/*if (data->player->key_up && data->player->y > 0 + 4)*/
 	/*	data->player->y -= speed * data->player->dash;*/

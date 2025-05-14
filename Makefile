@@ -43,7 +43,9 @@ endif
 SRCDIR		= src/
 OBJDIR		= obj/
 SRC			= main.c \
+			  color.c \
 			  delta_time.c \
+			  draw.c \
 			  free.c \
 			  general_utils.c \
 			  init_game.c \
@@ -53,6 +55,7 @@ SRC			= main.c \
 			  player.c \
 			  put.c \
 			  ray.c \
+			  ray_utils.c \
 			  read_file.c \
 
 OBJ			= $(SRC:.c=.o)
