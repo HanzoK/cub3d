@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 20:06:51 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:57:39 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define TURN_SPEED 3
 # define DRAW_DIST 780.0
 /*# define FPS 120*/
-# define FRAME_TIME 16
+# define FRAME_TIME 1
 /*# define IMG_W 128*/
 /*# define IMG_H 128*/
 
@@ -83,6 +83,8 @@ typedef struct s_texture
 	int				height;
 	int				size_line;
 	int				endian;
+	char			**cache;
+	char			**split_texture;
 	/*struct			s_wall_tx	*next;*/
 	/*struct			s_wall_tx	*prev;*/
 }					t_texture;
@@ -148,6 +150,7 @@ typedef struct s_time
 
 typedef struct s_ray
 {
+	float		win_x;
 	float		x;
 	float		y;
 	float		dir;

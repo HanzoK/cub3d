@@ -6,10 +6,29 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:08:43 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 10:44:31 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:03:57 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3d.h"
+
+void	split_texture(t_texture *tx)
+{
+	char **split_texture;
+
+	split_texture = malloc(sizeof(char *) * tx->height + 1);
+	int	y = 0;
+	while (y < tx->height)
+	{
+		split_texture[y] = tx->addr + (y * tx->size_line);
+		y++;
+	}
+	tx->split_texture = split_texture;
+}
+
+int	get_pixel(t_texture *tx, int x, int y)
+{
+	return (*(unsigned int *)&tx->split_texture[y][x * 4]);
+}
 /*int key_hook(int keycode, t_data *data)*/
 /*{*/
 /*	printf("Keycode: %d\n", keycode);*/

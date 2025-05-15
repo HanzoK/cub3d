@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:01:44 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 20:10:34 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:21:23 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	shade_color(float dist, int color)
 {
+	/*return (color);*/
 	int	alpha;
 	int	red;
 	int	green;
