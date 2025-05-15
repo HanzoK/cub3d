@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/15 16:00:58 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:15:22 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	put_north_column(t_data *data, t_ray *ray, int y, int end)
 	double		xy[2];
 	int			i;
 	int			color;
-	int	edge;
-	
-	edge = (HEIGHT - ray->height) / 2;
+	/*int	edge;*/
+	/**/
+	/*edge = (HEIGHT - ray->height) / 2;*/
 	tx = data->tx->north;
 	xy[0] = ray->column;
 	xy[1] = 0;
@@ -94,12 +94,12 @@ void	put_north_column(t_data *data, t_ray *ray, int y, int end)
 	while (y < end)
 	{
 		i = ((int)xy[1] * tx->size_line) + ((int)xy[0] * (tx->bpp / 8));
-		if (data->d < 10)
-		{
-			printf("north y: %d, edge: %d, tx_xy[1]: %f tx_xy[1] as int: %d i: %d\n", y, edge, xy[1], (int)xy[1], i);
-			printf("ray_height: %f, tx_height: %d, ratio: %f\n", ray->height, tx->height, increment);
-			data->d++;
-		}
+		/*if (data->d < 10)*/
+		/*{*/
+		/*	printf("north y: %d, edge: %d, tx_xy[1]: %f tx_xy[1] as int: %d i: %d\n", y, edge, xy[1], (int)xy[1], i);*/
+		/*	printf("ray_height: %f, tx_height: %d, ratio: %f\n", ray->height, tx->height, increment);*/
+		/*	data->d++;*/
+		/*}*/
 		/*i = i * ratio * tx->size_line;*/
 
 		if (i >= tx->size_line * tx->height)
@@ -109,7 +109,7 @@ void	put_north_column(t_data *data, t_ray *ray, int y, int end)
 			i = 0;
 		}
 		color = *(unsigned int *)&tx->addr[i];
-		color = *(unsigned int *)&tx->split_texture[y][(int)xy[0]];
+		/*color = *(unsigned int *)&tx->split_texture[y][(int)xy[0]];*/
 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
 
 		/*i = i + (int)increment;*/

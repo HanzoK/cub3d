@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 21:23:12 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:48:49 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,19 +141,16 @@ t_texture	*init_texture(t_data *data, char *path)
 
 	tx = ft_calloc(1, sizeof(t_texture));
 	if (!tx)
-	{
 		bruh(data, "Error\ntexture malloc failed\n", 1);
-	}
 	tx->img = mlx_xpm_file_to_image(data->mlx, path, &tx->width, &tx->height);
 	if (!tx->img)
-	{
 		bruh(data, "Error\ntexture loading failed\n", 1);
-	}
 	tx->addr = mlx_get_data_addr(tx->img, &tx->bpp, &tx->size_line, &tx->endian);
 	if (!tx->addr)
-	{
 		bruh(data, "Error\ntexture address failed\n", 1);
-	}
+	split_texture(tx);
+	if (!tx->split_texture)
+		bruh(data, "Error\ntexture split failed\n", 1);
 	return (tx);
 }
 
@@ -170,7 +167,6 @@ int	load_textures(t_data *data)
 	printf("Textures loaded\n");
 	return (1);
 }
-
 
 /*bool	validate_xpm_64(t_data *data, void *mlx)*/
 /*{*/

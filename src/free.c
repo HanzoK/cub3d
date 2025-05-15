@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 20:18:04 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:38:59 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void	free_textures(t_data *data)
 	mlx_destroy_image(data->mlx, tx->south->img);
 	mlx_destroy_image(data->mlx, tx->west->img);
 	mlx_destroy_image(data->mlx, tx->east->img);
+	free(tx->north->split_texture);
+	free(tx->south->split_texture);
+	free(tx->west->split_texture);
+	free(tx->east->split_texture);
 	free(tx->north);
 	free(tx->south);
 	free(tx->west);
