@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/15 17:19:57 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/15 18:49:54 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,8 @@ char	**fill_map(t_data *data, int map_start)
 	int		i;
 
 	rows = 0;
-    max_len = 0;
-    i = 0;
+        max_len = 0;
+        i = 0;
 	while (data->file->file[map_start + rows])
 		rows++;
 	if (rows < 1)
@@ -172,7 +172,6 @@ char	**fill_map(t_data *data, int map_start)
 			data->map[i][len++] = ' ';
 		i++;
 	}
-    data->map[rows] = NULL;
 	data->map_width = max_len;
 	data->map_height = rows;
 	return (data->map);

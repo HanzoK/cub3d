@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/15 17:48:49 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/15 18:47:12 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,22 +114,20 @@ int	rgb_value_check (char **colours)
 
 	if (!colours || !colours[0] || !colours[1] || !colours[2])
 		return (0);
-	i = 0;
-	while (i < 3)
+	i = -1;
+	while (++i < 3)
 	{
 		temp = ft_strtrim(colours[i], " \t\n");
 		ft_free(&colours[i]);
 		colours[i] = temp;
 		if (!is_numeric_value(temp))
 			return (0);
-		i++;
 	}
 	r = ft_atoi(colours[0]);
 	g = ft_atoi(colours[1]);
 	b = ft_atoi(colours[2]);
-	if (!(r >= 0 && r <= 255
-		&& g >= 0 && g <= 255
-		&& b >= 0 && b <= 255))
+	if (!((r >= 0 && r <= 255) && (g >= 0 && g <= 255)
+		&& (b >= 0 && b <= 255)))
 		return (0);
 	else
 		return (1);
