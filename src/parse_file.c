@@ -6,11 +6,27 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 18:25:35 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/16 14:35:41 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	split_texture(t_texture *tx)
+{
+	char    **split_texture;
+        int     y = 0;
+
+	split_texture = ft_calloc(sizeof(char *), tx->height + 1);
+        if (!split_texture)
+            return ;
+	while (y < tx->height)
+	{
+		split_texture[y] = tx->addr + (y * tx->size_line);
+		y++;
+	}
+	tx->split_texture = split_texture;
+}
 
 int check_and_set_texture(char  **texture, char *line)
 {
@@ -38,7 +54,7 @@ int parse_colour_config(t_data *data, char *line, int is_it_floor)
     if (arr_len(colours) != 3)
         return(ft_free(&value), free_array(colours), 0);
     if (!rgb_value_check(colours))
-        (ft_free(&value), free_array(colours), bruh (data, "Colours, bruh.\n", 1));
+        (ft_free(&value), free_array(colours), bruh(data, "Colours, bruh.\n", 1));
     if (is_it_floor)
     {
         tx->floor = value;
@@ -128,8 +144,8 @@ char	**fill_map(t_data *data, int map_start)
 	int		i;
 
 	rows = 0;
-    max_len = 0;
-    i = 0;
+        max_len = 0;
+        i = 0;
 	while (data->file->file[map_start + rows])
 		rows++;
 	if (rows < 1)
@@ -156,7 +172,6 @@ char	**fill_map(t_data *data, int map_start)
 			data->map[i][len++] = ' ';
 		i++;
 	}
-    data->map[rows] = NULL;
 	data->map_width = max_len;
 	data->map_height = rows;
 	return (data->map);

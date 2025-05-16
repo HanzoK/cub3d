@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/14 20:18:04 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:58:09 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ void	free_array(char **array)
 		i++;
 	}
 	free(array);
+}
+
+void	*free_texture(t_data *data, t_texture *texture)
+{
+	(void)data;
+	if (!texture)
+		return (NULL);
+	if (texture->img)
+		mlx_destroy_image(data->mlx, texture->img);
+	if (texture->split_texture)
+		free(texture->split_texture);
+	free(texture);
+	return (NULL);
 }
 
 void	free_textures(t_data *data)
@@ -52,14 +65,30 @@ void	free_textures(t_data *data)
 		free_array(tx->colour_floor);
 	if (tx->colour_ceiling)
 		free_array(tx->colour_ceiling);
-	mlx_destroy_image(data->mlx, tx->north->img);
-	mlx_destroy_image(data->mlx, tx->south->img);
-	mlx_destroy_image(data->mlx, tx->west->img);
-	mlx_destroy_image(data->mlx, tx->east->img);
-	free(tx->north);
-	free(tx->south);
-	free(tx->west);
-	free(tx->east);
+	tx->north = free_texture(data, tx->north);
+	tx->south = free_texture(data, tx->south);
+	tx->west = free_texture(data, tx->west);
+	tx->east = free_texture(data, tx->east);
+	/*if (tx->north && tx->north->img)*/
+	/*	mlx_destroy_image(data->mlx, tx->north->img);*/
+	/*if (tx->south && tx->south->img)*/
+	/*	mlx_destroy_image(data->mlx, tx->south->img);*/
+	/*if (tx->west && tx->west->img)*/
+	/*	mlx_destroy_image(data->mlx, tx->west->img);*/
+	/*if (tx->east && tx->east->img)*/
+	/*	mlx_destroy_image(data->mlx, tx->east->img);*/
+	/*if (tx->north && tx->north->split_texture)*/
+	/*	free(tx->north->split_texture);*/
+	/*if (tx->south && tx->south->split_texture)*/
+	/*	free(tx->south->split_texture);*/
+	/*if (tx->west && tx->west->split_texture)*/
+	/*	free(tx->west->split_texture);*/
+	/*if (tx->east && tx->east->split_texture)*/
+	/*	free(tx->east->split_texture);*/
+	/*free(tx->north);*/
+	/*free(tx->south);*/
+	/*free(tx->west);*/
+	/*free(tx->east);*/
 }
 
 void	bruh(t_data *data, char *s, int status)

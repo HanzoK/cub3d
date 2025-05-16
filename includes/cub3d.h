@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/15 15:57:39 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:12:10 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_texture
 	int				height;
 	int				size_line;
 	int				endian;
-	char			**cache;
 	char			**split_texture;
 	/*struct			s_wall_tx	*next;*/
 	/*struct			s_wall_tx	*prev;*/
@@ -205,6 +204,7 @@ void	input_validation(int argc, char **argv);
 int		validate_map(t_data *data);
 bool	validate_xpm_64(t_data *data, void *mlx);
 int		load_textures(t_data *data);
+void	split_texture(t_texture *tx);
 
 //*****************************************************************
 //*					FILE READING FUNCTIONS						  *

@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:08:43 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/15 16:03:57 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:33:27 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3d.h"
@@ -15,7 +15,7 @@ void	split_texture(t_texture *tx)
 {
 	char **split_texture;
 
-	split_texture = malloc(sizeof(char *) * tx->height + 1);
+	split_texture = ft_calloc(sizeof(char *), tx->height + 1);
 	int	y = 0;
 	while (y < tx->height)
 	{

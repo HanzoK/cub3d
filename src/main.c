@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/16 15:22:40 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:24:55 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,7 @@ int main(int argc, char **argv)
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
 		bruh(&data, "Error\nInvalid map or missing config values\n", 1);
- 	/*printf("NORTH texture: %s\n", tx.north);
-	printf("SOUTH texture: %s\n", tx.south);
-	printf("WEST texture: %s\n", tx.west);
-	printf("EAST texture: %s\n", tx.east);
-	printf("Floor colour (R,G,B): %d,%d,%d\n", tx.floor_r, tx.floor_g, tx.floor_b);
-	printf("Ceil  colour (R,G,B): %d,%d,%d\n\n", tx.ceiling_r, tx.ceiling_g, tx.ceiling_b);
-	printf("Map size: %d rows | %d cols\n\n", data.map_height, data.map_width);
-	i = 0;
-	while (data.map[i])
-	{
-		printf("%s\n", data.map[i]);
-		i++;
-	}*/
 	/// Ollie got stuff. Hanju can go for a smoke
-	/*data.sky = 0xFF00AAFF;*/
-	/*data.sky = 0xFF0077AA;*/
-	/*data.floor = 0xFF333333;*/
-	/*data.floor = 0xFF222222;*/
 	data.mlx = mlx_init();
 	if (!data.mlx)
 		bruh (&data, "Error\n mlx_init fail\n", 1);
@@ -102,23 +85,11 @@ int main(int argc, char **argv)
 	if (!data.player)
 		bruh (&data, "Error\n player malloc fail\n", 1);
 	write(1, "Player created\n", 16);
-	/*data.img_north = mlx_xpm_file_to_image(data.mlx, data.tx->north, 64, 64);*/
-	/*data.img_south = mlx_xpm_file_to_image(data.mlx, data.tx->south, 64, 64);*/
-	/*data.img_west = mlx_xpm_file_to_image(data.mlx, data.tx->west, 64, 64);*/
-	/*data.img_east = mlx_xpm_file_to_image(data.mlx, data.tx->east, 64, 64);*/
 	data.d = 0;
 	get_delta_time(&data);
 	data.time->last_frame = get_time(&data);
 	write(1, "Game ready\n", 12);
 	printarr(data.map);
-	/*data.wall[NORTH] = 0xFF00CCCC; */
-	/*data.wall[SOUTH] = 0xFFCCCC00;*/
-	/*data.wall[WEST] = 0xFF0000CC;*/
-	/*data.wall[EAST] = 0xFFCC0000;*/
-	/*data.wall[NORTH] = 0xFF990000; */
-	/*data.wall[SOUTH] = 0xFF990000;*/
-	/*data.wall[WEST] = 0xFF550000;*/
-	/*data.wall[EAST] = 0xFF550000;*/
 	data.floor = 0xFF444444;
 	data.sky = 0xFF0077AA;
 	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
