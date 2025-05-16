@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/15 12:12:49 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:07:20 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ray_get_wall_column(t_data *data, t_ray *ray)
 		else
 			ray->column = (int)(pos / VOX * (double)data->tx->west->width);
 	}
+	ray->column *= 4;
 }
 
 t_ray	*cast_ray(t_data *data, float direction)
