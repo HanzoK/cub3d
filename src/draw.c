@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/16 15:24:43 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:28:23 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,49 @@ void	put_floor(t_data *data, int x, int start)
 /*	put_pixel(data, x, y, (shade_color(dist, *color)));*/
 /*}*/
 /**/
+// void	put_north_column(t_data *data, t_ray *ray, int y, int end)
+// {
+// 	t_texture	*tx;
+// 	double		tx_y;
+// 	int			color;
+// 	double		increment;
+//
+// 	printf("put_north_column\n");
+// 	tx = data->tx->north;
+// 	tx_y = 0;
+// 	increment = ((double)tx->height / (double)ray->height);
+// 	while (y < end)
+// 	{
+// 		printf("y: %d x: %d\n", (int)tx_y, ray->column);
+// 		// color = *(unsigned int *)&tx->split_texture[(int)tx_y][ray->column];
+// 		color = *(unsigned int *)tx->split_texture[(int)tx_y];
+// 		printf("If you see this - its not the split texture\n");
+// 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
+// 		y++;
+// 		tx_y += increment;
+// 		if (tx_y >= tx->height)
+// 			tx_y = 0;
+// 	}
+// }
+
 void	put_north_column(t_data *data, t_ray *ray, int y, int end)
 {
 	t_texture	*tx;
-	double		tx_y;
+	int			edge;
+	int			tx_xy[2];
+	int			i;
 	int			color;
-	double		increment;
-	
-	printf("put_north_column\n");
+
+	edge = (HEIGHT - ray->height) / 2;
 	tx = data->tx->north;
-	tx_y = 0;
-	increment = ((double)tx->height / (double)ray->height);
+	tx_xy[0] = ray->column;
 	while (y < end)
 	{
-		printf("y: %d x: %d\n", (int)tx_y, ray->column);
-		// color = *(unsigned int *)&tx->split_texture[(int)tx_y][ray->column];
-		color = *(unsigned int *)tx->split_texture[(int)tx_y];
-		printf("If you see this - its not the split texture\n");
+		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
+		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
+		color = *(unsigned int *)&tx->addr[i];
 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
 		y++;
-		tx_y += increment;
-		if (tx_y >= tx->height)
-			tx_y = 0;
 	}
 }
 
@@ -114,7 +135,7 @@ void	put_south_column(t_data *data, t_ray *ray, int y, int end)
 	while (y < end)
 	{
 		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0] * (tx->bpp / 8));
+		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
 		color = *(unsigned int *)&tx->addr[i];
 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
 		y++;
@@ -135,7 +156,7 @@ void	put_west_column(t_data *data, t_ray *ray, int y, int end)
 	while (y < end)
 	{
 		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0] * (tx->bpp / 8));
+		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
 		color = *(unsigned int *)&tx->addr[i];
 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
 		y++;
@@ -156,7 +177,7 @@ void	put_east_column(t_data *data, t_ray *ray, int y, int end)
 	while (y < end)
 	{
 		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0] * (tx->bpp / 8));
+		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
 		color = *(unsigned int *)&tx->addr[i];
 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
 		y++;
