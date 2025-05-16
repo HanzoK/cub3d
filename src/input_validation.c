@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/15 18:47:12 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:01:39 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,14 @@ int	rgb_value_check (char **colours)
 		return (1);
 }
 
-t_texture	*init_texture(t_data *data, char *path)
+t_texture	*init_texture(t_data *data, char *path, t_texture **ptr)
 {
 	t_texture	*tx;
 
 	tx = ft_calloc(1, sizeof(t_texture));
 	if (!tx)
 		bruh(data, "Error\ntexture malloc failed\n", 1);
+	*ptr = tx;
 	tx->img = mlx_xpm_file_to_image(data->mlx, path, &tx->width, &tx->height);
 	if (!tx->img)
 		bruh(data, "Error\ntexture loading failed\n", 1);
@@ -154,13 +155,13 @@ t_texture	*init_texture(t_data *data, char *path)
 
 int	load_textures(t_data *data)
 {
-	data->tx->north = init_texture(data, data->tx->north_path);
+	data->tx->north = init_texture(data, data->tx->north_path, &data->tx->north);
 	write(1, "\rLOADING TEXTURES [1/4]", 23);
-	data->tx->south = init_texture(data, data->tx->south_path);
+	data->tx->south = init_texture(data, data->tx->south_path, &data->tx->south);
 	write(1, "\rLOADING TEXTURES [2/4]", 23);
-	data->tx->west = init_texture(data, data->tx->west_path);
+	data->tx->west = init_texture(data, data->tx->west_path, &data->tx->west);
 	write(1, "\rLOADING TEXTURES [3/4]", 23);
-	data->tx->east = init_texture(data, data->tx->east_path);
+	data->tx->east = init_texture(data, data->tx->east_path, &data->tx->east);
 	write(1, "\rLOADING TEXTURES [4/4]\n", 24);
 	printf("Textures loaded\n");
 	return (1);

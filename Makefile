@@ -65,10 +65,10 @@ OBJS		= $(addprefix $(OBJDIR), $(OBJ))
 all: 		$(OBJDIR) $(NAME) | logo
 
 $(NAME): 	$(LIB) $(OBJS) ./includes/cub3d.h
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lm $(LIB) $(MLXFLAGS) -pg
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lm $(LIB) $(MLXFLAGS) #-pg
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(LIB)
-	@$(CC) $(CFLAGS) -c -o $@ $< $(HEADER) -pg
+	@$(CC) $(CFLAGS) -c -o $@ $< $(HEADER) #-pg
 
 $(OBJDIR):
 	@mkdir $(OBJDIR)

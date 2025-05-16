@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/15 18:49:54 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/16 14:35:41 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int parse_colour_config(t_data *data, char *line, int is_it_floor)
     if (arr_len(colours) != 3)
         return(ft_free(&value), free_array(colours), 0);
     if (!rgb_value_check(colours))
-        (ft_free(&value), free_array(colours), bruh (data, "Colours, bruh.\n", 1));
+        (ft_free(&value), free_array(colours), bruh(data, "Colours, bruh.\n", 1));
     if (is_it_floor)
     {
         tx->floor = value;
