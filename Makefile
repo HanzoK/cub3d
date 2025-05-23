@@ -57,6 +57,9 @@ SRC			= main.c \
 			  ray.c \
 			  ray_utils.c \
 			  read_file.c \
+			  load_textures.c \
+			  fill_map.c \
+			  parse_colours.c \
 
 OBJ			= $(SRC:.c=.o)
 OBJS		= $(addprefix $(OBJDIR), $(OBJ))

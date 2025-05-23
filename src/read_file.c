@@ -6,68 +6,46 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 13:50:22 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:36:44 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*read_file_into_line(char	*filename)
+char	*read_file_into_line(t_data *data, char	*filename)
 {
-	int		fd;
-	int		exit_code;
 	char	*line;
 	char	*result;
 	char	*temp;
 	char	*buffer;
 
 	buffer = NULL;
-	temp = NULL;
-	line = NULL;
-	result = NULL;
-	exit_code = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return(perror("Error in open"), NULL);
+	data->fd = open(filename, O_RDONLY);
+	if (data->fd == -1)
+		return (perror("Error in open"), NULL);
 	result = ft_strdup("");
 	if (!result)
-		return (close(fd), NULL);
-	line = get_next_line_2(fd, &buffer, &exit_code);
+		return (close(data->fd), NULL);
+	line = get_next_line_2(data->fd, &buffer, &data->exit_code);
 	while (line)
 	{
 		temp = join2(result, line);
 		free(result);
 		result = temp;
 		free(line);
-		line = get_next_line_2(fd, &buffer, &exit_code);
+		line = get_next_line_2(data->fd, &buffer, &data->exit_code);
 	}
-	if (exit_code == -1)
+	if (data->exit_code == -1)
 		free(result);
-	return (close(fd), result);
+	return (close(data->fd), result);
 }
-
-char	**arrange_lines_as_map(char	*filename)
-{
-	char	*read_file;
-	char	**map;
-
-	read_file = read_file_into_line(filename);
-	if (!read_file)
-		return (NULL);
-	map = ft_split(read_file, '\n');
-	free(read_file);
-	if (!map)
-		return (NULL);
-	return (map);
-}
-
 
 int	read_file(t_data *data, char *filename)
 {
 	char	*raw_line;
 	char	*trimmed;
 
-	raw_line = read_file_into_line(filename);
+	raw_line = read_file_into_line(data, filename);
 	if (!raw_line)
 		return (0);
 	trimmed = ft_strtrim(raw_line, " \t\n");

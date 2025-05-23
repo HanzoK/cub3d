@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/05 13:50:15 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:46:00 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	skip_spaces(char *line, int i)
 
 int	arr_len(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])
@@ -31,7 +31,7 @@ int	arr_len(char **array)
 
 int	is_space_line(char *line)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (line[j] && ft_isspace((unsigned char)line[j]))
@@ -44,7 +44,7 @@ int	is_space_line(char *line)
 
 int	is_numeric_value(char *s)
 {
-	int i;
+	int	i;
 
 	if (!s || !s[0])
 		return (0);
@@ -63,10 +63,10 @@ char	*get_config_value(char *line, int config_name_len)
 	char	*raw_line;
 	char	*trimmed_line;
 	int		i1;
-    int		i2;
+	int		i2;
 
-    i1 = skip_spaces(line,0);
-    i2 = i1 + config_name_len;
+	i1 = skip_spaces(line, 0);
+	i2 = i1 + config_name_len;
 	i2 = skip_spaces(line, i2);
 	raw_line = line + i2;
 	trimmed_line = ft_strtrim(raw_line, " \t\n");
