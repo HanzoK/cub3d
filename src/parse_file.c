@@ -6,173 +6,97 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/16 14:35:41 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/23 18:42:43 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	split_texture(t_texture *tx)
+int	check_and_set_texture(char **texture, char *line)
 {
-	char    **split_texture;
-        int     y = 0;
+	if (*texture)
+		return (0);
+	*texture = get_config_value(line, 2);
+	if (!*texture)
+		return (0);
+	return (1);
+}
 
-	split_texture = ft_calloc(sizeof(char *), tx->height + 1);
-        if (!split_texture)
-            return ;
-	while (y < tx->height)
+int	handle_texture(t_data *data, char *trimmed, char *line)
+{
+	if (!ft_strncmp(trimmed, "NO", 2))
 	{
-		split_texture[y] = tx->addr + (y * tx->size_line);
-		y++;
+		if (!check_and_set_texture(&data->file->tx->north_path, line))
+			return (-1);
+		return (0);
 	}
-	tx->split_texture = split_texture;
+	if (!ft_strncmp(trimmed, "SO", 2))
+	{
+		if (!check_and_set_texture(&data->file->tx->south_path, line))
+			return (-1);
+		return (0);
+	}
+	if (!ft_strncmp(trimmed, "WE", 2))
+	{
+		if (!check_and_set_texture(&data->file->tx->west_path, line))
+			return (-1);
+		return (0);
+	}
+	if (!ft_strncmp(trimmed, "EA", 2))
+	{
+		if (!check_and_set_texture(&data->file->tx->east_path, line))
+			return (-1);
+		return (0);
+	}
+	return (1);
 }
 
-int check_and_set_texture(char  **texture, char *line)
+int	handle_colour(t_data *data, char *trimmed, char *line)
 {
-    if (*texture)
-        return (0);
-    *texture = get_config_value(line, 2);
-    if (!*texture)
-        return (0);
-    return (1);
-}
-
-int parse_colour_config(t_data *data, char *line, int is_it_floor)
-{
-    char    **colours;
-    char    *value;
-    t_textures    *tx;
-
-    tx = data->file->tx;
-    value = get_config_value(line, 1);
-    if (!value)
-        return (0);
-    colours = ft_split(value, ',');
-    if (!colours)
-        return (ft_free(&value), 0);
-    if (arr_len(colours) != 3)
-        return(ft_free(&value), free_array(colours), 0);
-    if (!rgb_value_check(colours))
-        (ft_free(&value), free_array(colours), bruh(data, "Colours, bruh.\n", 1));
-    if (is_it_floor)
-    {
-        tx->floor = value;
-        tx->colour_floor = colours;
-        tx->floor_r = ft_atoi(colours[0]);
-        tx->floor_g = ft_atoi(colours[1]);
-        tx->floor_b = ft_atoi(colours[2]);
-    }
-    else
-    {
-        tx->ceiling = value;
-        tx->colour_ceiling = colours;
-        tx->ceiling_r = ft_atoi(colours[0]);
-        tx->ceiling_g = ft_atoi(colours[1]);
-        tx->ceiling_b = ft_atoi(colours[2]);
-    }
-    data->sky = get_color(tx->ceiling_r, tx->ceiling_g, tx->ceiling_b);
-    data->floor = get_color(tx->floor_r, tx->floor_g, tx->floor_b);
-    return (1);
+	if (!ft_strncmp(trimmed, "F", 1))
+	{
+		if (data->file->tx->floor)
+			return (-1);
+		if (!parse_colour_config(data, line, 1))
+			return (-1);
+		return (0);
+	}
+	if (!ft_strncmp(trimmed, "C", 1))
+	{
+		if (data->file->tx->ceiling)
+			return (-1);
+		if (!parse_colour_config(data, line, 0))
+			return (-1);
+		return (0);
+	}
+	return (1);
 }
 
 int	parse_config_file(t_data *data)
 {
-    char	*line;
-    int		i;
-    char    *trimmed;
-
-    trimmed = NULL;
-    i = 0;
-    while (data->file->file[i])
-    {
-        line = data->file->file[i];
-        trimmed = line + skip_spaces(line, 0);
-        if (!ft_strncmp(trimmed, "NO", 2))
-        {
-            if (!check_and_set_texture(&data->file->tx->north_path, line))
-                return (-1);
-        }
-        else if (!ft_strncmp(line, "SO", 2))
-        {
-            if (!check_and_set_texture(&data->file->tx->south_path, line))
-                return (-1);
-        }
-        else if (!ft_strncmp(line, "WE", 2))
-        {
-            if (!check_and_set_texture(&data->file->tx->west_path, line))
-                return (-1);
-        }
-        else if (!ft_strncmp(line, "EA", 2))
-        {
-            if (!check_and_set_texture(&data->file->tx->east_path, line))
-                return (-1);
-        }
-        else if (!ft_strncmp(line, "S", 1))
-        {
-            if (!check_and_set_texture(&data->file->tx->sprite, line))
-                return (-1);
-        }
-        else if (!ft_strncmp(trimmed, "F", 1))
-        {
-            if (data->file->tx->floor)
-                return (-1);
-            if (!parse_colour_config(data, line, 1))
-                return (-1);
-        }
-        else if (!ft_strncmp(trimmed, "C", 1))
-        {
-            if (data->file->tx->ceiling)
-                return (-1);
-            if (!parse_colour_config(data, line, 0))
-                return (-1);
-        }
-        else if (is_space_line(line))
-            ;
-        else
-            break;
-        i++;
-    }
-    return (i);
-}
-
-char	**fill_map(t_data *data, int map_start)
-{
-	int		rows;
-	int		max_len;
-	int		len;
+	char	*line;
+	char	*trimmed;
 	int		i;
+	int		ret_tex;
+	int		ret_col;
 
-	rows = 0;
-        max_len = 0;
-        i = 0;
-	while (data->file->file[map_start + rows])
-		rows++;
-	if (rows < 1)
-		return (NULL);
-	while (i < rows)
-	{
-		len = ft_strlen(data->file->file[map_start + i]);
-		if (len > max_len)
-			max_len = len;
-		i++;
-	}
-	data->map = ft_calloc(rows + 1, sizeof(char *));
-	if (!data->map)
-		return (NULL);
 	i = 0;
-	while (i < rows)
+	while (data->file->file[i])
 	{
-		len = ft_strlen(data->file->file[map_start + i]);
-		data->map[i] = ft_calloc(max_len + 1, sizeof(char));
-		if (!data->map[i])
-			return (free_array(data->map), NULL);
-		ft_memcpy(data->map[i], data->file->file[map_start + i], len);
-		while (len < max_len)
-			data->map[i][len++] = ' ';
+		line = data->file->file[i];
+		trimmed = line + skip_spaces(line, 0);
+		ret_tex = handle_texture(data, trimmed, line);
+		if (ret_tex < 0)
+			return (-1);
+		if (ret_tex == 0)
+			ret_col = 1;
+		else
+			ret_col = handle_colour(data, trimmed, line);
+		if (ret_col < 0)
+			return (-1);
+		if (ret_tex == 1 && ret_col == 1 && !is_space_line(line))
+			break ;
 		i++;
 	}
-	data->map_width = max_len;
-	data->map_height = rows;
-	return (data->map);
+	return (i);
 }

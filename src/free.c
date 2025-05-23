@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/16 14:58:09 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:37:32 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*free_texture(t_data *data, t_texture *texture)
 
 void	free_textures(t_data *data)
 {
-	t_textures *tx;
+	t_textures	*tx;
 
 	tx = data->tx;
 	if (!tx)
@@ -57,8 +57,6 @@ void	free_textures(t_data *data)
 		ft_free(&tx->east_path);
 	if (tx->floor)
 		ft_free(&tx->floor);
-	if	(tx->sprite)
-		ft_free(&tx->sprite);
 	if (tx->ceiling)
 		ft_free(&tx->ceiling);
 	if (tx->colour_floor)
@@ -69,26 +67,6 @@ void	free_textures(t_data *data)
 	tx->south = free_texture(data, tx->south);
 	tx->west = free_texture(data, tx->west);
 	tx->east = free_texture(data, tx->east);
-	/*if (tx->north && tx->north->img)*/
-	/*	mlx_destroy_image(data->mlx, tx->north->img);*/
-	/*if (tx->south && tx->south->img)*/
-	/*	mlx_destroy_image(data->mlx, tx->south->img);*/
-	/*if (tx->west && tx->west->img)*/
-	/*	mlx_destroy_image(data->mlx, tx->west->img);*/
-	/*if (tx->east && tx->east->img)*/
-	/*	mlx_destroy_image(data->mlx, tx->east->img);*/
-	/*if (tx->north && tx->north->split_texture)*/
-	/*	free(tx->north->split_texture);*/
-	/*if (tx->south && tx->south->split_texture)*/
-	/*	free(tx->south->split_texture);*/
-	/*if (tx->west && tx->west->split_texture)*/
-	/*	free(tx->west->split_texture);*/
-	/*if (tx->east && tx->east->split_texture)*/
-	/*	free(tx->east->split_texture);*/
-	/*free(tx->north);*/
-	/*free(tx->south);*/
-	/*free(tx->west);*/
-	/*free(tx->east);*/
 }
 
 void	bruh(t_data *data, char *s, int status)

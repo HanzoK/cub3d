@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/15 17:12:10 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:37:20 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ typedef struct s_texture
 	int				size_line;
 	int				endian;
 	char			**split_texture;
-	/*struct			s_wall_tx	*next;*/
-	/*struct			s_wall_tx	*prev;*/
 }					t_texture;
 
 typedef struct s_textures
@@ -98,7 +96,6 @@ typedef struct s_textures
 	char			*south_path;
 	char			*west_path;
 	char			*east_path;
-	char			*sprite;
 	char			*floor;
 	char			*ceiling;
 	char			**colour_floor;
@@ -193,6 +190,8 @@ typedef struct s_data
 	t_textures		*tx;
 	t_file			*file;
 	int				d;
+	int				fd;
+	int				exit_code;
 }				t_data;
 
 //*****************************************************************
@@ -214,7 +213,7 @@ int		is_numeric_value(char *s);
 int		arr_len(char **array);
 int		skip_spaces(char *line, int i);
 int		is_space_line(char *line);
-char	*read_file_into_line(char	*filename);
+char	*read_file_into_line(t_data *data, char	*filename);
 char	**arrange_lines_as_map(char	*filename);
 int		read_file(t_data *data, char *filename);
 int		is_space_line(char *line);
