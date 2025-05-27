@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:42:03 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/23 18:42:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:45:10 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ t_texture	*init_texture(t_data *data, char *path, t_texture **ptr)
 {
 	t_texture	*tx;
 	size_t		len;
+	char		*str;
 
-	len = ft_strlen(path);
-	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
-		return (false);
+	str = ft_strrchr(path, '/');
+	str += (str != NULL) + ((str == NULL) * (size_t)path) ;
+	len = ft_strlen(str);
+	if (len < 5 || ft_strncmp(str + len - 4, ".xpm", 4) != 0)
+		return (bruh(data, "\nError\nEver heard of .xpm files?\n", 1), NULL);
 	tx = ft_calloc(1, sizeof(t_texture));
 	if (!tx)
 		bruh(data, "Error\ntexture malloc failed\n", 1);

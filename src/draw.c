@@ -6,7 +6,11 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/16 15:28:23 by oohnivch         ###   ########.fr       */
+<<<<<<< Updated upstream
+/*   Updated: 2025/05/27 17:24:00 by oohnivch         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/27 16:21:53 by hanjkim          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,115 +79,6 @@ void	put_floor(t_data *data, int x, int start)
 /*	put_pixel(data, x, y, (shade_color(dist, *color)));*/
 /*}*/
 /**/
-// void	put_north_column(t_data *data, t_ray *ray, int y, int end)
-// {
-// 	t_texture	*tx;
-// 	double		tx_y;
-// 	int			color;
-// 	double		increment;
-//
-// 	printf("put_north_column\n");
-// 	tx = data->tx->north;
-// 	tx_y = 0;
-// 	increment = ((double)tx->height / (double)ray->height);
-// 	while (y < end)
-// 	{
-// 		printf("y: %d x: %d\n", (int)tx_y, ray->column);
-// 		// color = *(unsigned int *)&tx->split_texture[(int)tx_y][ray->column];
-// 		color = *(unsigned int *)tx->split_texture[(int)tx_y];
-// 		printf("If you see this - its not the split texture\n");
-// 		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
-// 		y++;
-// 		tx_y += increment;
-// 		if (tx_y >= tx->height)
-// 			tx_y = 0;
-// 	}
-// }
-
-void	put_north_column(t_data *data, t_ray *ray, int y, int end)
-{
-	t_texture	*tx;
-	int			edge;
-	int			tx_xy[2];
-	int			i;
-	int			color;
-
-	edge = (HEIGHT - ray->height) / 2;
-	tx = data->tx->north;
-	tx_xy[0] = ray->column;
-	while (y < end)
-	{
-		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
-		color = *(unsigned int *)&tx->addr[i];
-		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
-		y++;
-	}
-}
-
-void	put_south_column(t_data *data, t_ray *ray, int y, int end)
-{
-	t_texture	*tx;
-	int			edge;
-	int			tx_xy[2];
-	int			i;
-	int			color;
-
-	edge = (HEIGHT - ray->height) / 2;
-	tx = data->tx->south;
-	tx_xy[0] = ray->column;
-	while (y < end)
-	{
-		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
-		color = *(unsigned int *)&tx->addr[i];
-		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
-		y++;
-	}
-}
-
-void	put_west_column(t_data *data, t_ray *ray, int y, int end)
-{
-	t_texture	*tx;
-	int			edge;
-	int			tx_xy[2];
-	int			i;
-	int			color;
-
-	edge = (HEIGHT - ray->height) / 2;
-	tx = data->tx->west;
-	tx_xy[0] = ray->column;
-	while (y < end)
-	{
-		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
-		color = *(unsigned int *)&tx->addr[i];
-		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
-		y++;
-	}
-}
-
-void	put_east_column(t_data *data, t_ray *ray, int y, int end)
-{
-	t_texture	*tx;
-	int			edge;
-	int			tx_xy[2];
-	int			i;
-	int			color;
-
-	edge = (HEIGHT - ray->height) / 2;
-	tx = data->tx->east;
-	tx_xy[0] = ray->column;
-	while (y < end)
-	{
-		tx_xy[1] = abs(y - edge) / ray->height * tx->height;
-		i = (tx_xy[1] * tx->size_line) + (tx_xy[0]);
-		color = *(unsigned int *)&tx->addr[i];
-		put_pixel(data, ray->win_x, y, shade_color(ray->dist, color));
-		y++;
-	}
-}
-
 void	draw_line(t_data *data, float start_x, int i)
 {
 	float	dist;
@@ -200,6 +95,10 @@ void	draw_line(t_data *data, float start_x, int i)
 	start_y = (HEIGHT - height) / 2;
 	end_y = start_y + height;
 	ray->win_x = i;
+	// if (start_y < 0)
+	// 	start_y = 0;
+	// if (end_y >= HEIGHT)
+	// 	end_y = HEIGHT - 1;
 	put_sky(data, i, start_y);
 	if (ray->wall == NORTH)
 		put_north_column(data, ray, start_y, end_y);
@@ -210,12 +109,17 @@ void	draw_line(t_data *data, float start_x, int i)
 	else if (ray->wall == EAST)
 		put_east_column(data, ray, start_y, end_y);
 	else
-		bruh(data, "Error\nray wall not found\n", 1);
+		bruh(data, "Error\nRay wall not found\n", 1);
 	/*while (start_y < end_y)*/
 	/*{*/
 	/*	put_texture(data, i, start_y, ray);*/
 	/*	start_y++;*/
 	/*}*/
+	// if (i == WIDTH / 2)
+	// {
+	// 	printf("Ray: %d, Wall: %d, Height: %.2f, Dist: %.2f\n",
+	// 		i, ray->wall, height, dist);
+	// }
 	put_floor(data, i, end_y);
 	put_fat_pixel(data, WIDTH / 2, HEIGHT / 2, 0xFFCC00CC);
 	free(ray);
@@ -244,8 +148,18 @@ int	draw(t_data *data)
 {
 	data->time->delta = get_delta_time(data);
 	move_player(data);
-	if (get_time(data) - data->time->last_frame < FRAME_TIME)
-		return (0);
+<<<<<<< Updated upstream
+	long	check;
+	check = get_time(data) - data->time->last_frame;
+	printf("\t\t\t\t\t\t\t\t\tframe time: %ld ms\n", check);
+	// if (check < FRAME_TIME)
+	// 	return (0);
+	// if (get_time(data) - data->time->last_frame < FRAME_TIME)
+	// 	return (0);
+=======
+	/*if (get_time(data) - data->time->last_frame < FRAME_TIME)*/
+		/*return (0);*/
+>>>>>>> Stashed changes
 	/*if (get_time(data) - data->time->last_frame > FRAME_TIME * 2)*/
 	/*	printf("Machine is struggling\n");*/
 	data->time->last_frame = get_time(data);

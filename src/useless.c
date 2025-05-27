@@ -6,11 +6,88 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:08:43 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/15 16:33:27 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/05/27 15:06:17 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3d.h"
 
+//
+// float	ray_x(t_data *data, int map_x, int map_y, int step_x)
+// {
+// 	float	dist;
+//
+// 	if (data->player->x_dir < 0)
+// 		dist = (data->player->x - map_x * VOX);
+// 	else if (data->player->x_dir > 0)
+// 		dist = ((map_x + 1) * VOX - data->player->x);
+// 	else
+// 		return (WIDTH);
+// 	while (1)
+// 	{
+// 		if (map_x < 0 || map_x >= data->map_width
+// 			|| map_y < 0 || map_y >= data->map_height)
+// 			break ;
+// 		if (data->map[map_y][map_x + step_x] == '1')
+// 			break ;
+// 		dist += VOX;
+// 		map_x += step_x;
+// 	}
+// 	return (dist);
+// }
+//
+// float	ray_y(t_data *data, int map_x, int map_y, int step_y)
+// {
+// 	float	dist;
+//
+// 	if (data->player->y_dir < 0)
+// 		dist = (data->player->y - map_y * VOX);
+// 	else if (data->player->y_dir > 0)
+// 		dist = ((map_y + 1) * VOX - data->player->y);
+// 	else
+// 		return (HEIGHT);
+// 	while (1)
+// 	{
+// 		if (map_x < 0 || map_x >= data->map_width
+// 			|| map_y < 0 || map_y >= data->map_height)
+// 			break ;
+// 		if (data->map[map_y + step_y][map_x] == '1')
+// 			break ;
+// 		dist += VOX;
+// 		map_y += step_y;
+// 	}
+// 	return (dist);
+// }
+//
+// void	update_player_distance(t_data *data, t_player *pl)
+// {
+// 	int	map_x;
+// 	int	map_y;
+// 	int	step_x;
+// 	int	step_y;
+//
+// 	map_x = (int)(pl->x / VOX);
+// 	map_y = (int)(pl->y / VOX);
+// 	step_x = 1 - (2 * (pl->x_dir < 0));
+// 	step_y = 1 - (2 * (pl->y_dir < 0));
+// 	data->player->x_dir = cos(pl->dir);
+// 	data->player->y_dir = sin(pl->dir);
+// 	pl->x_dist = ray_x(data, map_x, map_y, step_x);
+// 	pl->y_dist = ray_y(data, map_x, map_y, step_y);
+// }
+//
+// bool	can_move(t_player *player)
+// {
+// 	float	x_dist;
+// 	float	y_dist;
+//
+// 	x_dist = player->x_dist;
+// 	y_dist = player->y_dist;
+// 	if ((!x_dist || x_dist > 20) && 
+// 		(!y_dist || y_dist > 20))
+// 		return (true);
+// 	return (false);
+// }
+//
 void	split_texture(t_texture *tx)
 {
 	char **split_texture;
