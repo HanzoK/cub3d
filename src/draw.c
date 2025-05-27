@@ -6,7 +6,11 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/05/27 17:24:00 by oohnivch         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/27 16:21:53 by hanjkim          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +148,7 @@ int	draw(t_data *data)
 {
 	data->time->delta = get_delta_time(data);
 	move_player(data);
+<<<<<<< Updated upstream
 	long	check;
 	check = get_time(data) - data->time->last_frame;
 	printf("\t\t\t\t\t\t\t\t\tframe time: %ld ms\n", check);
@@ -151,6 +156,10 @@ int	draw(t_data *data)
 	// 	return (0);
 	// if (get_time(data) - data->time->last_frame < FRAME_TIME)
 	// 	return (0);
+=======
+	/*if (get_time(data) - data->time->last_frame < FRAME_TIME)*/
+		/*return (0);*/
+>>>>>>> Stashed changes
 	/*if (get_time(data) - data->time->last_frame > FRAME_TIME * 2)*/
 	/*	printf("Machine is struggling\n");*/
 	data->time->last_frame = get_time(data);

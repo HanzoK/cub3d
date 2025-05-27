@@ -6,7 +6,11 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:42:03 by oohnivch          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/05/27 14:48:27 by oohnivch         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/27 16:24:53 by hanjkim          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 

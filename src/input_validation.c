@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/23 18:56:56 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:25:48 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 void	input_validation(int argc, char **argv)
 {
 	size_t	len;
+	char	*str;
 
 	if (argc != 2)
 	{
 		ft_putstr_fd("Error\nAre you sure you know what you're doing?\n", 2);
 		exit(1);
 	}
-	len = ft_strlen(argv[1]);
-	if (len < 5 || ft_strncmp(argv[1] + len - 4, ".cub", 4) != 0)
+	str = ft_strrchr(argv[1], '/');
+	if (str)
+		str++;
+	else
+		str = argv[1];
+	len = ft_strlen(str);
+	if (len < 5 || ft_strncmp(str + len - 4, ".cub", 4) != 0)
 	{
 		ft_putstr_fd("Error\nDo you know the definition of insanity?\n", 2);
 		exit (1);
