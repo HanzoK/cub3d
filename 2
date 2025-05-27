@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/27 16:55:27 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:14:20 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,17 +181,16 @@ void	move_player(t_data *data)
 	x_spd = speed * cos(pl->dir) * pl->dash;
 	y_spd = speed * sin(pl->dir) * pl->dash;
 	/*update_player_distance(data, pl);*/
-	// printf("X: %f Y: %f X_spd: %f Y_spd: %f\n", pl->x, pl->y, x_spd, y_spd);
+	printf("X: %f Y: %f X_spd: %f Y_spd: %f\n", pl->x, pl->y, x_spd, y_spd);
 	int		check;
 	if (pl->key_up)
 	{
 		// pl->x += wall(data, pl->x + (17 * (1 - 2 * (x_spd < 0))), pl->y, x_spd);
 		// pl->y += wall(data, pl->x, pl->y + (17 * (1 - 2 * (y_spd < 0)))  , y_spd);
 		check = 15 * (1 - 2 * (x_spd < 0));
-		if (data->map[(int)(pl->y / VOX)][(int)(pl->x + check) / VOX] != '1')
+		if (data->map[(int)(pl->y / (float)VOX)][(int)(pl->x + check)] != '1')
 			pl->x += wall(data, pl->x + x_spd * 2, pl->y, x_spd);
-		check = 15 * (1 - 2 * (y_spd < 0));
-		if (data->map[(int)((pl->y + check) / VOX)][(int)(pl->x / (float)VOX)] != '1')
+		if (data->map[(int)(pl->y + check / (float)VOX)][(int)(pl->x / (float)VOX)] != '1')
 			pl->y += wall(data, pl->x, pl->y + y_spd * 2, y_spd);
 		// pl->x += x_spd;
 		// pl->y += y_spd;

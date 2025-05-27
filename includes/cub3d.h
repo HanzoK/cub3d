@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/23 16:37:20 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:49:36 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,10 @@ void	put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color
 void	put_empty_square(t_data *data, int pos_x, int pos_y, int size);
 void	put_fat_pixel(t_data *data, int x, int y, int color);
 void	color_screen(t_data *data, int color);
-void	evening(t_data *data);
-void	morning(t_data *data);
+void	put_north_column(t_data *data, t_ray *ray, int y, int end);
+void	put_south_column(t_data *data, t_ray *ray, int y, int end);
+void	put_west_column(t_data *data, t_ray *ray, int y, int end);
+void	put_east_column(t_data *data, t_ray *ray, int y, int end);
 
 //*****************************************************************
 //*						FREE FUNCTIONS							  *
@@ -269,9 +271,6 @@ int		button_hook(t_data *data);
 bool	edge(t_data *data, float pos_x, float pos_y);
 bool	coll(t_data *data, float pos_x, float pos_y);
 t_ray 	*cast_ray(t_data *data, float direction);
-/*int		cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y);*/
-/*int		cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y);*/
-/*float	ray(t_data *data, float direction, float *hit_x, float *hit_y);*/
 float	distance(t_data *data, float ray_x, float ray_y);
 
 //*****************************************************************
