@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/27 18:13:25 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:25:19 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,45 +36,6 @@ void	put_floor(t_data *data, int x, int start)
 	}
 }
 
-/*void	put_texture(t_data *data, int x, int y, t_ray *ray)*/
-/*{*/
-/*	int			tex_x;*/
-/*	int			tex_y;*/
-/*	int			*color;*/
-/*	void		*img;*/
-/*	t_texture	*tx;*/
-/*	int			i;*/
-/**/
-/**/
-/*	if (ray->wall == NORTH)*/
-/*		tx = data->tx->north;*/
-/*	else if (ray->wall == SOUTH)*/
-/*		tx = data->tx->south;*/
-/*	else if (ray->wall == WEST)*/
-/*		tx = data->tx->west;*/
-/*	else*/
-/*		tx = data->tx->east;*/
-/*	if (!tx)*/
-/*		bruh(data, "Error\ntexture not found\n", 1);*/
-/*	int	edge = (HEIGHT - ray->height) / 2 + (ray->height * y >= ((double)HEIGHT / 2));*/
-/*	img = tx->img;*/
-/*	tex_x = ray->column;*/
-/*	tex_y = abs(y - edge) / ray->height * tx->height;*/
-/*	i = (tex_y * tx->size_line) + (tex_x * (tx->bpp / 8));*/
-/*	if (img)*/
-/*		color = (int *)&tx->addr[i];*/
-/*	else*/
-/*	{*/
-/*		color = NULL;*/
-/*		bruh(data, "Error\ntexture address failed\n", 1);*/
-/*	}*/
-		/*color = *(unsigned int *)(img + (tex_y * tx->width + tex_x) * 4);*/
-	/*else*/
-	/*	*color = 0xFF000000;*/
-/*	float dist = ray->dist;*/
-/*	put_pixel(data, x, y, (shade_color(dist, *color)));*/
-/*}*/
-/**/
 void	draw_line(t_data *data, float start_x, int i)
 {
 	float	dist;
@@ -91,10 +52,6 @@ void	draw_line(t_data *data, float start_x, int i)
 	start_y = (HEIGHT - height) / 2;
 	end_y = start_y + height;
 	ray->win_x = i;
-	// if (start_y < 0)
-	// 	start_y = 0;
-	// if (end_y >= HEIGHT)
-	// 	end_y = HEIGHT - 1;
 	put_sky(data, i, start_y);
 	if (ray->wall == NORTH)
 		put_north_column(data, ray, start_y, end_y);
@@ -106,16 +63,6 @@ void	draw_line(t_data *data, float start_x, int i)
 		put_east_column(data, ray, start_y, end_y);
 	else
 		bruh(data, "Error\nRay wall not found\n", 1);
-	/*while (start_y < end_y)*/
-	/*{*/
-	/*	put_texture(data, i, start_y, ray);*/
-	/*	start_y++;*/
-	/*}*/
-	// if (i == WIDTH / 2)
-	// {
-	// 	printf("Ray: %d, Wall: %d, Height: %.2f, Dist: %.2f\n",
-	// 		i, ray->wall, height, dist);
-	// }
 	put_floor(data, i, end_y);
 	put_fat_pixel(data, WIDTH / 2, HEIGHT / 2, 0xFFCC00CC);
 	free(ray);
@@ -127,8 +74,6 @@ void	draw_frame(t_data *data)
 	float	start_x;
 	int		i;
 
-	/*fraction = PI / 2 / WIDTH;*/
-	/*start_x = data->player->dir - PI / 4;*/
 	fraction = PI / 3 / WIDTH;
 	start_x = data->player->dir - PI / 6;
 	i = 0;
@@ -149,13 +94,7 @@ int	draw(t_data *data)
 	printf("\t\t\t\t\t\t\t\t\tframe time: %ld ms\n", check);
 	if (check < FRAME_TIME)
 		return (0);
-	// if (get_time(data) - data->time->last_frame < FRAME_TIME)
-	// 	return (0);
-	/*if (get_time(data) - data->time->last_frame > FRAME_TIME * 2)*/
-	/*	printf("Machine is struggling\n");*/
 	data->time->last_frame = get_time(data);
-	/*put_map(data);*/
-	/*put_player(data);*/
 	draw_frame(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
