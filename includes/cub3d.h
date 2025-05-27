@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/27 16:49:36 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:20:35 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define TURN_SPEED 3
 # define DRAW_DIST 780.0
 /*# define FPS 120*/
-# define FRAME_TIME 1
+# define FRAME_TIME 16
 /*# define IMG_W 128*/
 /*# define IMG_H 128*/
 
@@ -40,10 +40,6 @@ typedef enum e_direction
 	EAST = 1,
 	SOUTH = 2,
 	WEST = 3,
-	NEAST = 4,
-	SEAST = 5,
-	SWEST = 6,
-	NWEST = 7,
 }				t_direction;
 
 typedef enum e_keycode
@@ -184,6 +180,7 @@ typedef struct s_data
 	int				map_height;
 	int				player_x;
 	int				player_y;
+	char			map_dir;
 	int				sky;
 	int				floor;
 	bool			is_game_ready;

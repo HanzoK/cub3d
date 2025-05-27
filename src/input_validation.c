@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/23 18:56:56 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:20:53 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	validate_and_count_tile(t_data *data, int i, int j, int *pc)
 	{
 		data->player_x = j;
 		data->player_y = i;
+		data->map_dir = c;
 		(*pc)++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/27 16:55:27 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:21:48 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,14 @@ t_player	*init_player(t_data *data)
 		return (NULL);
 	player->x = (float)data->player_x * VOX + ((float)VOX / 2);
 	player->y = (float)data->player_y * VOX + ((float)VOX / 2);
-	/*player->dir = PI / 2 * 3;*/
-	player->dir = 0;
+	if (data->map_dir == 'N')
+		player->dir = 3 * PI / 2;
+	else if (data->map_dir == 'E')
+		player->dir = 0;
+	else if (data->map_dir == 'S')
+		player->dir = PI / 2;
+	else if (data->map_dir == 'W')
+		player->dir = PI;
 	player->key_up = false;
 	player->key_down = false;
 	player->key_left = false;

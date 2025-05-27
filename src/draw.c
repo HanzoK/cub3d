@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/27 17:24:00 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:13:25 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,8 @@ int	draw(t_data *data)
 	long	check;
 	check = get_time(data) - data->time->last_frame;
 	printf("\t\t\t\t\t\t\t\t\tframe time: %ld ms\n", check);
-	// if (check < FRAME_TIME)
-	// 	return (0);
+	if (check < FRAME_TIME)
+		return (0);
 	// if (get_time(data) - data->time->last_frame < FRAME_TIME)
 	// 	return (0);
 	/*if (get_time(data) - data->time->last_frame > FRAME_TIME * 2)*/
