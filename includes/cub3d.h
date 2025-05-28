@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/27 18:24:21 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:31:19 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define TURN_SPEED 3
 # define DRAW_DIST 780.0
 /*# define FPS 120*/
-# define FRAME_TIME 16
+# define FRAME_TIME 11
 /*# define IMG_W 128*/
 /*# define IMG_H 128*/
 
@@ -229,6 +229,11 @@ int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 void		move_player(t_data *data);
 bool 		coll(t_data *data, float pos_x, float pos_y);
+void		turn(t_data *data, t_player *pl);
+void		walk_forward(t_data *data, t_player *pl, float x_spd, float y_spd);
+void		walk_backward(t_data *data, t_player *pl, float x_spd, float y_spd);
+void		strafe_left(t_data *data, t_player *pl, float x_spd, float y_spd);
+void		strafe_right(t_data *data, t_player *pl, float x_spd, float y_spd);
 
 //*****************************************************************
 //*						DRAW FUNCTIONS							  *
@@ -251,6 +256,9 @@ void	put_north_column(t_data *data, t_ray *ray, int y, int end);
 void	put_south_column(t_data *data, t_ray *ray, int y, int end);
 void	put_west_column(t_data *data, t_ray *ray, int y, int end);
 void	put_east_column(t_data *data, t_ray *ray, int y, int end);
+void	put_sky(t_data *data, int x, int end);
+void	put_floor(t_data *data, int x, int start);
+int		put_column(t_data *data, t_ray *ray, int start_y, int end_y);
 
 //*****************************************************************
 //*						FREE FUNCTIONS							  *

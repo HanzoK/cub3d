@@ -60,6 +60,7 @@ SRC			= main.c \
 			  load_textures.c \
 			  fill_map.c \
 			  parse_colours.c \
+			  walking.c \
 			  walls.c \
 
 OBJ			= $(SRC:.c=.o)
