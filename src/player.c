@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/28 09:55:37 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:00:22 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ void	turn(t_data *data, t_player *pl)
 void	move_player(t_data *data)
 {
 	t_player	*pl;
-	float 		speed;
-	double 		x_spd;
-	double 		y_spd;
+	float		speed;
+	double		x_spd;
+	double		y_spd;
 
 	pl = data->player;
 	turn(data, pl);

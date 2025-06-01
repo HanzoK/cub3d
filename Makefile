@@ -47,6 +47,7 @@ SRC			= main.c \
 			  delta_time.c \
 			  draw.c \
 			  free.c \
+			  free2.c \
 			  general_utils.c \
 			  init_game.c \
 			  input_validation.c \

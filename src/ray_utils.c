@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:12:59 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/14 15:57:13 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:54:58 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 float	distance(t_data *data, float ray_x, float ray_y)
 {
 	float	angle;
-	float 	dist;
+	float	dist;
 	float	x;
 	float	y;
 

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/28 10:31:19 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:22:24 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ typedef struct s_texture
 
 typedef struct s_textures
 {
-	t_texture			*north;
-	t_texture			*south;
-	t_texture			*west;
-	t_texture			*east;
+	t_texture		*north;
+	t_texture		*south;
+	t_texture		*west;
+	t_texture		*east;
 	char			*north_path;
 	char			*south_path;
 	char			*west_path;
@@ -132,6 +132,7 @@ typedef struct s_player
 	bool			turn_right;
 }					t_player;
 
+
 typedef struct s_time
 {
 	long			last; // last time
@@ -156,7 +157,7 @@ typedef struct s_ray
 	int			map_y;
 	int			step_x;
 	int			step_y;
-	t_direction wall;
+	t_direction	wall;
 	int			column;
 	float		height;
 	float		dist;
@@ -171,7 +172,6 @@ typedef struct s_data
 	int				bpp;
 	int				size_line;
 	int				endian;
-
 	int				wall[4];
 	t_time			*time;
 	t_player		*player;
@@ -189,13 +189,16 @@ typedef struct s_data
 	int				d;
 	int				fd;
 	int				exit_code;
+	int				window_center_x;
+	int				window_center_y;
 }				t_data;
 
 //*****************************************************************
 //*					FILE VALIDATION FUNCTIONS					  *
 //*****************************************************************
 
-void	ft_set_up_game(t_data *data, t_file *file, t_textures *tx, t_time *time);
+void	ft_set_up_game(t_data *data, t_file *file,
+			t_textures *tx, t_time *time);
 void	input_validation(int argc, char **argv);
 int		validate_map(t_data *data);
 bool	validate_xpm_64(t_data *data, void *mlx);
@@ -214,7 +217,7 @@ char	*read_file_into_line(t_data *data, char	*filename);
 char	**arrange_lines_as_map(char	*filename);
 int		read_file(t_data *data, char *filename);
 int		is_space_line(char *line);
-int		rgb_value_check (char **colours);
+int		rgb_value_check(char **colours);
 char	*get_config_value(char *line, int config_name_len);
 int		parse_colour_config(t_data *data, char *line, int is_it_floor);
 int		parse_config_file(t_data *data);
@@ -224,16 +227,17 @@ char	**fill_map(t_data *data, int map_start);
 //*						PLAYER FUNCTIONS						  *
 //*****************************************************************
 
-t_player	*init_player(t_data *data);
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 void		move_player(t_data *data);
-bool 		coll(t_data *data, float pos_x, float pos_y);
+bool		coll(t_data *data, float pos_x, float pos_y);
 void		turn(t_data *data, t_player *pl);
 void		walk_forward(t_data *data, t_player *pl, float x_spd, float y_spd);
 void		walk_backward(t_data *data, t_player *pl, float x_spd, float y_spd);
 void		strafe_left(t_data *data, t_player *pl, float x_spd, float y_spd);
 void		strafe_right(t_data *data, t_player *pl, float x_spd, float y_spd);
+t_player	*init_player(t_data *data);
+int			mouse_move(int x, int y, t_data *data);
 
 //*****************************************************************
 //*						DRAW FUNCTIONS							  *
@@ -264,6 +268,8 @@ int		put_column(t_data *data, t_ray *ray, int start_y, int end_y);
 //*						FREE FUNCTIONS							  *
 //*****************************************************************
 
+int		free_all_three(char **colours);
+void	free_partial_map(char **map, int rows);
 void	bruh(t_data *data, char *s, int status);
 void	free_array(char **lines);
 void	free_textures(t_data *date);
@@ -275,7 +281,7 @@ int		button_hook(t_data *data);
 
 bool	edge(t_data *data, float pos_x, float pos_y);
 bool	coll(t_data *data, float pos_x, float pos_y);
-t_ray 	*cast_ray(t_data *data, float direction);
+t_ray	*cast_ray(t_data *data, float direction);
 float	distance(t_data *data, float ray_x, float ray_y);
 
 //*****************************************************************

@@ -6,11 +6,26 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/23 16:37:32 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:46:01 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_partial_map(char **map, int rows)
+{
+	int	i;
+
+	if (!map)
+		return ;
+	i = 0;
+	while (i < rows)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
 
 void	free_array(char **array)
 {

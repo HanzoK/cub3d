@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:29:45 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/28 10:05:47 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:54:47 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	put_north_column(t_data *data, t_ray *ray, int y, int end)
 	}
 }
 
-void put_south_column(t_data *data, t_ray *ray, int y, int end)
+void	put_south_column(t_data *data, t_ray *ray, int y, int end)
 {
 	t_texture	*tx;
 	double		tx_y;

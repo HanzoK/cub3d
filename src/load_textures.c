@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:42:03 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/27 17:45:10 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/01 14:51:34 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_texture	*init_texture(t_data *data, char *path, t_texture **ptr)
 	char		*str;
 
 	str = ft_strrchr(path, '/');
-	str += (str != NULL) + ((str == NULL) * (size_t)path) ;
+	str += (str != NULL) + ((str == NULL) * (size_t)path);
 	len = ft_strlen(str);
 	if (len < 5 || ft_strncmp(str + len - 4, ".xpm", 4) != 0)
 		return (bruh(data, "\nError\nEver heard of .xpm files?\n", 1), NULL);
