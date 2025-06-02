@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 14:34:32 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:34:10 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	mouse_move(int x, int y, t_data *data)
 	last_x = (float)(x - data->window_center_x);
 	if (last_x != 0.0f)
 	{
-		last_y = 0.002f;
+		last_y = 0.0005;
 		data->player->dir += last_x * last_y;
 		if (data->player->dir < 0)
 			data->player->dir += 2 * PI;

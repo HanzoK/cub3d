@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:08:43 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/01 14:59:49 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/02 15:43:12 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3d.h"
@@ -271,29 +271,6 @@
 /*	}*/
 /*}*/
 /**/
-/*void	put_square(t_data *data, int pos_x, int pos_y,
- * int size, unsigned int color)*/
-/*{*/
-/*	int	x;*/
-/*	int	y;*/
-/**/
-/*	y = 0;*/
-/*	while (y < size)*/
-/*	{*/
-/*		x = 0;*/
-/*		while (x < size)*/
-/*		{*/
-/*			if ((x == 0 || x == size - 1 || y == 0 ||
- *			y == size - 1) && color != BLACK)*/
-/*				put_pixel(data, pos_x + x, pos_y + y, 0xFF0000FF);*/
-/*			else*/
-/*				put_pixel(data, pos_x + x, pos_y + y, color);*/
-/*			x++;*/
-/*		}*/
-/*		y++;*/
-/*	}*/
-/*}*/
-//
 // float	ray_x(t_data *data, int map_x, int map_y, int step_x)
 // {
 // 	float	dist;

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 14:34:40 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:43:09 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define BLACK 0xFF000000
 # define VOX 40
 # define MVOX VOX / 2
+# define MMAP_X WIDTH - MVOX * 5
+# define MMAP_Y HEIGHT - MVOX * 5
 # define SPEED 300
 # define TURN_SPEED 3
 # define DRAW_DIST 780.0
@@ -244,26 +246,27 @@ int			mouse_move(int x, int y, t_data *data);
 //*						DRAW FUNCTIONS							  *
 //*****************************************************************
 
-int		draw(t_data *data);
-void	draw_frame(t_data *data);
-void	draw_line(t_data *data, float start_x, int i);
-void	wipe(t_data *data);
-void	put_map(t_data *data);
-void	put_player(t_data *data);
-void	put_pixel(t_data *data, int x, int y, int color);
-void	put_pixel_sky(t_data *data, int x, int y, int color);
-void	put_pixel_floor(t_data *data, int x, int y, int color);
-void	put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color);
-void	put_empty_square(t_data *data, int pos_x, int pos_y, int size);
-void	put_fat_pixel(t_data *data, int x, int y, int color);
-void	color_screen(t_data *data, int color);
-void	put_north_column(t_data *data, t_ray *ray, int y, int end);
-void	put_south_column(t_data *data, t_ray *ray, int y, int end);
-void	put_west_column(t_data *data, t_ray *ray, int y, int end);
-void	put_east_column(t_data *data, t_ray *ray, int y, int end);
-void	put_sky(t_data *data, int x, int end);
-void	put_floor(t_data *data, int x, int start);
-int		put_column(t_data *data, t_ray *ray, int start_y, int end_y);
+int			draw(t_data *data);
+void		draw_frame(t_data *data);
+void		draw_line(t_data *data, float start_x, int i);
+void		draw_minimap(t_data *data);
+void		wipe(t_data *data);
+void		put_map(t_data *data);
+void		put_player(t_data *data);
+void		put_pixel(t_data *data, int x, int y, int color);
+void		put_pixel_sky(t_data *data, int x, int y, int color);
+void		put_pixel_floor(t_data *data, int x, int y, int color);
+void		put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color);
+void		put_empty_square(t_data *data, int pos_x, int pos_y, int size);
+void		put_fat_pixel(t_data *data, int x, int y, int color);
+void		color_screen(t_data *data, int color);
+void		put_north_column(t_data *data, t_ray *ray, int y, int end);
+void		put_south_column(t_data *data, t_ray *ray, int y, int end);
+void		put_west_column(t_data *data, t_ray *ray, int y, int end);
+void		put_east_column(t_data *data, t_ray *ray, int y, int end);
+void		put_sky(t_data *data, int x, int end);
+void		put_floor(t_data *data, int x, int start);
+int			put_column(t_data *data, t_ray *ray, int start_y, int end_y);
 
 //*****************************************************************
 //*						FREE FUNCTIONS							  *

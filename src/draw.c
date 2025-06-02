@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 14:17:11 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/02 14:58:04 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	draw(t_data *data)
 		return (0);
 	data->time->last_frame = get_time(data);
 	draw_frame(data);
+	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	tmp = ft_itoa(1000 / check);
 	fps = join2("FPS: ", tmp);

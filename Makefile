@@ -1,4 +1,3 @@
-
 NORMAL 		= \033[0m
 RED 		= \033[0;31m
 GREEN 		= \033[1;32m
@@ -51,6 +50,7 @@ SRC			= main.c \
 			  general_utils.c \
 			  init_game.c \
 			  input_validation.c \
+			  minimap.c \
 			  parse_file.c \
 			  parsing_utils.c \
 			  player.c \
