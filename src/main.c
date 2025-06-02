@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/01 17:31:32 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/02 14:19:01 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	mlx(t_data *data)
 		bruh(data, "Error\n image data address fail\n", 1);
 	mlx_mouse_move(data->mlx, data->win,
 		data->window_center_x, data->window_center_y);
+	mlx_mouse_hide(data->mlx, data->win);
 }
 
 int	main(int argc, char **argv)

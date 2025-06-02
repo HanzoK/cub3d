@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/28 10:33:09 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:17:11 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	draw(t_data *data)
 {
 	long	check;
 	char	*fps;
+	char	*tmp;
 
 	data->time->delta = get_delta_time(data);
 	move_player(data);
@@ -69,7 +70,11 @@ int	draw(t_data *data)
 	data->time->last_frame = get_time(data);
 	draw_frame(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	fps = join2("FPS: ", ft_itoa(1000 / check));
+	tmp = ft_itoa(1000 / check);
+	fps = join2("FPS: ", tmp);
+	free(tmp);
+	if (!fps)
+		bruh(data, "Error: FPS string allocation failed", 1);
 	mlx_string_put(data->mlx, data->win, 10, 20,
 				0x000000, fps);
 	free(fps);
