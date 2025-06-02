@@ -6,14 +6,14 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:44:16 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 15:28:29 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:35:31 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 void	put_square(t_data *data, int pos_x, int pos_y,
- int size, unsigned int color)
+	int size, unsigned int color)
 {
 	int	x;
 	int	y;

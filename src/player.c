@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 15:35:52 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:30:10 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ int	key_press(int keycode, t_data *data)
 		data->d = 3;
 	if (keycode == FOUR)
 		data->d = 4;
+	if (keycode == ALT)
+	{
+		if (data->mouse_enabled)
+		{
+			data->mouse_enabled = false;
+			mlx_mouse_show(data->mlx, data->win);
+		}
+	}
 	return (0);
 }
 
@@ -92,6 +100,13 @@ int	key_release(int keycode, t_data *data)
 		data->player->dash = 1;
 	if (keycode == CTRL)
 		data->player->dash = 1;
+	if (keycode == ALT)
+	{
+		data->mouse_enabled = true;
+		mlx_mouse_hide(data->mlx, data->win);
+		mlx_mouse_move(data->mlx, data->win,
+			data->window_center_x, data->window_center_y);
+	}
 	return (0);
 }
 
@@ -123,7 +138,7 @@ void	move_player(t_data *data)
 		walk_forward(data, pl, x_spd, y_spd);
 	else if (pl->key_down)
 		walk_backward(data, pl, x_spd, y_spd);
-	else if (pl->key_left)
+	if (pl->key_left)
 		strafe_left(data, pl, x_spd, y_spd);
 	else if (pl->key_right)
 		strafe_right(data, pl, x_spd, y_spd);

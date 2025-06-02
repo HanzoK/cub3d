@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 15:43:09 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:08:23 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef enum e_keycode
 	RIGHT = 65363,
 	SHIFT = 65505,
 	CTRL = 65507,
+	ALT = 65513,
 	W = 119,
 	A = 97,
 	S = 115,
@@ -194,6 +195,7 @@ typedef struct s_data
 	int				exit_code;
 	int				window_center_x;
 	int				window_center_y;
+	bool			mouse_enabled;
 }				t_data;
 
 //*****************************************************************

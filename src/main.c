@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 15:34:10 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:35:54 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ int	mouse_move(int x, int y, t_data *data)
 	float		last_x;
 	float		last_y;
 
+	if (!data->mouse_enabled)
+		return (0);
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 		return (0);
 	last_x = (float)(x - data->window_center_x);
 	if (last_x != 0.0f)
 	{
-		last_y = 0.0005;
+		last_y = 0.001;
 		data->player->dir += last_x * last_y;
 		if (data->player->dir < 0)
 			data->player->dir += 2 * PI;
@@ -83,6 +85,7 @@ void	mlx(t_data *data)
 		bruh(data, "Error\n window creation fail\n", 1);
 	data->window_center_x = WIDTH / 2;
 	data->window_center_y = HEIGHT / 2;
+	data->mouse_enabled = true;
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (!data->img)
 		bruh(data, "Error\n image creation fail\n", 1);
@@ -90,9 +93,9 @@ void	mlx(t_data *data)
 			&data->bpp, &data->size_line, &data->endian);
 	if (!data->addr)
 		bruh(data, "Error\n image data address fail\n", 1);
+	mlx_mouse_hide(data->mlx, data->win);
 	mlx_mouse_move(data->mlx, data->win,
 		data->window_center_x, data->window_center_y);
-	mlx_mouse_hide(data->mlx, data->win);
 }
 
 int	main(int argc, char **argv)
@@ -113,6 +116,7 @@ int	main(int argc, char **argv)
 	get_delta_time(&data);
 	data.time->last_frame = get_time(&data);
 	mlx_hook(data.win, 6, 1L << 6, &mouse_move, &data);
+	data.mouse_enabled = true;
 	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
 	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
 	mlx_hook(data.win, 17, 0, &button_hook, &data);
