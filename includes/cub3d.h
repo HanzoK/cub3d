@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/27 18:24:21 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:45:08 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define PI 3.14159265358979323846
 # define BLACK 0xFF000000
 # define VOX 40
+# define MVOX VOX / 2
 # define SPEED 300
 # define TURN_SPEED 3
 # define DRAW_DIST 780.0
