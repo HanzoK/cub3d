@@ -47,6 +47,7 @@ SRC			= main.c \
 			  delta_time.c \
 			  draw.c \
 			  free.c \
+			  free2.c \
 			  general_utils.c \
 			  init_game.c \
 			  input_validation.c \
@@ -60,6 +61,7 @@ SRC			= main.c \
 			  load_textures.c \
 			  fill_map.c \
 			  parse_colours.c \
+			  walking.c \
 			  walls.c \
 
 OBJ			= $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 12:29:37 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:34:32 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_game_ready(t_data *data)
 {
 	t_textures	*tx;
-	int		map_ok;
+	int			map_ok;
 
 	tx = data->file->tx;
 	map_ok = validate_map(data);
@@ -31,9 +31,9 @@ void	check_game_ready(t_data *data)
 		data->is_game_ready = true;
 }
 
-int start_up_game(char **argv, t_data *data)
+int	start_up_game(char **argv, t_data *data)
 {
-	int map_start;
+	int	map_start;
 
 	if (!read_file(data, argv[1]))
 		return (0);
@@ -48,52 +48,73 @@ int start_up_game(char **argv, t_data *data)
 	return (1);
 }
 
-int main(int argc, char **argv)
+int	mouse_move(int x, int y, t_data *data)
 {
-	t_data 		data;
-	t_file 		file;
-	t_textures		tx;
+	float		last_x;
+	float		last_y;
+
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return (0);
+	last_x = (float)(x - data->window_center_x);
+	if (last_x != 0.0f)
+	{
+		last_y = 0.002f;
+		data->player->dir += last_x * last_y;
+		if (data->player->dir < 0)
+			data->player->dir += 2 * PI;
+		else if (data->player->dir > 2 * PI)
+			data->player->dir -= 2 * PI;
+	}
+	mlx_mouse_move(data->mlx, data->win,
+		data->window_center_x, data->window_center_y);
+	return (0);
+}
+
+void	mlx(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		bruh(data, "Error\n mlx_init fail\n", 1);
+	write(1, "\rLOADING TEXTURES [0/4]", 23);
+	if (!load_textures(data))
+		bruh(data, "Error\n texture validation fail\n", 1);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
+	if (!data->win)
+		bruh(data, "Error\n window creation fail\n", 1);
+	data->window_center_x = WIDTH / 2;
+	data->window_center_y = HEIGHT / 2;
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (!data->img)
+		bruh(data, "Error\n image creation fail\n", 1);
+	data->addr = mlx_get_data_addr(data->img,
+			&data->bpp, &data->size_line, &data->endian);
+	if (!data->addr)
+		bruh(data, "Error\n image data address fail\n", 1);
+	mlx_mouse_move(data->mlx, data->win,
+		data->window_center_x, data->window_center_y);
+	mlx_mouse_hide(data->mlx, data->win);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data		data;
+	t_file		file;
+	t_textures	tx;
 	t_time		time;
-	//int			i;
 
 	ft_set_up_game(&data, &file, &tx, &time);
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
 		bruh(&data, "Error\nInvalid map or missing config values\n", 1);
-	/// Ollie got stuff. Hanju can go for a smoke
-	data.mlx = mlx_init();
-	if (!data.mlx)
-		bruh (&data, "Error\n mlx_init fail\n", 1);
-	write(1, "\rLOADING TEXTURES [0/4]", 23);
-	if (!load_textures(&data))
-		bruh(&data, "Error\n texture validation fail\n", 1);
-	write(1, "Hanju finished\n", 15);
-	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "cub3D");
-	if (!data.win)
-		bruh (&data, "Error\n window creation fail\n", 1);
-	write(1, "Mlx init\n", 9);
-	write(1, "Window created\n", 15);
-	data.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
-	if (!data.img)
-		bruh (&data, "Error\n image creation fail\n", 1);
-	write(1, "Image created\n", 14);
-	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.size_line, &data.endian);
-	if (!data.addr)
-		bruh (&data, "Error\n image data address fail\n", 1);
-	write(1, "Image data address\n", 19);
+	mlx(&data);
 	data.player = init_player(&data);
 	if (!data.player)
 		bruh (&data, "Error\n player malloc fail\n", 1);
-	write(1, "Player created\n", 16);
-	data.d = 0;
 	get_delta_time(&data);
 	data.time->last_frame = get_time(&data);
-	write(1, "Game ready\n", 12);
-	printarr(data.map);
-	data.floor = 0xFF444444;
-	data.sky = 0xFF0077AA;
-	mlx_hook(data.win, 2, 1L<<0, key_press, &data);
-	mlx_hook(data.win, 3, 1L<<1, key_release, &data);
+	mlx_hook(data.win, 6, 1L << 6, &mouse_move, &data);
+	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
+	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
 	mlx_hook(data.win, 17, 0, &button_hook, &data);
 	mlx_loop_hook(data.mlx, &draw, &data);
 	mlx_loop(data.mlx);

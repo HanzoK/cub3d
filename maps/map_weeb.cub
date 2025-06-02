@@ -3,8 +3,8 @@ SO ./textures/south_weeb.xpm
 WE ./textures/west_weeb.xpm
 EA ./textures/east_weeb.xpm
 
-F 220,65,0
-C 210,123,0
+F 30,170,130
+C 230,50,135
 
 11111111111111111111111111111111
 10000000000000000000000000000001

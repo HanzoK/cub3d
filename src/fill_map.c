@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 17:29:31 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/23 18:38:33 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:46:59 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ char	**create_map_array(t_data *data, int map_start, int rows, int max_len)
 		len = ft_strlen(data->file->file[map_start + i]);
 		map[i] = ft_calloc(max_len + 1, sizeof(char));
 		if (!map[i])
-		{
-			bruh(data, "Error\n malloc fail\n", 1);
-			return (NULL);
-		}
+			return (free_partial_map(map, i), NULL);
 		ft_memcpy(map[i], data->file->file[map_start + i], len);
 		while (len < max_len)
 			map[i][len++] = ' ';

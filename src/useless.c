@@ -6,11 +6,293 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:08:43 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/05/27 15:06:17 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:59:49 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3d.h"
 
+/*void	cheat_up(t_player *pl, float x_spd, float y_spd)*/
+/*{*/
+/*	pl->x -= x_spd * 0.5;*/
+/*	pl->y -= y_spd * 0.5;*/
+/*}*/
+/**/
+/*void	cheat_down(t_player *pl, float x_spd, float y_spd)*/
+/*{*/
+/*	pl->x += x_spd * 0.5;*/
+/*	pl->y += y_spd * 0.5;*/
+/*}*/
+/**/
+/*void	cheat_left(t_player *pl, float x_spd, float y_spd)*/
+/*{*/
+/*	pl->x -= y_spd * 0.5;*/
+/*	pl->y += x_spd * 0.5;*/
+/*}*/
+/**/
+/*void	cheat_right(t_player *pl, float x_spd, float y_spd)*/
+/*{*/
+/*	pl->x += y_spd * 0.5;*/
+/*	pl->y -= x_spd * 0.5;*/
+/*}*/
+/**/
+/*void	cheat(t_data *data, t_player *pl, float x_spd, float y_spd)*/
+/*{*/
+/*	while (data->map[(int)(pl->y / VOX)][(int)(pl->x / VOX)] == '1')*/
+/*	{*/
+/*		if (pl->key_up)*/
+/*			cheat_up(pl, x_spd, y_spd);*/
+/*		else if (pl->key_down)*/
+/*			cheat_down(pl, x_spd, y_spd);*/
+/*		else if (pl->key_left)*/
+/*			cheat_left(pl, x_spd, y_spd);*/
+/*		else if (pl->key_right)*/
+/*			cheat_right(pl, x_spd, y_spd);*/
+/*		else*/
+/*			break ;*/
+/*	}*/
+/*}*/
+
+/*void	put_pixel_sky(t_data *data, int x, int y, int color)*/
+/*{*/
+/*	int	red;*/
+/*	int	green;*/
+/*	int	blue;*/
+/**/
+/*	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)*/
+/*		return ;*/
+/*	red = (color >> 16) & 0xFF;*/
+/*	green = (color >> 8) & 0xFF;*/
+/*	blue = color & 0xFF;*/
+/*	float ratio = y / ((float)HEIGHT / 2);*/
+/*	red = (int)((float)red * (1 - ratio));*/
+/*	green = (int)((float)green * (1 - ratio));*/
+/*	blue = (int)((float)blue * (1 - ratio));*/
+/*	if (red > 255)*/
+/*		red = 255;*/
+/*	if (green > 255)*/
+/*		green = 255;*/
+/*	if (blue > 255)*/
+/*		blue = 255;*/
+/*	if (red <= 0)*/
+/*		red = 1;*/
+/*	if (green <= 0)*/
+/*		green = 1;*/
+/*	if (blue <= 0)*/
+/*		blue = 1;*/
+/*	color = (255 << 24 | (red << 16) | (green << 8) | blue);*/
+	/*i = (y * data->size_line) + (x * (data->bpp / 8));*/
+	/*data->addr[i] = color & 0xFF;*/
+	/*data->addr[i + 1] = color & 0xFF;*/
+	/*data->addr[i + 2] = color & 0xFF;*/
+/*}*/
+/**/
+/*void	put_pixel_floor(t_data *data, int x, int y, int color)*/
+/*{*/
+/*	int	red;*/
+/*	int	green;*/
+/*	int	blue;*/
+/**/
+/*	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)*/
+/*		return ;*/
+/*	red = (color >> 16) & 0xFF;*/
+/*	green = (color >> 8) & 0xFF;*/
+/*	blue = color & 0xFF;*/
+/*	float ratio = (HEIGHT - y) / ((float)HEIGHT / 2);*/
+/*	red = (int)((float)red * (1 - ratio));*/
+/*	green = (int)((float)green * (1 - ratio));*/
+/*	blue = (int)((float)blue * (1 - ratio));*/
+/*	if (red > 255)*/
+/*		red = 255;*/
+/*	if (green > 255)*/
+/*		green = 255;*/
+/*	if (blue > 255)*/
+/*		blue = 255;*/
+/*	if (red <= 0)*/
+/*		red = 1;*/
+/*	if (green <= 0)*/
+/*		green = 1;*/
+/*	if (blue <= 0)*/
+/*		blue = 1;*/
+/*	int	i;*/
+/*	i = (y * data->size_line) + (x * (data->bpp / 8));*/
+/*	data->addr[i] = color & 0xFF;*/
+/*	data->addr[i + 1] = (color >> 8) & 0xFF;*/
+/*	data->addr[i + 2] = (color >> 16) & 0xFF;*/
+/*}*/
+/**/
+
+// void	color_screen(t_data *data, int color)
+// {
+// 	int x;
+// 	int y;
+//
+// 	y = 0;
+// 	while (y < HEIGHT)
+// 	{
+// 		x = 0;
+// 		while (x < WIDTH)
+// 		{
+// 			put_pixel(data, x, y, color);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+//
+// void	evening(t_data *data)
+// {
+// 	int x;
+// 	int y;
+//
+// 	y = 0;
+// 	while (y < HEIGHT)
+// 	{
+// 		x = 0;
+// 		while (x < WIDTH && y < HEIGHT / 2)
+// 		{
+// 			put_pixel(data, x, y, 0xFFFF9955);
+// 			x++;
+// 		}
+// 		while (x < WIDTH && y >= HEIGHT / 2)
+// 		{
+// 			put_pixel(data, x, y, 0xFF002200);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+//
+// void	morning(t_data *data)
+// {
+// 	int x;
+// 	int y;
+//
+// 	y = 0;
+// 	while (y < HEIGHT)
+// 	{
+// 		x = 0;
+// 		while (x < WIDTH && y < HEIGHT / 2)
+// 		{
+// 			put_pixel(data, x, y, 0xFF66AAFF);
+// 			x++;
+// 		}
+// 		while (x < WIDTH && y >= HEIGHT / 2)
+// 		{
+// 			put_pixel(data, x, y, 0xFF005511);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+//
+/*void	put_player(t_data *data)*/
+/*{*/
+/*	int	x;*/
+/*	int	y;*/
+/*	int	h;*/
+/**/
+/*	h = 3;*/
+/*	y = 0 - h;*/
+/*	while (y < h)*/
+/*	{*/
+/*		x = (0 - h) + (y == (0 - h) || y == h - 1);*/
+/*		while (x < h - (y == (0 - h) || y == h - 1))*/
+/*		{*/
+/*			put_pixel(data, data->player->x + x,
+ *			data->player->y + y, 0xFFFFCCFF);*/
+/*			x++;*/
+/*		}*/
+/*		y++;*/
+/*	}*/
+/*}*/
+/**/
+/*void	put_map(t_data *data)*/
+/*{*/
+/*	int	x;*/
+/*	int	y;*/
+/*	int x_lim;*/
+/*	int y_lim;*/
+/**/
+	/*printf("PUTTING MAP\n");*/
+/*	x_lim = ft_strlen(data->map[0]);*/
+/*	y_lim = arr_len(data->map);*/
+/*	y = 0;*/
+/*	while (y < y_lim)*/
+/*	{*/
+/*		x = 0;*/
+/*		while (x < x_lim)*/
+/*		{*/
+/*			if (data->map[y][x] == '1')*/
+/*				put_square(data, x * VOX, y * VOX, VOX, 0xFF000088);*/
+/*			else if (data->map[y][x] != '1' && data->map[y][x] != ' ')*/
+/*				put_empty_square(data, x * VOX, y * VOX, VOX);*/
+			/*else if (data->map[y][x] == ' ')*/
+			/*	put_pixel(data, x, y, 0xFF000000);*/
+/*			x++;*/
+/*		}*/
+/*		y++;*/
+/*	}*/
+/*}*/
+
+// void	wipe(t_data *data)
+// {
+// 	int	x;
+// 	int	y;
+//
+// 	y = 0;
+// 	while (y < HEIGHT)
+// 	{
+// 		x = 0;
+// 		while (x < WIDTH)
+// 		{
+// 			put_pixel(data, x, y, 0x00000000);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+//
+/*void	put_empty_square(t_data *data, int pos_x, int pos_y, int size)*/
+/*{*/
+/*	int	x;*/
+/*	int	y;*/
+/**/
+/*	y = 0;*/
+/*	while (y < size)*/
+/*	{*/
+/*		x = 0;*/
+/*		while (x < size)*/
+/*		{*/
+/*			if (x == 0 || x == size - 1 || y == 0 || y == size - 1)*/
+/*				put_pixel(data, pos_x + x, pos_y + y, 0xFF333333);*/
+/*			x++;*/
+/*		}*/
+/*		y++;*/
+/*	}*/
+/*}*/
+/**/
+/*void	put_square(t_data *data, int pos_x, int pos_y,
+ * int size, unsigned int color)*/
+/*{*/
+/*	int	x;*/
+/*	int	y;*/
+/**/
+/*	y = 0;*/
+/*	while (y < size)*/
+/*	{*/
+/*		x = 0;*/
+/*		while (x < size)*/
+/*		{*/
+/*			if ((x == 0 || x == size - 1 || y == 0 ||
+ *			y == size - 1) && color != BLACK)*/
+/*				put_pixel(data, pos_x + x, pos_y + y, 0xFF0000FF);*/
+/*			else*/
+/*				put_pixel(data, pos_x + x, pos_y + y, color);*/
+/*			x++;*/
+/*		}*/
+/*		y++;*/
+/*	}*/
+/*}*/
 //
 // float	ray_x(t_data *data, int map_x, int map_y, int step_x)
 // {
@@ -88,24 +370,24 @@
 // 	return (false);
 // }
 //
-void	split_texture(t_texture *tx)
-{
-	char **split_texture;
-
-	split_texture = ft_calloc(sizeof(char *), tx->height + 1);
-	int	y = 0;
-	while (y < tx->height)
-	{
-		split_texture[y] = tx->addr + (y * tx->size_line);
-		y++;
-	}
-	tx->split_texture = split_texture;
-}
-
-int	get_pixel(t_texture *tx, int x, int y)
-{
-	return (*(unsigned int *)&tx->split_texture[y][x * 4]);
-}
+/*void	split_texture(t_texture *tx)*/
+/*{*/
+/*	char **split_texture;*/
+/**/
+/*	split_texture = ft_calloc(sizeof(char *), tx->height + 1);*/
+/*	int	y = 0;*/
+/*	while (y < tx->height)*/
+/*	{*/
+/*		split_texture[y] = tx->addr + (y * tx->size_line);*/
+/*		y++;*/
+/*	}*/
+/*	tx->split_texture = split_texture;*/
+/*}*/
+/**/
+/*int	get_pixel(t_texture *tx, int x, int y)*/
+/*{*/
+/*	return (*(unsigned int *)&tx->split_texture[y][x * 4]);*/
+/*}*/
 /*int key_hook(int keycode, t_data *data)*/
 /*{*/
 /*	printf("Keycode: %d\n", keycode);*/
@@ -209,155 +491,156 @@ int	get_pixel(t_texture *tx, int x, int y)
 /*	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);*/
 /*	return (0);*/
 /*}*/
-int	cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y)
-{
-	float	ray_dir_x;
-	float	ray_dir_y;
-	int		step_count;
-
-	ray_dir_x = cos(start_x);
-	ray_dir_y = sin(start_x);
-	*ray_x = data->player->x;
-	*ray_y = data->player->y;
-	step_count = 0;
-	while (!coll(data, *ray_x, *ray_y))
-	{
-		*ray_x += ray_dir_x;
-		*ray_y += ray_dir_y;
-		step_count++;
-	}
-	return (step_count);
-}
-
-int	cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y)
-{
-	// set ray start pos
-	*ray_x = data->player->x;
-	*ray_y = data->player->y;
-
-	// current grid pos
-	int		map_x;
-	int		map_y;
-	map_x = (int)(*ray_x / VOX);
-	map_y = (int)(*ray_y / VOX);
-
-	// ray direction vector
-	float	ray_dir_x;
-	float	ray_dir_y;
-	ray_dir_x = cos(start_x);
-	ray_dir_y = sin(start_x);
-
-	// distance to next grid line
-	float	delta_dist_x;
-	float	delta_dist_y;
-	delta_dist_x = fabs((float)VOX / ray_dir_x);
-	delta_dist_y = fabs((float)VOX / ray_dir_y);
-
-	// step direction and distance
-	int		step_x;
-	int		step_y;
-	float	side_dist_x;
-	float	side_dist_y;
-	side_dist_x = 0;
-	side_dist_y = 0;
-	if (ray_dir_x < 0)
-	{
-		step_x = -1;
-		side_dist_x = (*ray_x - map_x * VOX) / VOX * delta_dist_x;
-	}
-	else
-	{
-		step_x = 1;
-		side_dist_x = ((map_x + 1) * VOX - *ray_x) / VOX * delta_dist_x;
-	}
-	if (ray_dir_y < 0)
-	{
-		step_y = -1;
-		side_dist_y = (*ray_y - map_y * VOX) / VOX * delta_dist_y;
-	}
-	else
-	{
-		step_y = 1;
-		side_dist_y = ((map_y + 1) * VOX - *ray_y) / VOX * delta_dist_y;
-	}
+/*int	cast_ray1(t_data *data, float start_x, float *ray_x, float *ray_y)*/
+/*{*/
+/*	float	ray_dir_x;*/
+/*	float	ray_dir_y;*/
+/*	int		step_count;*/
+/**/
+/*	ray_dir_x = cos(start_x);*/
+/*	ray_dir_y = sin(start_x);*/
+/*	*ray_x = data->player->x;*/
+/*	*ray_y = data->player->y;*/
+/*	step_count = 0;*/
+/*	while (!coll(data, *ray_x, *ray_y))*/
+/*	{*/
+/*		*ray_x += ray_dir_x;*/
+/*		*ray_y += ray_dir_y;*/
+/*		step_count++;*/
+/*	}*/
+/*	return (step_count);*/
+/*}*/
+/**/
+/*int	cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y)*/
+/*{*/
+/*	// set ray start pos*/
+/*	*ray_x = data->player->x;*/
+/*	*ray_y = data->player->y;*/
+/**/
+/*	// current grid pos*/
+/*	int		map_x;*/
+/*	int		map_y;*/
+/*	map_x = (int)(*ray_x / VOX);*/
+/*	map_y = (int)(*ray_y / VOX);*/
+/**/
+/*	// ray direction vector*/
+/*	float	ray_dir_x;*/
+/*	float	ray_dir_y;*/
+/*	ray_dir_x = cos(start_x);*/
+/*	ray_dir_y = sin(start_x);*/
+/**/
+/*	// distance to next grid line*/
+/*	float	delta_dist_x;*/
+/*	float	delta_dist_y;*/
+/*	delta_dist_x = fabs((float)VOX / ray_dir_x);*/
+/*	delta_dist_y = fabs((float)VOX / ray_dir_y);*/
+/**/
+/*	// step direction and distance*/
+/*	int		step_x;*/
+/*	int		step_y;*/
+/*	float	side_dist_x;*/
+/*	float	side_dist_y;*/
+/*	side_dist_x = 0;*/
+/*	side_dist_y = 0;*/
+/*	if (ray_dir_x < 0)*/
+/*	{*/
+/*		step_x = -1;*/
+/*		side_dist_x = (*ray_x - map_x * VOX) / VOX * delta_dist_x;*/
+/*	}*/
+/*	else*/
+/*	{*/
+/*		step_x = 1;*/
+/*		side_dist_x = ((map_x + 1) * VOX - *ray_x) / VOX * delta_dist_x;*/
+/*	}*/
+/*	if (ray_dir_y < 0)*/
+/*	{*/
+/*		step_y = -1;*/
+/*		side_dist_y = (*ray_y - map_y * VOX) / VOX * delta_dist_y;*/
+/*	}*/
+/*	else*/
+/*	{*/
+/*		step_y = 1;*/
+/*		side_dist_y = ((map_y + 1) * VOX - *ray_y) / VOX * delta_dist_y;*/
+/*	}*/
 	/*side_dist_x = powf(side_dist_x, 2) + */
-	while (!edge(data, *ray_x + side_dist_x, *ray_y + side_dist_y))
-	{
-		side_dist_x += ray_dir_x;
-		side_dist_y += ray_dir_y;
-		map_x += step_x;
-		map_y += step_y;
-	}
-
-	printf("side_dist_x: %f side_dist_y: %f delta_dist_x: %f delta_dist_y: %f\n",
-		side_dist_x, side_dist_y, delta_dist_x, delta_dist_y);
-	if (side_dist_x < side_dist_y)
-		printf("hit vertical wall\n");
-	else
-		printf("hit horizontal wall\n");
-	// DDA
-	int		side;
-	int		step_count;
-	step_count = 0;
-	while (1)
-	{
-		if (side_dist_x < side_dist_y)
-		{
-			side_dist_x += delta_dist_x;
-			map_x += step_x;
-			side = 0;
-		}
-		else
-		{
-			side_dist_y += delta_dist_y;
-			map_y += step_y;
-			side = 1;
-		}
-		step_count++;
-		if (data->map[map_y][map_x] == '1')
-			break ;
-	}
-
-	// find the collision point
-	float perp_dist;
-	if (side == 0)
-		perp_dist = (map_x - *ray_x + (float)(1 - step_x) / 2) / ray_dir_x;
-	else
-		perp_dist = (map_y - *ray_y + (float)(1 - step_y) / 2) / ray_dir_y;
-	*ray_x += ray_dir_x * perp_dist;
-	*ray_y += ray_dir_y * perp_dist;
-	return (step_count);
-}
-
-int	cast_ray3(t_data *data, float start_x, float *ray_x, float *ray_y)
-{
-	float	init_x;
-	float	init_y;
-	float	ray_dir_x;
-	float	ray_dir_y;
-	int		step_count = 0;
-
-	ray_dir_x = cos(start_x);
-	ray_dir_y = sin(start_x);
-
-	*ray_x = data->player->x;
-	*ray_y = data->player->y;
-	init_x = *ray_x;
-	init_y = *ray_y;
-
-	int	map_x = (int)(*ray_x / VOX);
-	int	map_y = (int)(*ray_y / VOX);
-
-	while (1)
-	{
-		if (data->map[map_y][map_x] == '1')
-			break;
-		*ray_x += ray_dir_x;
-		*ray_y += ray_dir_y;
-		step_count++;
-	}
-	return (step_count);
-}
+/*	while (!edge(data, *ray_x + side_dist_x, *ray_y + side_dist_y))*/
+/*	{*/
+/*		side_dist_x += ray_dir_x;*/
+/*		side_dist_y += ray_dir_y;*/
+/*		map_x += step_x;*/
+/*		map_y += step_y;*/
+/*	}*/
+/**/
+/*	printf("side_dist_x: %f side_dist_y:
+ *	%f delta_dist_x: %f delta_dist_y: %f\n",*/
+/*		side_dist_x, side_dist_y, delta_dist_x, delta_dist_y);*/
+/*	if (side_dist_x < side_dist_y)*/
+/*		printf("hit vertical wall\n");*/
+/*	else*/
+/*		printf("hit horizontal wall\n");*/
+/*	// DDA*/
+/*	int		side;*/
+/*	int		step_count;*/
+/*	step_count = 0;*/
+/*	while (1)*/
+/*	{*/
+/*		if (side_dist_x < side_dist_y)*/
+/*		{*/
+/*			side_dist_x += delta_dist_x;*/
+/*			map_x += step_x;*/
+/*			side = 0;*/
+/*		}*/
+/*		else*/
+/*		{*/
+/*			side_dist_y += delta_dist_y;*/
+/*			map_y += step_y;*/
+/*			side = 1;*/
+/*		}*/
+/*		step_count++;*/
+/*		if (data->map[map_y][map_x] == '1')*/
+/*			break ;*/
+/*	}*/
+/**/
+/*	// find the collision point*/
+/*	float perp_dist;*/
+/*	if (side == 0)*/
+/*		perp_dist = (map_x - *ray_x + (float)(1 - step_x) / 2) / ray_dir_x;*/
+/*	else*/
+/*		perp_dist = (map_y - *ray_y + (float)(1 - step_y) / 2) / ray_dir_y;*/
+/*	*ray_x += ray_dir_x * perp_dist;*/
+/*	*ray_y += ray_dir_y * perp_dist;*/
+/*	return (step_count);*/
+/*}*/
+/**/
+/*int	cast_ray3(t_data *data, float start_x, float *ray_x, float *ray_y)*/
+/*{*/
+/*	float	init_x;*/
+/*	float	init_y;*/
+/*	float	ray_dir_x;*/
+/*	float	ray_dir_y;*/
+/*	int		step_count = 0;*/
+/**/
+/*	ray_dir_x = cos(start_x);*/
+/*	ray_dir_y = sin(start_x);*/
+/**/
+/*	*ray_x = data->player->x;*/
+/*	*ray_y = data->player->y;*/
+/*	init_x = *ray_x;*/
+/*	init_y = *ray_y;*/
+/**/
+/*	int	map_x = (int)(*ray_x / VOX);*/
+/*	int	map_y = (int)(*ray_y / VOX);*/
+/**/
+/*	while (1)*/
+/*	{*/
+/*		if (data->map[map_y][map_x] == '1')*/
+/*			break;*/
+/*		*ray_x += ray_dir_x;*/
+/*		*ray_y += ray_dir_y;*/
+/*		step_count++;*/
+/*	}*/
+/*	return (step_count);*/
+/*}*/
 
 // senior version
 /*int	cast_ray2(t_data *data, float start_x, float *ray_x, float *ray_y)*/
@@ -419,7 +702,8 @@ int	cast_ray3(t_data *data, float start_x, float *ray_x, float *ray_y)
 /*		}*/
 /*		step_count++;*/
 /**/
-/*		if (map_y < 0 || map_x < 0 || !data->map[map_y] || data->map[map_y][map_x] == '\0')*/
+/*		if (map_y < 0 || map_x < 0 || !data->map[map_y] ||
+ *		data->map[map_y][map_x] == '\0')*/
 /*			break; // safety check*/
 /**/
 /*		if (data->map[map_y][map_x] == '1')*/
@@ -527,11 +811,13 @@ int	cast_ray3(t_data *data, float start_x, float *ray_x, float *ray_y)
 /*	new_step_x = sqrtf(1 + (dir_y / dir_x) * (dir_y / dir_x));*/
 /*	new_step_y = sqrtf(1 + (dir_x / dir_y) * (dir_x / dir_y));*/
 /*	put_fat_pixel(data, ray_pos_x, ray_pos_y, 0xFF00AAAA);*/
-/*	while (!coll(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y))*/
+/*	while (!coll(data, ray_pos_x + ray_dist_x *
+ *	step_x, ray_pos_y + ray_dist_y * step_y))*/
 /*	{*/
 /*		if ((ray_dist_x != 0 && ray_dist_x < ray_dist_y) || ray_dist_y == 0)*/
 /*		{*/
-/*			put_fat_pixel(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y, 0xFF00FF00);*/
+/*			put_fat_pixel(data, ray_pos_x + ray_dist_x
+ *			* step_x, ray_pos_y, 0xFF00FF00);*/
 /*			ray_dist_x += step_size_x;*/
 /*			map_x += step_x;*/
 			/*ray_pos_x += step_dist_x;*/
@@ -539,7 +825,8 @@ int	cast_ray3(t_data *data, float start_x, float *ray_x, float *ray_y)
 /*		}*/
 /*		else if (ray_dist_x == 0 || ray_dist_x > ray_dist_y)*/
 /*		{*/
-/*			put_fat_pixel(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y, 0xFFFFFF00);*/
+/*			put_fat_pixel(data, ray_pos_x + ray_dist_x *
+ *			step_x, ray_pos_y + ray_dist_y * step_y, 0xFFFFFF00);*/
 /*			ray_dist_y += step_size_y;*/
 /*			map_y += step_y;*/
 			/*ray_pos_y += step_dist_y;*/
@@ -548,46 +835,47 @@ int	cast_ray3(t_data *data, float start_x, float *ray_x, float *ray_y)
 /*		i++;*/
 /*		if (i == 2)*/
 /*			break;*/
-/*		put_pixel(data, ray_pos_x + ray_dist_x * step_x, ray_pos_y + ray_dist_y * step_y, 0xFFFF00AA);*/
+/*		put_pixel(data, ray_pos_x + ray_dist_x * step_x,
+ *		ray_pos_y + ray_dist_y * step_y, 0xFFFF00AA);*/
 		/*put_fat_pixel(data, ray_pos_x, ray_pos_y, 0xFF00AAAA);*/
 /*		step_count++;*/
 /*	}*/
 /**/
 /*	return (step_count);*/
 /*}*/
-float	distance2(t_data *data, float ray_x, float ray_y, float start_x)
-{
-	float	angle;
-	float 	dist;
-	float	x;
-	float	y;
-
-	x = ray_x - data->player->x;
-	y = ray_y - data->player->y;
-	angle = atan2f(y, x) - start_x;
-	dist = sqrtf(powf(x, 2) + powf(y, 2)) * cosf(angle);
-	return (dist);
-}
-
-void	put_ray(t_data *data, float start_x)
-{
-	float	ray_x;
-	float	ray_y;
-	float	cos_ray;
-	float 	sin_ray;
-
-	cos_ray = cos(start_x);
-	sin_ray = sin(start_x);
-	ray_x = data->player->x;
-	ray_y = data->player->y;
-	while (!coll(data, ray_x, ray_y))
-	{
-		if (edge(data, ray_x, ray_y))
-			put_pixel(data, ray_x, ray_y, 0xFF00AAAA);
-		else
-			put_pixel(data, ray_x, ray_y, 0xFFAA0000);
-		ray_x += cos_ray;
-		ray_y += sin_ray;
-	}
-}
-
+/*float	distance2(t_data *data, float ray_x, float ray_y, float start_x)*/
+/*{*/
+/*	float	angle;*/
+/*	float 	dist;*/
+/*	float	x;*/
+/*	float	y;*/
+/**/
+/*	x = ray_x - data->player->x;*/
+/*	y = ray_y - data->player->y;*/
+/*	angle = atan2f(y, x) - start_x;*/
+/*	dist = sqrtf(powf(x, 2) + powf(y, 2)) * cosf(angle);*/
+/*	return (dist);*/
+/*}*/
+/**/
+/*void	put_ray(t_data *data, float start_x)*/
+/*{*/
+/*	float	ray_x;*/
+/*	float	ray_y;*/
+/*	float	cos_ray;*/
+/*	float 	sin_ray;*/
+/**/
+/*	cos_ray = cos(start_x);*/
+/*	sin_ray = sin(start_x);*/
+/*	ray_x = data->player->x;*/
+/*	ray_y = data->player->y;*/
+/*	while (!coll(data, ray_x, ray_y))*/
+/*	{*/
+/*		if (edge(data, ray_x, ray_y))*/
+/*			put_pixel(data, ray_x, ray_y, 0xFF00AAAA);*/
+/*		else*/
+/*			put_pixel(data, ray_x, ray_y, 0xFFAA0000);*/
+/*		ray_x += cos_ray;*/
+/*		ray_y += sin_ray;*/
+/*	}*/
+/*}*/
+/**/
