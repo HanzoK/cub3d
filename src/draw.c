@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 17:34:32 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/04 17:12:51 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	draw(t_data *data)
 	free(tmp);
 	if (!fps)
 		bruh(data, "Error: FPS string allocation failed", 1);
-	mlx_string_put(data->mlx, data->win, 10, 20,
-		0x000000, fps);
+	mlx_string_put(data->mlx, data->win, 11, 20,
+		0xFFDDFFFF, fps);
 	free(fps);
 	return (0);
 }

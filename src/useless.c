@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:08:43 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 15:43:12 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:52:38 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3d.h"
@@ -185,27 +185,6 @@
 // 	}
 // }
 //
-/*void	put_player(t_data *data)*/
-/*{*/
-/*	int	x;*/
-/*	int	y;*/
-/*	int	h;*/
-/**/
-/*	h = 3;*/
-/*	y = 0 - h;*/
-/*	while (y < h)*/
-/*	{*/
-/*		x = (0 - h) + (y == (0 - h) || y == h - 1);*/
-/*		while (x < h - (y == (0 - h) || y == h - 1))*/
-/*		{*/
-/*			put_pixel(data, data->player->x + x,
- *			data->player->y + y, 0xFFFFCCFF);*/
-/*			x++;*/
-/*		}*/
-/*		y++;*/
-/*	}*/
-/*}*/
-/**/
 /*void	put_map(t_data *data)*/
 /*{*/
 /*	int	x;*/
@@ -834,25 +813,64 @@
 /*	return (dist);*/
 /*}*/
 /**/
-/*void	put_ray(t_data *data, float start_x)*/
-/*{*/
-/*	float	ray_x;*/
-/*	float	ray_y;*/
-/*	float	cos_ray;*/
-/*	float 	sin_ray;*/
-/**/
-/*	cos_ray = cos(start_x);*/
-/*	sin_ray = sin(start_x);*/
-/*	ray_x = data->player->x;*/
-/*	ray_y = data->player->y;*/
-/*	while (!coll(data, ray_x, ray_y))*/
-/*	{*/
-/*		if (edge(data, ray_x, ray_y))*/
-/*			put_pixel(data, ray_x, ray_y, 0xFF00AAAA);*/
-/*		else*/
-/*			put_pixel(data, ray_x, ray_y, 0xFFAA0000);*/
-/*		ray_x += cos_ray;*/
-/*		ray_y += sin_ray;*/
-/*	}*/
-/*}*/
-/**/
+// void	put_ray(t_data *data, float start_x)
+// {
+// 	float	ray_x;
+// 	float	ray_y;
+// 	float	cos_ray;
+// 	float 	sin_ray;
+//
+// 	cos_ray = cos(start_x);
+// 	sin_ray = sin(start_x);
+// 	ray_x = data->player->x;
+// 	ray_y = data->player->y;
+// 	while (!coll(data, ray_x, ray_y))
+// 	{
+// 		if (edge(data, ray_x, ray_y))
+// 			put_pixel(data, ray_x, ray_y, 0xFF00AAAA);
+// 		else
+// 			put_pixel(data, ray_x, ray_y, 0xFFAA0000);
+// 		ray_x += cos_ray;
+// 		ray_y += sin_ray;
+// 	}
+// }
+//
+// void	put_player_minimap(t_data *data)
+// {
+// 	int x;
+// 	int	y;
+//
+// 	x = data->player->x;
+// 	y = data->player->y;
+// 	if (x < 0 || y < 0 || x >= data->map_width * VOX || y >= data->map_height * VOX)
+// 		return ;
+// 	x = (x % MVOX) + 100;
+// 	y = (y % MVOX) + 100;
+// 	// printf("Put player at minimap: (%d, %d)\n", x, y);
+// 	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
+// 		return ;
+// 	put_player(data, x, y);
+// }
+//
+void	put_square(t_data *data, int pos_x, int pos_y,
+	int size, unsigned int color)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < size)
+	{
+		x = 0;
+		while (x < size)
+		{
+			if ((x == 0 || x == size - 1 || y == 0 || y == size - 1) && color != BLACK)
+				put_pixel(data, pos_x + x, pos_y + y, 0xFF0000FF);
+			else
+				put_pixel(data, pos_x + x, pos_y + y, color);
+			x++;
+		}
+		y++;
+	}
+}
+

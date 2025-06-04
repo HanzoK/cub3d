@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 16:08:23 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/04 17:23:23 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define PI 3.14159265358979323846
-# define BLACK 0xFF000000
-# define VOX 40
+# define P_COLOR 0xFF2255FF
+# define D_COLOR 0xFFEEEE33
+# define VOX 64
 # define MVOX VOX / 2
-# define MMAP_X WIDTH - MVOX * 5
-# define MMAP_Y HEIGHT - MVOX * 5
-# define SPEED 300
+# define SPEED 420
 # define TURN_SPEED 3
-# define DRAW_DIST 780.0
+# define MOUSE_SPEED 0.0005
+# define DRAW_DIST 1000.0
+// # define DRAW_DIST 150.0
 /*# define FPS 120*/
 # define FRAME_TIME 11
 /*# define IMG_W 128*/
@@ -254,7 +255,7 @@ void		draw_line(t_data *data, float start_x, int i);
 void		draw_minimap(t_data *data);
 void		wipe(t_data *data);
 void		put_map(t_data *data);
-void		put_player(t_data *data);
+void		put_player(t_data *data, int pl_x, int pl_y);
 void		put_pixel(t_data *data, int x, int y, int color);
 void		put_pixel_sky(t_data *data, int x, int y, int color);
 void		put_pixel_floor(t_data *data, int x, int y, int color);
