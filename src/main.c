@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/04 17:05:44 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:48:37 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	main(int argc, char **argv)
 	t_textures	tx;
 	t_time		time;
 
-	ft_set_up_game(&data, &file, &tx, &time);
+	set_up_game(&data, &file, &tx, &time);
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
 		bruh(&data, "Error\nInvalid map or missing config values\n", 1);

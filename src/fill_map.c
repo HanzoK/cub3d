@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 17:29:31 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/01 16:46:59 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 08:29:39 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**fill_map(t_data *data, int map_start)
 	data->map = create_map_array(data, map_start, rows, max_len);
 	if (!data->map)
 		return (NULL);
-	data->map_width = max_len;
-	data->map_height = rows;
+	data->map_w = max_len;
+	data->map_h = rows;
 	return (data->map);
 }

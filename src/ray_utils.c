@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:12:59 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/01 14:54:58 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 08:53:15 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ bool	coll(t_data *data, float pos_x, float pos_y)
 
 	x = (int)(pos_x / VOX);
 	y = (int)(pos_y / VOX);
-	if (x < 0 || x >= data->map_width
-		|| y < 0 || y >= data->map_height)
+	if (x < 0 || x >= data->map_w
+		|| y < 0 || y >= data->map_h)
 		return (false);
 	if (data->map[y][x] == '1')
 		return (true);

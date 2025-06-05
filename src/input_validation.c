@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/05/27 18:25:35 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:29:39 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	validate_and_count_tile(t_data *data, int i, int j, int *pc)
 	c = data->map[i][j];
 	if (c == '0')
 	{
-		if (i == 0 || i == data->map_height - 1
-			|| j == 0 || j == data->map_width - 1)
+		if (i == 0 || i == data->map_h - 1
+			|| j == 0 || j == data->map_w - 1)
 			return (0);
 		if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' ' \
 			|| data->map[i][j - 1] == ' ' || data->map[i][j + 1] == ' ')
@@ -102,10 +102,10 @@ int	validate_map(t_data *data)
 		return (0);
 	pc = 0;
 	i = 0;
-	while (i < data->map_height)
+	while (i < data->map_h)
 	{
 		j = 0;
-		while (j < data->map_width)
+		while (j < data->map_w)
 		{
 			if (!validate_and_count_tile(data, i, j, &pc))
 				return (0);

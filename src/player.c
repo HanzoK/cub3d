@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 17:30:10 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 08:12:45 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,8 @@ int	key_press(int keycode, t_data *data)
 		data->player->key_left = true;
 	if (keycode == RIGHT || keycode == D)
 		data->player->key_right = true;
-	if (keycode == M)
-		printarr(data->map);
 	if (keycode == SHIFT)
 		data->player->dash = 2;
-	if (keycode == CTRL)
-		data->player->dash = 0.1;
-	if (keycode == ZERO)
-		data->d = 0;
-	if (keycode == ONE)
-		data->d = 1;
-	if (keycode == TWO)
-		data->d = 2;
-	if (keycode == THREE)
-		data->d = 3;
-	if (keycode == FOUR)
-		data->d = 4;
 	if (keycode == ALT)
 	{
 		if (data->mouse_enabled)
@@ -97,8 +83,6 @@ int	key_release(int keycode, t_data *data)
 	if (keycode == RIGHT || keycode == D)
 		data->player->key_right = false;
 	if (keycode == SHIFT)
-		data->player->dash = 1;
-	if (keycode == CTRL)
 		data->player->dash = 1;
 	if (keycode == ALT)
 	{
