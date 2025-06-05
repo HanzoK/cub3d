@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 10:31:32 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:14:33 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ void	dda(t_data *data, t_ray *ray)
 			if (data->map[ray->map_y][ray->map_x] == '1')
 				break ;
 		}
+		if (ray->x_len > data->map_w * VOX
+			|| ray->y_len > data->map_h * VOX)
+		{
+			ray->wall = FAIL;
+			break ;
+		}
 	}
 }
 
@@ -114,6 +120,8 @@ t_ray	*cast_ray(t_data *data, float direction)
 	ray = init_ray(data, direction);
 	ray_init_len(ray);
 	dda(data, ray);
+	if (ray->wall == FAIL)
+		(free(ray), bruh(data, "Error: Raycast no wall hit", 0));
 	if (ray->wall % 2)
 	{
 		ray->x = ray->x + ray->x_dir * (ray->x_len - ray->x_step_size);

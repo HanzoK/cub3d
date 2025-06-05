@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/05 08:59:05 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:13:24 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum e_direction
 	EAST = 1,
 	SOUTH = 2,
 	WEST = 3,
+	FAIL = -1,
 }				t_direction;
 
 typedef enum e_keycode
