@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/05 08:48:37 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:57:01 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	mouse_move(int x, int y, t_data *data)
 	if (!data->mouse_enabled)
 		return (0);
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return (0);
+	if (x == data->window_center_x && y == data->window_center_y)
 		return (0);
 	last_x = (float)(x - data->window_center_x);
 	if (last_x != 0.0f)
