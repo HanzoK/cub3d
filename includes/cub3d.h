@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/02 16:08:23 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 08:59:05 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,31 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define PI 3.14159265358979323846
-# define BLACK 0xFF000000
-# define VOX 40
-# define MVOX VOX / 2
-# define MMAP_X WIDTH - MVOX * 5
-# define MMAP_Y HEIGHT - MVOX * 5
-# define SPEED 300
+# define P_COLOR 0xFF2255FF
+# define D_COLOR 0xFFEEEE33
+# define VOX 64
+# define SPEED 420
 # define TURN_SPEED 3
-# define DRAW_DIST 780.0
-/*# define FPS 120*/
+# define MOUSE_SPEED 0.0005
+# define DRAW_DIST 1000.0
 # define FRAME_TIME 11
-/*# define IMG_W 128*/
-/*# define IMG_H 128*/
+
+typedef enum e_colors
+{
+	PLAYER = 0xFF2255FF,
+	DASH = 0xFFEEEE33,
+	TILE = 0xFF222222,
+	EDGE = 0xFF111111,
+	WALL = 0xFF553399,
+	WHITE = 0xFFFFFFFF,
+	BLACK = 0x00000000,
+	RED = 0xFFFF0000,
+	GREEN = 0xFF00FF00,
+	BLUE = 0xFF0000FF,
+	YELLOW = 0xFFFFFF00,
+	CYAN = 0xFF00FFFF,
+	MAGENTA = 0xFFFF00FF,
+}				t_colors;
 
 typedef enum e_direction
 {
@@ -136,7 +149,6 @@ typedef struct s_player
 	bool			turn_right;
 }					t_player;
 
-
 typedef struct s_time
 {
 	long			last; // last time
@@ -180,8 +192,8 @@ typedef struct s_data
 	t_time			*time;
 	t_player		*player;
 	char			**map;
-	int				map_width;
-	int				map_height;
+	int				map_w;
+	int				map_h;
 	int				player_x;
 	int				player_y;
 	char			map_dir;
@@ -202,31 +214,31 @@ typedef struct s_data
 //*					FILE VALIDATION FUNCTIONS					  *
 //*****************************************************************
 
-void	ft_set_up_game(t_data *data, t_file *file,
-			t_textures *tx, t_time *time);
-void	input_validation(int argc, char **argv);
-int		validate_map(t_data *data);
-bool	validate_xpm_64(t_data *data, void *mlx);
-int		load_textures(t_data *data);
-void	split_texture(t_texture *tx);
+void		set_up_game(t_data *data, t_file *file,
+				t_textures *tx, t_time *time);
+void		input_validation(int argc, char **argv);
+int			validate_map(t_data *data);
+bool		validate_xpm_64(t_data *data, void *mlx);
+int			load_textures(t_data *data);
+void		split_texture(t_texture *tx);
 
 //*****************************************************************
 //*					FILE READING FUNCTIONS						  *
 //*****************************************************************
 
-int		is_numeric_value(char *s);
-int		arr_len(char **array);
-int		skip_spaces(char *line, int i);
-int		is_space_line(char *line);
-char	*read_file_into_line(t_data *data, char	*filename);
-char	**arrange_lines_as_map(char	*filename);
-int		read_file(t_data *data, char *filename);
-int		is_space_line(char *line);
-int		rgb_value_check(char **colours);
-char	*get_config_value(char *line, int config_name_len);
-int		parse_colour_config(t_data *data, char *line, int is_it_floor);
-int		parse_config_file(t_data *data);
-char	**fill_map(t_data *data, int map_start);
+int			is_numeric_value(char *s);
+int			arr_len(char **array);
+int			skip_spaces(char *line, int i);
+int			is_space_line(char *line);
+char		*read_file_into_line(t_data *data, char	*filename);
+char		**arrange_lines_as_map(char	*filename);
+int			read_file(t_data *data, char *filename);
+int			is_space_line(char *line);
+int			rgb_value_check(char **colours);
+char		*get_config_value(char *line, int config_name_len);
+int			parse_colour_config(t_data *data, char *line, int is_it_floor);
+int			parse_config_file(t_data *data);
+char		**fill_map(t_data *data, int map_start);
 
 //*****************************************************************
 //*						PLAYER FUNCTIONS						  *
@@ -251,14 +263,13 @@ int			mouse_move(int x, int y, t_data *data);
 int			draw(t_data *data);
 void		draw_frame(t_data *data);
 void		draw_line(t_data *data, float start_x, int i);
-void		draw_minimap(t_data *data);
+void		draw_minimap(t_data *data, float off_x, float off_y);
 void		wipe(t_data *data);
 void		put_map(t_data *data);
-void		put_player(t_data *data);
+void		put_player(t_data *data, int pl_x, int pl_y);
 void		put_pixel(t_data *data, int x, int y, int color);
 void		put_pixel_sky(t_data *data, int x, int y, int color);
 void		put_pixel_floor(t_data *data, int x, int y, int color);
-void		put_square(t_data *data, int pos_x, int pos_y, int size, unsigned int color);
 void		put_empty_square(t_data *data, int pos_x, int pos_y, int size);
 void		put_fat_pixel(t_data *data, int x, int y, int color);
 void		color_screen(t_data *data, int color);
@@ -274,37 +285,38 @@ int			put_column(t_data *data, t_ray *ray, int start_y, int end_y);
 //*						FREE FUNCTIONS							  *
 //*****************************************************************
 
-int		free_all_three(char **colours);
-void	free_partial_map(char **map, int rows);
-void	bruh(t_data *data, char *s, int status);
-void	free_array(char **lines);
-void	free_textures(t_data *date);
-int		button_hook(t_data *data);
+int			free_all_three(char **colours);
+void		free_partial_map(char **map, int rows);
+void		bruh(t_data *data, char *s, int status);
+void		free_array(char **lines);
+void		free_textures(t_data *date);
+int			button_hook(t_data *data);
 
 //*****************************************************************
 //*						RAY FUNCTIONS							  *
 //*****************************************************************
 
-bool	edge(t_data *data, float pos_x, float pos_y);
-bool	coll(t_data *data, float pos_x, float pos_y);
-t_ray	*cast_ray(t_data *data, float direction);
-float	distance(t_data *data, float ray_x, float ray_y);
+bool		edge(t_data *data, float pos_x, float pos_y);
+bool		coll(t_data *data, float pos_x, float pos_y);
+t_ray		*cast_ray(t_data *data, float direction);
+float		distance(t_data *data, float ray_x, float ray_y);
+bool		out_of_bounds(t_data *data, int x, int y);
 
 //*****************************************************************
 //*						TIME FUNCTIONS							  *
 //*****************************************************************
 
-long	get_time(t_data *data);
-long	get_delta_time(t_data *data);
+long		get_time(t_data *data);
+long		get_delta_time(t_data *data);
 
 //*****************************************************************
 //*						UTIL FUNCTIONS							  *
 //*****************************************************************
 
-int		shade_color(float dist, int color);
-int		get_color(int red, int green, int blue);
-char	*join2(char const *s1, char const *s2);
-void	printarr(char **arr);
-float	dist(float *start, float *end, float direction);
+int			shade_color(float dist, int color);
+int			get_color(int red, int green, int blue);
+char		*join2(char const *s1, char const *s2);
+void		printarr(char **arr);
+float		dist(float *start, float *end, float direction);
 
 #endif

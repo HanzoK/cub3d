@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:01:44 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/01 15:01:17 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 07:57:17 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@ int	shade_color(float dist, int color)
 	red = (int)((float)red * (1 - ratio));
 	green = (int)((float)green * (1 - ratio));
 	blue = (int)((float)blue * (1 - ratio));
-	// if (red > 255)
-	// 	red = 255;
-	// if (green > 255)
-	// 	green = 255;
-	// if (blue > 255)
-	// 	blue = 255;
 	if (red <= 0)
 		red = 1;
 	if (green <= 0)

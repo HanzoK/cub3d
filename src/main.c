@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/04 16:36:46 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 13:57:01 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	mouse_move(int x, int y, t_data *data)
 	last_x = (float)(x - data->window_center_x);
 	if (last_x != 0.0f)
 	{
-		last_y = 0.001;
+		last_y = MOUSE_SPEED;
 		data->player->dir += last_x * last_y;
 		if (data->player->dir < 0)
 			data->player->dir += 2 * PI;
@@ -107,7 +107,7 @@ int	main(int argc, char **argv)
 	t_textures	tx;
 	t_time		time;
 
-	ft_set_up_game(&data, &file, &tx, &time);
+	set_up_game(&data, &file, &tx, &time);
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
 		bruh(&data, "Error\nInvalid map or missing config values\n", 1);

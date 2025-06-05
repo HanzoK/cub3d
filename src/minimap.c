@@ -5,65 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 12:44:16 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/02 17:35:31 by hanjkim          ###   ########.fr       */
+/*   Created: 2.15/06/02 12:44:16 by oohnivch          #+#    #+#             */
+/*   Updated: 2025/06/05 08:58:47 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_square(t_data *data, int pos_x, int pos_y,
-	int size, unsigned int color)
+void	put_mini_ray(t_data *data, float dir, float x, float y)
+{
+	float	cos_ray;
+	float	sin_ray;
+	int		ray_mysterio;
+	int		color;
+
+	cos_ray = cos(dir);
+	sin_ray = sin(dir);
+	ray_mysterio = 0;
+	if (data->player->dash > 1)
+		color = DASH;
+	else
+		color = PLAYER;
+	while (ray_mysterio < 7)
+	{
+		if (ray_mysterio < 4)
+			put_fat_pixel(data, x + cos_ray, y + sin_ray, color);
+		else
+			put_pixel(data, x, y, color);
+		x += cos_ray;
+		y += sin_ray;
+		ray_mysterio++;
+	}
+}
+
+void	put_player(t_data *data, int pl_x, int pl_y)
 {
 	int	x;
 	int	y;
+	int	h;
+	int	color;
 
-	y = 0;
-	while (y < size)
+	h = 3;
+	y = 0 - h;
+	if (data->player->dash > 1)
+		color = DASH;
+	else
+		color = PLAYER;
+	while (y < h)
 	{
-		x = 0;
-		while (x < size)
+		x = (0 - h) + (y == (0 - h) || y == h - 1);
+		while (x < h - (y == (0 - h) || y == h - 1))
 		{
-			if ((x == 0 || x == size - 1 || y == 0 || y == size - 1) && color != BLACK)
-				put_pixel(data, pos_x + x, pos_y + y, 0xFF0000FF);
-			else
-				put_pixel(data, pos_x + x, pos_y + y, color);
+			put_pixel(data, pl_x + x, pl_y + y, color);
 			x++;
 		}
 		y++;
 	}
+	put_mini_ray(data, data->player->dir, pl_x, pl_y);
 }
 
-void	draw_minimap(t_data *data)
+bool	out_of_bounds(t_data *data, int x, int y)
 {
-	int	map_x;
-	int	map_y;
-	int	mini_x;
-	int	mini_y;
+	if (x < 0 || y < 0 || x >= data->map_w * VOX || y >= data->map_h * VOX)
+		return (true);
+	return (false);
+}
 
-	mini_x = -4;
-	mini_y = -4;
-	// x = (data->player_x - (WIDTH / 2) / VOX) - 4;
-	// y = (data->player_y - (HEIGHT / 2) / VOX) - 4;
-	// map_y = data->player_y / VOX - mini_y;
-	printf("Player position: (%f, %f)\n", (float)data->player->x, (float)data->player->y);
-	while (mini_x <= 4)
+void	draw_minimap(t_data *data, float off_x, float off_y)
+{
+	int		x;
+	int		y;
+	double	space;
+
+	space = VOX * 2.15;
+	while (off_x <= 4 * VOX)
 	{
-		map_x = data->player->x / VOX - mini_x;
-		while (mini_y <= 4)
+		x = data->player->x + off_x;
+		while (off_y <= 4 * VOX)
 		{
-			map_y = data->player->y / VOX - mini_y;
-			if (map_x < 0 || map_y < 0 || map_x >= data->map_width || map_y >= data->map_height)
-				put_square(data, mini_x * MVOX + 100, mini_y * MVOX + 100, MVOX, 0xFF111111);
-			else if (data->map[map_y][map_x] == '1')
-				put_square(data, mini_x * MVOX + 100, mini_y * MVOX + 100, MVOX, 0xFF0000FF);
-			else if (data->map[map_y][map_x] != '1')
-				put_square(data, mini_x * MVOX + 100, mini_y * MVOX + 100, MVOX, 0xFF555555);
-			// else if (data->map[y][x] == 'P')
-			// 	put_player(data);
-			mini_y++;
+			y = data->player->y + off_y;
+			if (out_of_bounds(data, x, y))
+				put_pixel(data, space + off_x / 2, space + off_y / 2, EDGE);
+			else if (edge(data, x, y))
+				put_pixel(data, space + off_x / 2, space + off_y / 2, EDGE);
+			else if (data->map[y / VOX][x / VOX] == '1')
+				put_pixel(data, space + off_x / 2, space + off_y / 2, WALL);
+			else
+				put_pixel(data, space + off_x / 2, space + off_y / 2, TILE);
+			off_y += 2;
 		}
-		mini_y = -4;
-		mini_x++;
+		off_x += 2;
+		off_y = -4 * VOX;
 	}
+	put_player(data, VOX * 2.1, VOX * 2.1);
 }
