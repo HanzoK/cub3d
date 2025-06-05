@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2.15/06/02 12:44:16 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 08:58:47 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:27:53 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	put_player(t_data *data, int pl_x, int pl_y)
 bool	out_of_bounds(t_data *data, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= data->map_w * VOX || y >= data->map_h * VOX)
+		return (true);
+	if (data->map[y / VOX][x / VOX] == ' ')
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 14:22:43 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:31:41 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ void	dda(t_data *data, t_ray *ray)
 				break ;
 		}
 		if (ray->x_len > 2147483647.0 || ray->y_len > 2147483647.0)
-		{
-			ray->wall = FAIL;
-			break ;
-		}
+			(free(ray), bruh(data, "Error: Raycast no wall hit", 0));
 	}
 }
 
