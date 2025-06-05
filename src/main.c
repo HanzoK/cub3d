@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/05 13:57:01 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/05 14:11:40 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	main(int argc, char **argv)
 	set_up_game(&data, &file, &tx, &time);
 	input_validation(argc, argv);
 	if (!start_up_game(argv, &data))
-		bruh(&data, "Error\nInvalid map or missing config values\n", 1);
+		bruh(&data, "Error\nInvalid map or missing config values", 1);
 	mlx(&data);
 	data.player = init_player(&data);
 	if (!data.player)
