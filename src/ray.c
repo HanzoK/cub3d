@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 14:14:33 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:22:43 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	dda(t_data *data, t_ray *ray)
 			if (data->map[ray->map_y][ray->map_x] == '1')
 				break ;
 		}
-		if (ray->x_len > data->map_w * VOX
-			|| ray->y_len > data->map_h * VOX)
+		if (ray->x_len > 2147483647.0 || ray->y_len > 2147483647.0)
 		{
 			ray->wall = FAIL;
 			break ;
