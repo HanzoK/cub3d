@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/05 08:29:39 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:09:56 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int	validate_and_count_tile(t_data *data, int i, int j, int *pc)
 	}
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
+		if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' ' \
+			|| data->map[i][j - 1] == ' ' || data->map[i][j + 1] == ' ')
+			return (0);
 		data->player_x = j;
 		data->player_y = i;
 		data->map_dir = c;
@@ -113,8 +116,7 @@ int	validate_map(t_data *data)
 		}
 		i++;
 	}
-	if (pc == 0)
+	if (pc != 1)
 		return (0);
-	else
-		return (1);
+	return (1);
 }
