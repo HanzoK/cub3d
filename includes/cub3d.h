@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/11 16:15:05 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:44:16 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
+# include <stdio.h>
 # include <stdbool.h>
 # include <mlx.h>
 # include <math.h>
@@ -162,7 +163,7 @@ typedef struct s_player
 	float			dir;
 	float			x_dir;
 	float			y_dir;
-	t_sprite		anim[3];
+	t_sprite		*anim[3];
 	// t_sprite		*walk;
 	// t_sprite		*idle;
 	// t_sprite		*fire;
@@ -235,6 +236,7 @@ typedef struct s_data
 	int				window_center_x;
 	int				window_center_y;
 	bool			mouse_enabled;
+	t_sprite		*sprites;
 }				t_data;
 
 //*****************************************************************
@@ -269,6 +271,7 @@ char		**fill_map(t_data *data, int map_start);
 //*						PLAYER FUNCTIONS						  *
 //*****************************************************************
 
+void		set_player_sprites(t_data *data);
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 void		move_player(t_data *data);
@@ -303,6 +306,7 @@ int			put_column(t_data *data, t_ray *ray, int start_y, int end_y);
 //*						FREE FUNCTIONS							  *
 //*****************************************************************
 
+void		free_player_sprites(t_data *data);
 int			free_all_three(char **colours);
 void		free_partial_map(char **map, int rows);
 void		bruh(t_data *data, char *s, int status);

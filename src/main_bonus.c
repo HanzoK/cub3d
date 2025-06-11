@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/09 21:40:11 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/11 22:17:27 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	main(int argc, char **argv)
 	data.player = init_player(&data);
 	if (!data.player)
 		bruh (&data, "Error\n player malloc fail\n", 1);
+	set_player_sprites(&data);
 	get_delta_time(&data);
 	data.time->last_frame = get_time(&data);
 	mlx_hook(data.win, 6, 1L << 6, &mouse_move, &data);

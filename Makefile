@@ -89,6 +89,7 @@ BONUS_SRC	= main_bonus.c \
 			  walking.c \
 			  walls.c \
 			  raw_map_parsing.c \
+			  player_sprite_bonus.c \
 
 OBJ			= $(SRC:.c=.o)
 BONUS_OBJ	= $(BONUS_SRC:.c=.o)
