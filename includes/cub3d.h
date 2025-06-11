@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/09 21:39:24 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/11 16:15:05 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ typedef enum e_direction
 	FAIL = -1,
 }				t_direction;
 
+typedef enum e_animation
+{
+	IDLE = 0,
+	WALK = 1,
+	FIRE = 2,
+}				t_animation;
+
 typedef enum e_keycode
 {
 	ESC = 65307,
@@ -99,6 +106,21 @@ typedef struct s_texture
 	char			**split_texture;
 }					t_texture;
 
+typedef struct s_sprite
+{
+	int				index;
+	char			*path;
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				width;
+	int				height;
+	int				size_line;
+	int				endian;
+	char			**split_texture;
+	struct s_sprite	*next; // Next of last is first
+}					t_sprite;
+
 typedef struct s_textures
 {
 	t_texture		*north;
@@ -132,6 +154,7 @@ typedef struct s_file
 
 typedef struct s_player
 {
+	int				state; // 0 = idle, 1 = walk, 2 = fire
 	float			x;
 	float			y;
 	float			x_dist;
@@ -139,7 +162,11 @@ typedef struct s_player
 	float			dir;
 	float			x_dir;
 	float			y_dir;
-
+	t_sprite		anim[3];
+	// t_sprite		*walk;
+	// t_sprite		*idle;
+	// t_sprite		*fire;
+	// t_sprite anim[0][1][2] = {idle, walk, fire}
 	float			dash;
 	bool			key_up;
 	bool			key_down;
