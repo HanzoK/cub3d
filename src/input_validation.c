@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:05:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/11 15:14:33 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:52:13 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,15 @@ int	validate_and_count_tile(t_data *data, int i, int j, int *pc)
 		if (i == 0 || i == data->map_h - 1
 			|| j == 0 || j == data->map_w - 1)
 			return (0);
-		if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' ' 
+		if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' '
 			|| data->map[i][j - 1] == ' ' || data->map[i][j + 1] == ' ')
 			return (0);
 	}
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
-		if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' ' 
+		if (i == 0 || i == data->map_h - 1 || j == 0 || j == data->map_w - 1)
+			return (0);
+		if (data->map[i - 1][j] == ' ' || data->map[i + 1][j] == ' '
 			|| data->map[i][j - 1] == ' ' || data->map[i][j + 1] == ' ')
 			return (0);
 		data->player_x = j;
