@@ -6,26 +6,11 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:29:45 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 10:32:55 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:14:21 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// DEPRECATED: This function is not used anymore, but kept for reference.
-// int	texture_color(t_texture *tx, int x, int y)
-// {
-// 	int	checked_x;
-// 	int	checked_y;
-//
-// 	checked_x = x * (x >= 0 && x < tx->width * 4);
-// 	checked_y = y * (y >= 0 && y < tx->height);
-// 	if (!checked_x && checked_x != x)
-// 		printf("Error: texture_color called with invalid x: %d\n", x);
-// 	else if (!checked_y && checked_y != y)
-// 		printf("Error: texture_color called with invalid y: %d\n", y);
-// 	return (*(int *)&tx->split_texture[checked_y][checked_x]);
-// }
 
 void	put_north_column(t_data *data, t_ray *ray, int y, int end)
 {

@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 15:35:02 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:33:06 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,24 @@ int	key_press(int keycode, t_data *data)
 		data->player->key_up = true;
 	if (keycode == DOWN || keycode == S)
 		data->player->key_down = true;
-	if (keycode == LEFT || keycode == A)
-		data->player->turn_left = true;
-	if (keycode == RIGHT || keycode == D)
-		data->player->turn_right = true;
 	if (keycode == Q)
-		data->player->key_left = true;
+		data->player->turn_left = true;
 	if (keycode == E)
+		data->player->turn_right = true;
+	if (keycode == LEFT || keycode == A)
+		data->player->key_left = true;
+	if (keycode == RIGHT || keycode == D)
 		data->player->key_right = true;
 	if (keycode == SHIFT)
 		data->player->dash = 2;
+	if (keycode == ALT)
+	{
+		if (data->mouse_enabled)
+		{
+			data->mouse_enabled = false;
+			mlx_mouse_show(data->mlx, data->win);
+		}
+	}
 	return (0);
 }
 
@@ -66,16 +74,23 @@ int	key_release(int keycode, t_data *data)
 		data->player->key_up = false;
 	if (keycode == DOWN || keycode == S)
 		data->player->key_down = false;
-	if (keycode == LEFT || keycode == A)
-		data->player->turn_left = false;
-	if (keycode == RIGHT || keycode == D)
-		data->player->turn_right = false;
 	if (keycode == Q)
-		data->player->key_left = false;
+		data->player->turn_left = false;
 	if (keycode == E)
+		data->player->turn_right = false;
+	if (keycode == LEFT || keycode == A)
+		data->player->key_left = false;
+	if (keycode == RIGHT || keycode == D)
 		data->player->key_right = false;
 	if (keycode == SHIFT)
 		data->player->dash = 1;
+	if (keycode == ALT)
+	{
+		data->mouse_enabled = true;
+		mlx_mouse_hide(data->mlx, data->win);
+		mlx_mouse_move(data->mlx, data->win,
+			data->window_center_x, data->window_center_y);
+	}
 	return (0);
 }
 

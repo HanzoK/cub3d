@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:04:55 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/01 17:30:54 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/09 21:35:06 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	read_file(t_data *data, char *filename)
 	raw_line = read_file_into_line(data, filename);
 	if (!raw_line)
 		return (0);
+	if (has_empty_line_after_map(raw_line))
+		return (ft_free(&raw_line), 0);
 	trimmed = ft_strtrim(raw_line, " \t\n");
 	if (!trimmed)
 		return (ft_free(&raw_line), 0);

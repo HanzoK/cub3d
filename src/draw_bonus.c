@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 15:43:39 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:13:31 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	draw_frame(t_data *data)
 int	draw(t_data *data)
 {
 	long	check;
+	char	*fps;
+	char	*tmp;
 
 	data->time->delta = get_delta_time(data);
 	move_player(data);
@@ -68,5 +70,13 @@ int	draw(t_data *data)
 	draw_frame(data);
 	draw_minimap(data, -4 * VOX, -4 * VOX);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	tmp = ft_itoa(1000 / check);
+	fps = join2("FPS: ", tmp);
+	free(tmp);
+	if (!fps)
+		bruh(data, "Error: FPS string allocation failed", 1);
+	mlx_string_put(data->mlx, data->win, 11, 20,
+		0xFFDDFFFF, fps);
+	free(fps);
 	return (0);
 }

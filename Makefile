@@ -10,6 +10,7 @@ CYAN 		= \033[0;36m
 #                                   Variables                                  #
 # **************************************************************************** #
 NAME 		= cub3D
+BONUS_NAME	= cub3D_bonus
 CC			= cc 
 CFLAGS		= -Wall -Wextra -Werror -g
 
@@ -63,15 +64,47 @@ SRC			= main.c \
 			  parse_colours.c \
 			  walking.c \
 			  walls.c \
+			  raw_map_parsing.c \
+
+BONUS_SRC	= main_bonus.c \
+			  color_bonus.c \
+			  delta_time.c \
+			  draw_bonus.c \
+			  free.c \
+			  free2.c \
+			  general_utils.c \
+			  init_game.c \
+			  input_validation.c \
+			  minimap_bonus.c \
+			  parse_file.c \
+			  parsing_utils.c \
+			  player_bonus.c \
+			  put.c \
+			  ray.c \
+			  ray_utils.c \
+			  read_file.c \
+			  load_textures.c \
+			  fill_map.c \
+			  parse_colours.c \
+			  walking.c \
+			  walls.c \
+			  raw_map_parsing.c \
 
 OBJ			= $(SRC:.c=.o)
+BONUS_OBJ	= $(BONUS_SRC:.c=.o)
 OBJS		= $(addprefix $(OBJDIR), $(OBJ))
+BONUS_OBJS	= $(addprefix $(OBJDIR), $(BONUS_OBJ))
 
 
 all: 		$(OBJDIR) $(NAME) | logo
 
+bonus:		$(OBJDIR) $(BONUS_NAME) | logo_bonus
+
 $(NAME): 	$(LIB) $(OBJS) ./includes/cub3d.h
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lm $(LIB) $(MLXFLAGS) #-pg
+
+$(BONUS_NAME): $(LIB) $(BONUS_OBJS) ./includes/cub3d.h
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) -lm $(LIB) $(MLXFLAGS) #-pg
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(LIB)
 	@$(CC) $(CFLAGS) -c -o $@ $< $(HEADER) #-pg
@@ -95,10 +128,13 @@ fclean:
 	@make --no-print-directory -C $(LIBFTDIR) fclean
 	@rm -rf $(OBJDIR)
 	@rm -f $(NAME)
-	@echo "$(YELLOW)Deleting $(NAME) and $(words $(OBJ)) object file(s) $(NORMAL)" 
+	@rm -f $(BONUS_NAME)
+	@echo "$(YELLOW)Deleting binaries and $(words $(OBJ)) object file(s) $(NORMAL)" 
 	@echo "$(GREEN)Deletion success! $(NORMAL)"
 
 re: fclean all
+
+reb: fclean bonus
 
 logo:
 	@echo "$(BLUE)"
@@ -111,4 +147,15 @@ logo:
 	@echo "	 ░▒▓██████▓▒░   ░▒▓██████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  "
 	@echo "$(NORMAL)"
                                                                            
-.PHONY: all clean fclean re
+logo_bonus:
+	@echo "$(RED)"
+	@echo "	 ░▒▓██████▓▒░  ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  "
+	@echo "	░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░        ░▒▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ "
+	@echo "	 ░▒▓██████▓▒░   ░▒▓██████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  ░▒▓███████▓▒░  "
+	@echo "$(NORMAL)"
+
+.PHONY: all clean fclean re bonus reb logo logo_bonus

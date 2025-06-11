@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:23:32 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/05 08:00:03 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:15:13 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	printarr(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		printf("%s\n", arr[i]);
+		ft_printf("%s\n", arr[i]);
 		i++;
 	}
 }

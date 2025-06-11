@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/09 20:53:58 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/09 21:40:11 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,32 @@ int	start_up_game(char **argv, t_data *data)
 	return (1);
 }
 
+int	mouse_move(int x, int y, t_data *data)
+{
+	float		last_x;
+	float		last_y;
+
+	if (!data->mouse_enabled)
+		return (0);
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return (0);
+	if (x == data->window_center_x && y == data->window_center_y)
+		return (0);
+	last_x = (float)(x - data->window_center_x);
+	if (last_x != 0.0f)
+	{
+		last_y = MOUSE_SPEED;
+		data->player->dir += last_x * last_y;
+		if (data->player->dir < 0)
+			data->player->dir += 2 * PI;
+		else if (data->player->dir > 2 * PI)
+			data->player->dir -= 2 * PI;
+	}
+	mlx_mouse_move(data->mlx, data->win,
+		data->window_center_x, data->window_center_y);
+	return (0);
+}
+
 void	mlx(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -69,6 +95,9 @@ void	mlx(t_data *data)
 			&data->bpp, &data->size_line, &data->endian);
 	if (!data->addr)
 		bruh(data, "Error\n image data address fail\n", 1);
+	mlx_mouse_hide(data->mlx, data->win);
+	mlx_mouse_move(data->mlx, data->win,
+		data->window_center_x, data->window_center_y);
 }
 
 int	main(int argc, char **argv)
@@ -88,6 +117,8 @@ int	main(int argc, char **argv)
 		bruh (&data, "Error\n player malloc fail\n", 1);
 	get_delta_time(&data);
 	data.time->last_frame = get_time(&data);
+	mlx_hook(data.win, 6, 1L << 6, &mouse_move, &data);
+	data.mouse_enabled = true;
 	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
 	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
 	mlx_hook(data.win, 17, 0, &button_hook, &data);

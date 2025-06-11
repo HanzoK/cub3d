@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/05 14:13:24 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:39:24 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdbool.h>
 # include <mlx.h>
 # include <math.h>
@@ -219,20 +218,18 @@ void		set_up_game(t_data *data, t_file *file,
 				t_textures *tx, t_time *time);
 void		input_validation(int argc, char **argv);
 int			validate_map(t_data *data);
-bool		validate_xpm_64(t_data *data, void *mlx);
 int			load_textures(t_data *data);
 void		split_texture(t_texture *tx);
+bool		has_empty_line_after_map(char *raw);
 
 //*****************************************************************
 //*					FILE READING FUNCTIONS						  *
 //*****************************************************************
 
-int			is_numeric_value(char *s);
 int			arr_len(char **array);
 int			skip_spaces(char *line, int i);
 int			is_space_line(char *line);
 char		*read_file_into_line(t_data *data, char	*filename);
-char		**arrange_lines_as_map(char	*filename);
 int			read_file(t_data *data, char *filename);
 int			is_space_line(char *line);
 int			rgb_value_check(char **colours);
@@ -248,7 +245,6 @@ char		**fill_map(t_data *data, int map_start);
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 void		move_player(t_data *data);
-bool		coll(t_data *data, float pos_x, float pos_y);
 void		turn(t_data *data, t_player *pl);
 void		walk_forward(t_data *data, t_player *pl, float x_spd, float y_spd);
 void		walk_backward(t_data *data, t_player *pl, float x_spd, float y_spd);
@@ -265,15 +261,9 @@ int			draw(t_data *data);
 void		draw_frame(t_data *data);
 void		draw_line(t_data *data, float start_x, int i);
 void		draw_minimap(t_data *data, float off_x, float off_y);
-void		wipe(t_data *data);
-void		put_map(t_data *data);
 void		put_player(t_data *data, int pl_x, int pl_y);
 void		put_pixel(t_data *data, int x, int y, int color);
-void		put_pixel_sky(t_data *data, int x, int y, int color);
-void		put_pixel_floor(t_data *data, int x, int y, int color);
-void		put_empty_square(t_data *data, int pos_x, int pos_y, int size);
 void		put_fat_pixel(t_data *data, int x, int y, int color);
-void		color_screen(t_data *data, int color);
 void		put_north_column(t_data *data, t_ray *ray, int y, int end);
 void		put_south_column(t_data *data, t_ray *ray, int y, int end);
 void		put_west_column(t_data *data, t_ray *ray, int y, int end);
@@ -298,7 +288,6 @@ int			button_hook(t_data *data);
 //*****************************************************************
 
 bool		edge(t_data *data, float pos_x, float pos_y);
-bool		coll(t_data *data, float pos_x, float pos_y);
 t_ray		*cast_ray(t_data *data, float direction);
 float		distance(t_data *data, float ray_x, float ray_y);
 bool		out_of_bounds(t_data *data, int x, int y);
@@ -314,10 +303,10 @@ long		get_delta_time(t_data *data);
 //*						UTIL FUNCTIONS							  *
 //*****************************************************************
 
+int			has_blank_line_in_map(char **lines, int map_start);
 int			shade_color(float dist, int color);
 int			get_color(int red, int green, int blue);
 char		*join2(char const *s1, char const *s2);
 void		printarr(char **arr);
-float		dist(float *start, float *end, float direction);
 
 #endif

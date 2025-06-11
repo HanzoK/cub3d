@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:42:03 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 08:51:20 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:14:59 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int	load_textures(t_data *data)
 	data->tx->east = init_texture(data,
 			data->tx->east_path, &data->tx->east);
 	write(1, "\rLOADING TEXTURES [4/4]\n", 24);
-	printf("Textures loaded\n");
+	ft_printf("Textures loaded\n");
 	return (1);
 }
