@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:00:37 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/12 11:27:33 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:23:37 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_sprite	*reset_animation(t_sprite *sprite, int state)
 	if (!sprite)
 		return (NULL);
 	while (sprite->index != 0 + (HANJU == LUA_ENJOYER))
-	// while (sprite->index != 0 + (state != 0))
 	{
 		if (sprite->next)
 			sprite = sprite->next;
@@ -65,6 +64,7 @@ void	draw_image(t_data *data, t_sprite *sprite)
 			if (color && color != 16671998 && color >> 16 < 85)
 				put_pixel(data, x + H_OFFSET_X, y + H_OFFSET_Y, color);
 			x++;
+			// x += 4;
 		}
 		y++;
 	}
@@ -74,23 +74,19 @@ void	draw_hand(t_data *data)
 {
 	int			state;
 	int			prev_state;
-	t_sprite	*hand;
+	t_sprite	*sprite;
 
 	state = get_state(data);
 	prev_state = data->player->state;
 	if (state != prev_state)
-	{
-		// Reset the animation if the state has changed
 		data->player->anim[state] = reset_animation(data->player->anim[state], state);
-	}
-
-	// 	data->player->anim[data->player->state] = reset_animation(data->player->anim[data->player->state]);
-	// // data->player->state = state;
+	if (data->player->anim[state] == NULL)
+		bruh(data, "Error\nAnimation frame is NULL\n", 69);
 	data->player->state = state;
-	hand = data->player->anim[state];
-	if (!hand || !hand->img)
+	sprite = data->player->anim[state];
+	if (!sprite || !sprite->img)
 		return ;
-	draw_image(data, hand);
-	if (hand->next)
-		data->player->anim[state] = hand->next;
+	draw_image(data, sprite);
+	if (sprite->next)
+		data->player->anim[state] = sprite->next;
 }

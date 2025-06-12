@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:30:07 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/12 11:20:21 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:21:14 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	split_sprite_texture(t_sprite *tx)
 	int		y;
 
 	y = 0;
-	/*split_texture = ft_calloc(sizeof(char *), tx->height + 1);*/
+	split_texture = ft_calloc(sizeof(char *), tx->height + 1);
 	// BRO, WHAT IS THIS?????LOL                      VVVVVVVVVVVVVV
-	split_texture = ft_calloc(tx->height + 1, sizeof(*split_texture));
+	// split_texture = ft_calloc(tx->height + 1, sizeof(*split_texture));
 	if (!split_texture)
 		return ;
 	while (y < tx->height)
@@ -71,7 +71,7 @@ void	set_idle_sprite(t_data *data)
 
 	snprintf(path, sizeof(path), "./textures/idle/%04d.xpm", 1);
 	ft_printf("Loading idle sprite from %s\n", path);
-	ps = init_sprite(data, path, 0);
+	ps = init_sprite(data, path, 1);
 	ps->next = data->player->anim[IDLE];
 	data->player->anim[IDLE] = ps;
 	ps->next = ps; // Make it circular linked list
