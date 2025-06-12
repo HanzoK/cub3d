@@ -73,6 +73,7 @@ BONUS_SRC	= main_bonus.c \
 			  free.c \
 			  free2.c \
 			  general_utils.c \
+			  hand_bonus.c \
 			  init_game.c \
 			  input_validation.c \
 			  minimap_bonus.c \

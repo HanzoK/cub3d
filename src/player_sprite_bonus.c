@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:30:07 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/11 22:15:52 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/12 11:20:21 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	split_sprite_texture(t_sprite *tx)
 
 	y = 0;
 	/*split_texture = ft_calloc(sizeof(char *), tx->height + 1);*/
+	// BRO, WHAT IS THIS?????LOL                      VVVVVVVVVVVVVV
 	split_texture = ft_calloc(tx->height + 1, sizeof(*split_texture));
 	if (!split_texture)
 		return ;
@@ -37,7 +38,10 @@ t_sprite	*init_sprite(t_data *data, const char *path, int i)
 	ps = ft_calloc(1, sizeof(t_sprite));
 	if (!ps)
 		bruh(data, "Error\nSprite malloc failed\n", 1);
+	//This here V is disgusting. Is it in lua?
 	ps->index = i;
+	//          ^ 
+	// Try to guess how long i was in infinite loop searching for index ZERO
 	ps->path = ft_strdup(path);
 	if (!ps->path)
 		bruh(data, "Error\nSprite path malloc failed\n", 1);
@@ -57,7 +61,6 @@ t_sprite	*init_sprite(t_data *data, const char *path, int i)
 	ft_printf("Sprite split_texture: %p\n", ps->split_texture);
 	if (!ps->split_texture)
 		bruh(data, "Error\nSprite split texture failed\n", 1);
-	ps->next = NULL;
 	return (ps);
 }
 
@@ -71,25 +74,36 @@ void	set_idle_sprite(t_data *data)
 	ps = init_sprite(data, path, 0);
 	ps->next = data->player->anim[IDLE];
 	data->player->anim[IDLE] = ps;
+	ps->next = ps; // Make it circular linked list
 }
 
 void	set_walk_sprite(t_data *data)
 {
 	char		path[1024];
 	t_sprite	*ps;
+	t_sprite	*last_ps;
 	int			i;
 
 	i = 1;
+	last_ps = NULL;
 	while (i < 30)
 	{
 		snprintf(path, sizeof(path), "./textures/walk/%04d.xpm", i);
 		ft_printf("Loading idle sprite from %s\n", path);
 		ps = init_sprite(data, path, i);
+		if (!ps)
+			bruh(data, "Error\nSprite init failed\n", 1);
+		if (!data->player->anim[WALK])
+			data->player->anim[WALK] = ps;
+		else
+			if (last_ps)
+				last_ps->next = ps;
+		last_ps = ps;
 		ps->next = data->player->anim[WALK];
-		data->player->anim[WALK] = ps;
 		i++;
 	}
 }
+
 void	set_fire_sprite(t_data *data)
 {
 	char		path[1024];

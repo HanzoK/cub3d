@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/11 19:54:33 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/12 10:35:11 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_player	*init_player(t_data *data)
 	player->turn_left = false;
 	player->turn_right = false;
 	player->dash = 1;
+	player->state = 0;
 	return (player);
 }
 

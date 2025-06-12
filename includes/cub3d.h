@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/11 19:44:16 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/12 11:20:59 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 # define MOUSE_SPEED 0.0005
 # define DRAW_DIST 1000.0
 # define FRAME_TIME 11
+# define H_OFFSET_X 384
+# define H_OFFSET_Y 208
+# define HANJU 69
+# define LUA_ENJOYER 69
 
 typedef enum e_colors
 {
@@ -48,6 +52,7 @@ typedef enum e_colors
 	YELLOW = 0xFFFFFF00,
 	CYAN = 0xFF00FFFF,
 	MAGENTA = 0xFFFF00FF,
+	IGNORE = 0x00FE42FE,
 }				t_colors;
 
 typedef enum e_direction
@@ -271,6 +276,7 @@ char		**fill_map(t_data *data, int map_start);
 //*						PLAYER FUNCTIONS						  *
 //*****************************************************************
 
+int			get_state(t_data *data);
 void		set_player_sprites(t_data *data);
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
@@ -291,6 +297,7 @@ int			draw(t_data *data);
 void		draw_frame(t_data *data);
 void		draw_line(t_data *data, float start_x, int i);
 void		draw_minimap(t_data *data, float off_x, float off_y);
+void		draw_hand(t_data *data);
 void		put_player(t_data *data, int pl_x, int pl_y);
 void		put_pixel(t_data *data, int x, int y, int color);
 void		put_fat_pixel(t_data *data, int x, int y, int color);
