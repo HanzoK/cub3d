@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 19:03:16 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/12 17:02:31 by hanjkim          ###   ########.fr       */
+/*   Created: 2025/06/12 17:01:08 by hanjkim           #+#    #+#             */
+/*   Updated: 2025/06/12 17:02:23 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	bruh(t_data *data, char *s, int status)
 	if (data)
 	{
 		free_textures(data);
+		free_player_sprites(data);
 		if (data->img)
 			mlx_destroy_image(data->mlx, data->img);
 		if (data->win)

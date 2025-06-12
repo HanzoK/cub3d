@@ -68,18 +68,20 @@ SRC			= main.c \
 
 BONUS_SRC	= main_bonus.c \
 			  color_bonus.c \
-			  delta_time.c \
 			  draw_bonus.c \
-			  free.c \
-			  free2.c \
-			  general_utils.c \
+			  free_bonus.c \
+			  free2_bonus.c \
 			  hand_bonus.c \
+			  player_bonus.c \
+			  player_sprite_bonus.c \
+			  player_mouse_bonus.c \
+			  minimap_bonus.c \
+			  delta_time.c \
+			  general_utils.c \
 			  init_game.c \
 			  input_validation.c \
-			  minimap_bonus.c \
 			  parse_file.c \
 			  parsing_utils.c \
-			  player_bonus.c \
 			  put.c \
 			  ray.c \
 			  ray_utils.c \
@@ -90,8 +92,6 @@ BONUS_SRC	= main_bonus.c \
 			  walking.c \
 			  walls.c \
 			  raw_map_parsing.c \
-			  player_sprite_bonus.c \
-			  player_mouse_bonus.c \
 
 OBJ			= $(SRC:.c=.o)
 BONUS_OBJ	= $(BONUS_SRC:.c=.o)
