@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/12 11:20:59 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:22:39 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ void		input_validation(int argc, char **argv);
 int			validate_map(t_data *data);
 int			load_textures(t_data *data);
 void		split_texture(t_texture *tx);
+void		split_sprite_texture(t_sprite *tx);
 bool		has_empty_line_after_map(char *raw);
 
 //*****************************************************************
@@ -288,6 +289,7 @@ void		strafe_left(t_data *data, t_player *pl, float x_spd, float y_spd);
 void		strafe_right(t_data *data, t_player *pl, float x_spd, float y_spd);
 t_player	*init_player(t_data *data);
 int			mouse_move(int x, int y, t_data *data);
+int			mouse_click(int button, int x, int y, t_data *data);
 
 //*****************************************************************
 //*						DRAW FUNCTIONS							  *
@@ -308,6 +310,8 @@ void		put_east_column(t_data *data, t_ray *ray, int y, int end);
 void		put_sky(t_data *data, int x, int end);
 void		put_floor(t_data *data, int x, int start);
 int			put_column(t_data *data, t_ray *ray, int start_y, int end_y);
+t_sprite	*reset_animation(t_sprite *sprite, int state);
+void		draw_image(t_data *data, t_sprite *sprite);
 
 //*****************************************************************
 //*						FREE FUNCTIONS							  *

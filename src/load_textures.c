@@ -6,11 +6,28 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:42:03 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/12 10:49:30 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:17:20 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	split_sprite_texture(t_sprite *tx)
+{
+	char	**split_texture;
+	int		y;
+
+	y = 0;
+	split_texture = ft_calloc(sizeof(char *), tx->height + 1);
+	if (!split_texture)
+		return ;
+	while (y < tx->height)
+	{
+		split_texture[y] = tx->addr + (y * tx->size_line);
+		y++;
+	}
+	tx->split_texture = split_texture;
+}
 
 void	split_texture(t_texture *tx)
 {

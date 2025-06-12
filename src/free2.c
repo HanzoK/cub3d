@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:21:28 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/11 18:38:23 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/12 14:16:26 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	free_sprite_list(t_data *data, t_sprite **first)
 	t_sprite	*current;
 	t_sprite	*next;
 
+	if (!first || !*first)
+		return ;
 	current = *first;
-	while (current)
+	while (current->next != *first)
 	{
 		next = current->next;
 		if (current->img)
@@ -43,7 +45,13 @@ void	free_sprite_list(t_data *data, t_sprite **first)
 		free(current);
 		current = next;
 	}
-	*first = NULL;
+	if (current->img)
+		mlx_destroy_image(data->mlx, current->img);
+	if (current->split_texture)
+		free(current->split_texture);
+	if (current->path)
+		ft_free(&current->path);
+	free(current);
 }
 
 void	free_player_sprites(t_data *data)

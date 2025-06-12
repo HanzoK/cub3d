@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:04:44 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/12 11:38:09 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:26:54 by hanjkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,9 @@ int	main(int argc, char **argv)
 	set_player_sprites(&data);
 	get_delta_time(&data);
 	data.time->last_frame = get_time(&data);
-	mlx_hook(data.win, 6, 1L << 6, &mouse_move, &data);
+	mlx_hook(data.win, 6, 1L << 6, mouse_move, &data);
 	data.mouse_enabled = true;
+	mlx_mouse_hook(data.win, &mouse_click, &data);
 	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
 	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
 	mlx_hook(data.win, 17, 0, &button_hook, &data);
