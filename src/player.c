@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/12 16:49:51 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/13 14:28:31 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ int	key_press(int keycode, t_data *data)
 		data->player->key_up = true;
 	if (keycode == DOWN || keycode == S)
 		data->player->key_down = true;
-	if (keycode == LEFT || keycode == A)
-		data->player->turn_left = true;
-	if (keycode == RIGHT || keycode == D)
-		data->player->turn_right = true;
-	if (keycode == Q)
+	if (keycode == A)
 		data->player->key_left = true;
-	if (keycode == E)
+	if (keycode == D)
 		data->player->key_right = true;
+	if (keycode == LEFT || keycode == Q)
+		data->player->turn_left = true;
+	if (keycode == RIGHT || keycode == E)
+		data->player->turn_right = true;
 	if (keycode == SHIFT)
 		data->player->dash = 2;
 	return (0);
@@ -67,14 +67,14 @@ int	key_release(int keycode, t_data *data)
 		data->player->key_up = false;
 	if (keycode == DOWN || keycode == S)
 		data->player->key_down = false;
-	if (keycode == LEFT || keycode == A)
-		data->player->turn_left = false;
-	if (keycode == RIGHT || keycode == D)
-		data->player->turn_right = false;
-	if (keycode == Q)
+	if (keycode == A)
 		data->player->key_left = false;
-	if (keycode == E)
+	if (keycode == D)
 		data->player->key_right = false;
+	if (keycode == LEFT || keycode == Q)
+		data->player->turn_left = false;
+	if (keycode == RIGHT || keycode == E)
+		data->player->turn_right = false;
 	if (keycode == SHIFT)
 		data->player->dash = 1;
 	return (0);
