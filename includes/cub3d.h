@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/12 16:22:39 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/13 11:51:43 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef enum e_colors
 	YELLOW = 0xFFFFFF00,
 	CYAN = 0xFF00FFFF,
 	MAGENTA = 0xFFFF00FF,
-	IGNORE = 0x00FE42FE,
+	IGNORE = 0x0000FF00,
 }				t_colors;
 
 typedef enum e_direction

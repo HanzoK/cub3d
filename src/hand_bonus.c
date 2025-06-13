@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:00:37 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/12 14:45:58 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/13 13:08:10 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,10 @@ void	draw_image(t_data *data, t_sprite *sprite)
 		x = 0;
 		while (x < sprite->width)
 		{
-			// color = *(unsigned int *)&sprite->split_texture[y][x];
 			color = *(unsigned int *)&sprite->addr[y * sprite->size_line + x * (sprite->bpp / 8)];
-			color = color & 0xFFFFFFFF;
-			// printf("Color at (%d, %d): %u\n", x, y, color);
-			// if (color && color != IGNORE)
-			if (color && color != 16671998 && color >> 16 < 85)
+			if (color && color != IGNORE)
 				put_pixel(data, x + H_OFFSET_X, y + H_OFFSET_Y, color);
 			x++;
-			// x += 4;
 		}
 		y++;
 	}
