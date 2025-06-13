@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/12 10:11:11 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:14:38 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,25 @@ int	draw(t_data *data)
 	mlx_string_put(data->mlx, data->win, 11, 20,
 		0xFFDDFFFF, fps);
 	free(fps);
+	return (0);
+}
+
+int	get_state(t_data *data)
+{
+	static int	still_firing = 3;
+
+	if (data->player->state == 2 && still_firing > 0)
+	{
+		still_firing--;
+		return (2);
+	}
+	if (still_firing == 0)
+	{
+		reset_animation(data->player->anim[2], 2);
+		still_firing = 3;
+	}
+	if (data->player->key_up || data->player->key_down
+		|| data->player->key_left || data->player->key_right)
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:23:32 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/13 13:05:53 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:14:30 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,4 @@ int	get_color(int red, int green, int blue)
 	color <<= 8;
 	color += blue;
 	return (color);
-}
-
-int	get_state(t_data *data)
-{
-	static int	still_firing = 3;
-
-	if (data->player->state == 2 && still_firing > 0)
-	{
-		still_firing--;
-		return (2);
-	}
-	if (still_firing == 0)
-	{
-		reset_animation(data->player->anim[2], 2);
-		still_firing = 3;
-	}
-	if (data->player->key_up || data->player->key_down
-		|| data->player->key_left || data->player->key_right)
-		return (1);
-	return (0);
 }
