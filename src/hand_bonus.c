@@ -6,13 +6,13 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:00:37 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/13 13:08:10 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:47:56 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_sprite	*reset_animation(t_sprite *sprite, int state)
+t_sprite	*reset(t_sprite *sprite, int state)
 {
 	if (!sprite)
 		return (NULL);
@@ -21,7 +21,7 @@ t_sprite	*reset_animation(t_sprite *sprite, int state)
 		if (sprite->next)
 			sprite = sprite->next;
 		else
-			break;
+			break ;
 	}
 	(void)state;
 	return (sprite);
@@ -56,7 +56,8 @@ void	draw_image(t_data *data, t_sprite *sprite)
 		x = 0;
 		while (x < sprite->width)
 		{
-			color = *(unsigned int *)&sprite->addr[y * sprite->size_line + x * (sprite->bpp / 8)];
+			color = *(unsigned int *)&sprite->addr[y * \
+				sprite->size_line + x * (sprite->bpp / 8)];
 			if (color && color != IGNORE)
 				put_pixel(data, x + H_OFFSET_X, y + H_OFFSET_Y, color);
 			x++;
@@ -74,7 +75,7 @@ void	draw_hand(t_data *data)
 	state = get_state(data);
 	prev_state = data->player->state;
 	if (state != prev_state)
-		data->player->anim[state] = reset_animation(data->player->anim[state], state);
+		data->player->anim[state] = reset(data->player->anim[state], state);
 	if (data->player->anim[state] == NULL)
 		bruh(data, "Error\nAnimation frame is NULL\n", 69);
 	data->player->state = state;

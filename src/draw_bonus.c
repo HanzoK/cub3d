@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:10:51 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/13 14:14:38 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:46:13 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	get_state(t_data *data)
 	}
 	if (still_firing == 0)
 	{
-		reset_animation(data->player->anim[2], 2);
+		reset(data->player->anim[2], 2);
 		still_firing = 3;
 	}
 	if (data->player->key_up || data->player->key_down

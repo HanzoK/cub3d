@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:06:21 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/13 11:51:43 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:45:51 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ void		put_east_column(t_data *data, t_ray *ray, int y, int end);
 void		put_sky(t_data *data, int x, int end);
 void		put_floor(t_data *data, int x, int start);
 int			put_column(t_data *data, t_ray *ray, int start_y, int end_y);
-t_sprite	*reset_animation(t_sprite *sprite, int state);
+t_sprite	*reset(t_sprite *sprite, int state);
 void		draw_image(t_data *data, t_sprite *sprite);
 
 //*****************************************************************
