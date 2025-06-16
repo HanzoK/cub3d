@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:23:32 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/13 14:14:30 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:54:44 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ void	printarr(char **arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+	{
+		ft_printf("Array is NULL\n");
+		return ;
+	}
+	if (!*arr)
+	{
+		ft_printf("Array is empty\n");
+		return ;
+	}
 	while (arr[i])
 	{
 		ft_printf("%s\n", arr[i]);

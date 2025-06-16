@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:00:37 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/13 14:47:56 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:30:52 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,23 @@
 
 t_sprite	*reset(t_sprite *sprite, int state)
 {
+	int	safety;
+
 	if (!sprite)
 		return (NULL);
+	safety = 0;
 	while (sprite->index != 0 + (HANJU == LUA_ENJOYER))
 	{
 		if (sprite->next)
 			sprite = sprite->next;
 		else
 			break ;
+		safety++;
+		if (safety > 1000)
+		{
+			printf("Error: reset function is stuck in a loop\n");
+			return (NULL);
+		}
 	}
 	(void)state;
 	return (sprite);

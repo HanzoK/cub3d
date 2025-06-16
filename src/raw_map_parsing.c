@@ -6,7 +6,7 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:32:53 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/10 12:17:30 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:25:53 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,9 @@
 
 char	*get_trimmed_line(char *p)
 {
-	char		*eol;
-	size_t		len;
 	char		*line;
 	char		*trim;
 
-	eol = ft_strchr(p, '\n');
-	if (eol)
-		len = (size_t)(eol - p);
-	else
-		len = ft_strlen(p);
 	line = ft_strdup(p);
 	if (!line)
 		return (NULL);

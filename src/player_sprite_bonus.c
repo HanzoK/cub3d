@@ -6,19 +6,14 @@
 /*   By: hanjkim <hanjkim@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:30:07 by hanjkim           #+#    #+#             */
-/*   Updated: 2025/06/12 16:58:30 by hanjkim          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:17:42 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_sprite	*init_sprite(t_data *data, const char *path, int i)
+void	init_sprite(t_data *data, const char *path, int i, t_sprite *ps)
 {
-	t_sprite	*ps;
-
-	ps = ft_calloc(1, sizeof(t_sprite));
-	if (!ps)
-		bruh(data, "Error\nSprite malloc failed\n", 1);
 	ps->index = i;
 	ps->path = ft_strdup(path);
 	if (!ps->path)
@@ -34,7 +29,7 @@ t_sprite	*init_sprite(t_data *data, const char *path, int i)
 	split_sprite_texture(ps);
 	if (!ps->split_texture)
 		bruh(data, "Error\nSprite split texture failed\n", 1);
-	return (ps);
+	return ;
 }
 
 void	set_idle_sprite(t_data *data)
@@ -43,12 +38,13 @@ void	set_idle_sprite(t_data *data)
 	t_sprite	*ps;
 
 	snprintf(path, sizeof(path), "./textures/idle/%04d.xpm", 1);
-	ps = init_sprite(data, path, 1);
+	ps = ft_calloc(1, sizeof(t_sprite));
 	if (!ps)
-		bruh(data, "Error\nIdle Sprite init failed\n", 1);
-	ps->next = data->player->anim[IDLE];
+		bruh(data, "Error\nSprite malloc failed\n", 1);
 	data->player->anim[IDLE] = ps;
+	ps->next = data->player->anim[IDLE];
 	ps->next = ps;
+	init_sprite(data, path, 1, ps);
 }
 
 void	set_walk_sprite(t_data *data)
@@ -63,7 +59,7 @@ void	set_walk_sprite(t_data *data)
 	while (i < 30)
 	{
 		snprintf(path, sizeof(path), "./textures/walk/%04d.xpm", i);
-		ps = init_sprite(data, path, i);
+		ps = ft_calloc(1, sizeof(t_sprite));
 		if (!ps)
 			bruh(data, "Error\nWalk Sprite init failed\n", 1);
 		if (!data->player->anim[WALK])
@@ -73,6 +69,7 @@ void	set_walk_sprite(t_data *data)
 				last_ps->next = ps;
 		last_ps = ps;
 		ps->next = data->player->anim[WALK];
+		init_sprite(data, path, i, ps);
 		i++;
 	}
 }
@@ -89,7 +86,7 @@ void	set_fire_sprite(t_data *data)
 	while (i < 8)
 	{
 		snprintf(path, sizeof(path), "./textures/fire/%04d.xpm", i);
-		ps = init_sprite(data, path, i);
+		ps = ft_calloc(1, sizeof(t_sprite));
 		if (!ps)
 			bruh(data, "Error\nFire Sprite init failed\n", 1);
 		if (!data->player->anim[FIRE])
@@ -99,6 +96,7 @@ void	set_fire_sprite(t_data *data)
 				last_ps->next = ps;
 		last_ps = ps;
 		ps->next = data->player->anim[FIRE];
+		init_sprite(data, path, i, ps);
 		i++;
 	}
 }

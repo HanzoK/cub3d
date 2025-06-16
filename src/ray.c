@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:02 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 14:31:41 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:22:41 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_ray	*init_ray(t_data *data, float direction)
 
 	ray = ft_calloc(sizeof(t_ray), 1);
 	if (!ray)
-		return (bruh(data, "Error: malloc failed", 0), NULL);
+		return (bruh(data, "Error: malloc failed", 69), NULL);
 	ray->x = data->player->x;
 	ray->y = data->player->y;
 	ray->dir = direction;
@@ -70,7 +70,7 @@ void	dda(t_data *data, t_ray *ray)
 				break ;
 		}
 		if (ray->x_len > 2147483647.0 || ray->y_len > 2147483647.0)
-			(free(ray), bruh(data, "Error: Raycast no wall hit", 0));
+			(free(ray), bruh(data, "Error: Raycast no wall hit", 69));
 	}
 }
 
@@ -117,7 +117,7 @@ t_ray	*cast_ray(t_data *data, float direction)
 	ray_init_len(ray);
 	dda(data, ray);
 	if (ray->wall == FAIL)
-		(free(ray), bruh(data, "Error: Raycast no wall hit", 0));
+		(free(ray), bruh(data, "Error: Raycast no wall hit", 69));
 	if (ray->wall % 2)
 	{
 		ray->x = ray->x + ray->x_dir * (ray->x_len - ray->x_step_size);

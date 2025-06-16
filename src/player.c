@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:16:24 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/13 14:28:31 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:06:19 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_player	*init_player(t_data *data)
 {
 	t_player	*player;
 
-	player = malloc(sizeof(t_player));
+	player = ft_calloc(sizeof(t_player), 1);
 	if (!player)
 		return (NULL);
 	player->x = (float)data->player_x * VOX + ((float)VOX / 2);

@@ -6,7 +6,7 @@
 /*   By: oohnivch <oohnivch@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:06:30 by oohnivch          #+#    #+#             */
-/*   Updated: 2025/06/05 08:27:36 by oohnivch         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:19:46 by oohnivch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int	put_column(t_data *data, t_ray *ray, int start_y, int end_y)
 	else if (ray->wall == EAST)
 		put_east_column(data, ray, start_y, end_y);
 	else
-	{
-		free(ray);
-		return (bruh(data, "Error: put_column failed", 1), 1);
-	}
+		return (free(ray), (bruh(data, "Error: put_column failed", 1), 1));
 	return (0);
 }
 
@@ -90,11 +87,11 @@ void	put_fat_pixel(t_data *data, int x, int y, int color)
 void	put_pixel(t_data *data, int x, int y, int color)
 {
 	int	i;
-	int	*lol;
+	int	*pixel_pos;
 
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 		return ;
 	i = (y * data->size_line) + (x * (data->bpp / 8));
-	lol = (int *)&data->addr[i];
-	*lol = color;
+	pixel_pos = (int *)&data->addr[i];
+	*pixel_pos = color;
 }
