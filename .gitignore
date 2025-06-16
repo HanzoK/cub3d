@@ -53,6 +53,8 @@ dkms.conf
 
 *.zip
 .cache
+.cache/
 compile_commands.json
+mlx/
 mlx
 textures/huge_*
